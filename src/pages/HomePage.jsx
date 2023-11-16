@@ -2,7 +2,7 @@ import DisplayItems from '../components/global/DisplayItems'
 import Search from '../components/homepage/Search'
 import PromoBanners from '../components/homepage/PromoBanners'
 
-export default function App({isSignedIn}) {
+export default function App() {
 
   return (
     <>

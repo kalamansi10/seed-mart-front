@@ -1,18 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect} from 'react'
 import './promo-banner.css'
 
 export default function PromoBanners() {
   const [banners, setBanners] = useState()
+
+  let currentBanner = 0
   let bannerCount
   let pages
-  let currentBanner = 0
 
   useEffect(() => {
+    let pageSlider = setInterval(() => move(1), 5000)
     fetch("/api/v1/active-banners")
       .then(response => response.json())
       .then(activeBanners => mapActiveBanners(activeBanners))
       .then(mappedBanners => setBanners(mappedBanners))
+    return () => clearInterval(pageSlider)
   }, [])
+
+  if (banners) {
+    bannerCount = banners.length
+    pages = generatePages()
+  }
 
   function mapActiveBanners(activeBanners) {
     return activeBanners.map((banner) =>
@@ -54,14 +62,6 @@ export default function PromoBanners() {
       )
     }
     return pages
-  }
-
-  if (banners != null) {
-    bannerCount = banners.length
-    pages = generatePages()
-    setInterval(() => {
-      move(1)
-    }, 5000)
   }
 
   return (
