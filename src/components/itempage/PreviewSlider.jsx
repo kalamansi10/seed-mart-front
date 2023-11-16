@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react'
 
-export default function PreviewSlider({item}) {
+export default function PreviewSlider({ item }) {
   const preview = useRef()
   const sliderPos = useRef(0)
-  const image_links = item.image_links
+  const {image_links} = item
 
   useEffect(() => {
     preview.current = document.querySelector('.preview-image')
@@ -11,7 +11,7 @@ export default function PreviewSlider({item}) {
   }, [])
 
   function mapMainPreview() {
-    result = []
+    let result = []
     for (let i = 0; i < image_links.length; i++) {
       result.push(
         <div className='preview-image hidden' id={`img${i}`} key={i}>
@@ -23,7 +23,7 @@ export default function PreviewSlider({item}) {
   }
 
   function mapSubPreview() {
-    result = []
+    let result = []
     for (let i = 0; i < image_links.length; i++) {
       result.push(
         <div className='flex-row justify-center align-center' id={`img${i}`} key={i}>

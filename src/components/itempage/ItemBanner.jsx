@@ -1,11 +1,11 @@
 import React from 'react'
-import filterModule from '../general/filterModule'
+import filterModule from '../global/filterModule'
 
 export default function ItemBanner({ item }) {
 
   function mapSpecs() {
     return Object.keys(filterModule).map(specLabel =>
-      <div className='flex-row justify-between'>
+      <div className='flex-row justify-between' key={specLabel}>
         <span>{mapSpecLabel(specLabel) + ': '}</span>
         <span>{item[specLabel]}</span>
       </div>
@@ -13,7 +13,7 @@ export default function ItemBanner({ item }) {
   }
 
   function mapSpecLabel(specLabel) {
-    result = ''
+    let result = ''
     specLabel.split('_').forEach(word => {
       result = result + word.charAt(0).toUpperCase() + word.slice(1) + ' '
     })

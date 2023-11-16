@@ -1,31 +1,30 @@
-import React, {useEffect, useState} from 'react'
-import Navigation from '../general/Navigation'
+import {useEffect, useState} from 'react'
+import { useParams } from 'react-router-dom'
 import PreviewSlider from '../components/itempage/PreviewSlider'
 import ItemBanner from '../components/itempage/ItemBanner'
 
-export default function App({isSignedIn, itemID}) {
-
+export default function ItemPage() {
   const [item, setItem] = useState()
+  const {id} = useParams()
 
   useEffect(() => {
-    fetch('/v1/seeds/get-item/' + itemID)
+    fetch('/api/v1/get-item/' + id)
     .then(response => response.json())
     .then(data => setItem(data))
-  },[])
+  }, [])
 
-  if (item != null) {
+  if (item) {
     return (
-        <>
-          <Navigation isSignedIn={isSignedIn} />
-          <div className='flex-row justify-center align-center'>
-            <div>
-              <PreviewSlider item={item}/>
-            </div>
-            <div>
-              <ItemBanner item={item}/>
-            </div>
+      <>
+        <div className='flex-row justify-center align-center'>
+          <div>
+            <PreviewSlider item={item}/>
           </div>
-        </>
-      )
-    }
+          <div>
+            <ItemBanner item={item}/>
+          </div>
+        </div>
+      </>
+    )
+  }
 }
