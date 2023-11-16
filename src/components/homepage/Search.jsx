@@ -1,10 +1,19 @@
+import { Link, redirect } from 'react-router-dom'
+import useInput from '../global/useInput'
+
 export default function Search() {
+  const [keyword, keywordInput] = useInput('text')
+
+  function searchKeyword(e) {
+    redirect
+  }
+
   return (
     <div>
-      <form action="/results" method="get">
-        <input type="text" name="keyword" id="keyword"/>
-        <input type="submit" />
-      </form>
+      {keywordInput}
+      <Link to={'results?keyword=' + keyword}>
+        <button>Search</button>
+      </Link>
     </div>
   )
 }

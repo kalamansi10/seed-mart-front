@@ -1,9 +1,7 @@
 import React from 'react'
-import filterModule from '../general/filterModule'
+import filterModule from '../global/filterModule'
 
-export default function SearchFilter({ keyword, queryString, setQueryString }) {
-  const url = new URLSearchParams(queryString)
-
+export default function SearchFilter({searchAPI, setSearchAPI, searchParams}) {
 
   function mapFilters() {
     return Object.keys(filterModule).map(filter =>
@@ -17,7 +15,7 @@ export default function SearchFilter({ keyword, queryString, setQueryString }) {
   }
 
   function mapFilterLabel(filter) {
-    result = ''
+    let result = ''
     filter.split('_').forEach(word => {
       result = result + word.charAt(0).toUpperCase() + word.slice(1) + ' '
     })
@@ -35,13 +33,14 @@ export default function SearchFilter({ keyword, queryString, setQueryString }) {
   }
 
   function applyFilter(e) {
-    url.delete(e.target.name)
+    searchParams.delete(e.target.name)
     if (e.target.checked == true) {
       clearGroup(e.target.name)
       e.target.checked = true
-      url.append(e.target.name, e.target.value)
+      searchParams.append(e.target.name, e.target.value)
     }
-    setQueryString('?' + url.toString())
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
+    console.log(searchAPI)
   }
 
   function clearGroup(name) {
@@ -53,10 +52,10 @@ export default function SearchFilter({ keyword, queryString, setQueryString }) {
   function applyPriceFilter(e) {
     e.preventDefault()
     document.querySelectorAll('.price-input').forEach(filter => {
-      url.delete(filter.name)
-      if (filter.value != '') { url.append(filter.name, filter.value) }
+      searchParams.delete(filter.name)
+      if (filter.value != '') { searchParams.append(filter.name, filter.value) }
     })
-    setQueryString('?' + url.toString())
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
 
   return (
