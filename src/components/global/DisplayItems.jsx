@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import './display-items.css'
 
 export default function DisplayItems({API}) {
   const [items, setItems] = useState()
@@ -12,8 +13,8 @@ export default function DisplayItems({API}) {
 
   function mapItems(items) {
     return items.map((item) =>
-      <a href={'/show/' + item.id}>
-        <div className="item-card flex-column justify-between box-shadow" key={item.id}>
+      <a href={'/show/' + item.id} key={item.id}>
+        <div className="item-card flex-column justify-between box-shadow">
           <div>
             <img src={item.image_links[0]} alt="placeholder" />
             <div className="item-padding">
