@@ -1,6 +1,6 @@
 import DisplayItems from '../components/global/DisplayItems'
 import Search from '../components/homepage/Search'
-import Banners from '../components/homepage/Banners'
+import PromoBanners from '../components/homepage/PromoBanners'
 
 export default function App({isSignedIn}) {
 
@@ -8,7 +8,7 @@ export default function App({isSignedIn}) {
     <>
       <div className='flex-column align-center'>
         <Search />
-        <Banners />
+        <PromoBanners />
         <DisplayItems API='/api/v1/most-recent'/>
       </div>
     </>
