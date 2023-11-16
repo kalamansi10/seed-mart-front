@@ -40,7 +40,6 @@ export default function SearchFilter({searchAPI, setSearchAPI, searchParams}) {
       searchParams.append(e.target.name, e.target.value)
     }
     setSearchAPI('/api/v1/search?' + searchParams.toString())
-    console.log(searchAPI)
   }
 
   function clearGroup(name) {

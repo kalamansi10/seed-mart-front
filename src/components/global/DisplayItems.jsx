@@ -9,7 +9,7 @@ export default function DisplayItems({API}) {
     .then(response => response.json())
     .then(items => mapItems(items))
     .then(mappedItems => setItems(mappedItems))
-  },[API])
+  }, [API])
 
   function mapItems(items) {
     return items.map((item) =>

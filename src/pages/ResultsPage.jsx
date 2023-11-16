@@ -17,7 +17,7 @@ export default function App({isSignedIn}) {
       <div className='flex-column align-center'>
         <div className='flex-row'>
           <SearchFilter searchAPI={searchAPI} setSearchAPI={setSearchAPI} searchParams={searchParams}/>
-          <DisplayItems API={searchAPI} />
+          {searchAPI && <DisplayItems API={searchAPI} />}
         </div>
       </div>
     </>
