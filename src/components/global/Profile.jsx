@@ -1,37 +1,55 @@
-import { useRef } from 'react'
+import useInput from './useInput'
+import useCheckUser from './useCheckUser'
+import useDialog from './useDialog'
 
 function SignIn() {
-  const profileModal = useRef()
- 
-  const runShowModal = () => {
-    profileModal.current.showModal()
-    profileModal.current.addEventListener('click', runCloseModal)
+  const [email, inputEmail] = useInput('email')
+  const [password, inputPassword] = useInput('password')
+  const currentUser = useCheckUser()
+
+  const [profileDialog, showDialog] = useDialog()
+
+
+  const logIn = () => {
+    fetch('http://localhost:3000/users/sign_in', {
+      method: 'post',
+      'credentials': 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.cookie.split('=')[1]
+      },
+      body: JSON.stringify({
+        "user": {
+          "email": email,
+          "password": password
+        }
+      })
+    })
+
+    profileModal.current.close()
+  }
+  const logOut = () => {
+    fetch('http://localhost:3000/users/sign_out', {
+      method: 'delete',
+      'credentials': 'include',
+      headers: {
+        'X-CSRF-Token': document.cookie.split('=')[1]
+      }
+    })
   }
 
-  const runCloseModal = e => {
-
-    const dialogDimensions = profileModal.current.getBoundingClientRect()
-    if (
-      e.clientX < dialogDimensions.left ||
-      e.clientX > dialogDimensions.right ||
-      e.clientY < dialogDimensions.top ||
-      e.clientY > dialogDimensions.bottom
-    ) {
-      profileModal.current.close()
-      profileModal.current.removeEventListener('click', runCloseModal)
-    }
-  }  
-
-  if (false) {
+  if (currentUser) {
     return (
-      <li><a href='/users/sign_out' onClick={runShowModal} data-turbo-frame='devise' data-turbo-method='delete'>Sign Out</a></li>
+      <button onClick={logOut}>Log out</button>
     )
   } else {
     return (
       <>
-        <span onClick={runShowModal}>Sign In</span>
-        <dialog ref={profileModal}>
-          
+        <span onClick={showDialog}>Sign In</span>
+        <dialog ref={profileDialog}>
+          {inputEmail}
+          {inputPassword}
+          <button onClick={logIn}>Log in</button>
         </dialog>
       </>
     )
