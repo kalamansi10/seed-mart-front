@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Navigation isSignedIn={true} />
+      <Navigation />
       <RouterProvider router={router} />
     </>
   )

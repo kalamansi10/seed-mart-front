@@ -1,10 +1,10 @@
-import React from 'react'
-import filterModule from '../global/filterModule'
+import useItemFilters from '../global/useItemFilters'
 
-export default function SearchFilter({searchAPI, setSearchAPI, searchParams}) {
+export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) {
+  const filters = JSON.parse(useItemFilters())
 
   function mapFilters() {
-    return Object.keys(filterModule).map(filter =>
+    return Object.keys(filters).map(filter =>
       <section key={filter}>
         <h4>{mapFilterLabel(filter)}</h4>
         <div className='filter-group flex-column flex-wrap'>
@@ -24,7 +24,7 @@ export default function SearchFilter({searchAPI, setSearchAPI, searchParams}) {
 
   function mapOptions(filter) {
     let name = `filter[${filter}]`
-    return filterModule[filter].map(option =>
+    return filters[filter].map(option =>
       <span key={option}>
         <input type='checkbox' name={name} id={option} onClick={applyFilter} value={option} />
         <label htmlFor={option}> {option}</label>
@@ -57,17 +57,19 @@ export default function SearchFilter({searchAPI, setSearchAPI, searchParams}) {
     setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
 
-  return (
-    <div className='filters-section'>
-      <form className='price-filter'>
-        <div className='flex-row justify-center'>
-          <input className='price-input' type='number' name='minimum' placeholder='min' />
-          &nbsp;-&nbsp;
-          <input className='price-input' type='number' name='maximum' placeholder='max' />
-        </div>
-        <br />
-        <button onClick={applyPriceFilter}>Apply</button>
-      </form>
-      {mapFilters()}
-    </div>)
+  if (filters) {
+    return (
+      <div className='filters-section'>
+        <form className='price-filter'>
+          <div className='flex-row justify-center'>
+            <input className='price-input' type='number' name='minimum' placeholder='min' />
+            &nbsp;-&nbsp;
+            <input className='price-input' type='number' name='maximum' placeholder='max' />
+          </div>
+          <br />
+          <button onClick={applyPriceFilter}>Apply</button>
+        </form>
+        {mapFilters()}
+      </div>)
+  }
 }

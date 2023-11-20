@@ -2,9 +2,9 @@ import useInput from './useInput'
 import useCheckUser from './useCheckUser'
 import useDialog from './useDialog'
 
-function SignIn() {
-  const [email, inputEmail] = useInput('email')
-  const [password, inputPassword] = useInput('password')
+function Session() {
+  const [email, inputEmail] = useInput('email', 'email')
+  const [password, inputPassword] = useInput('password', 'password')
   const currentUser = useCheckUser()
 
   const [profileDialog, showDialog] = useDialog()
@@ -25,9 +25,8 @@ function SignIn() {
         }
       })
     })
-
-    profileModal.current.close()
   }
+
   const logOut = () => {
     fetch('http://localhost:3000/users/sign_out', {
       method: 'delete',
@@ -56,4 +55,4 @@ function SignIn() {
   }
 }
 
-export default SignIn
+export default Session

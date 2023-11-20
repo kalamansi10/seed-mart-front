@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import './display-items.css'
 
 export default function DisplayItems({API}) {
@@ -13,7 +14,7 @@ export default function DisplayItems({API}) {
 
   function mapItems(items) {
     return items.map((item) =>
-      <a href={'/show/' + item.id} key={item.id}>
+      <Link to={'/show/' + item.id} key={item.id}>
         <div className="item-card flex-column justify-between box-shadow">
           <div>
             <img src={item.image_links[0]} alt="placeholder" />
@@ -34,7 +35,7 @@ export default function DisplayItems({API}) {
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     )
   }
 
