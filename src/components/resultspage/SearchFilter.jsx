@@ -1,10 +1,10 @@
-import useItemFilters from '../global/useItemFilters'
+import useItemsProps from '../global/useItemsProps'
 
 export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) {
-  const filters = JSON.parse(useItemFilters())
+  const properties = JSON.parse(useItemsProps())
 
   function mapFilters() {
-    return Object.keys(filters).map(filter =>
+    return Object.keys(properties).map(filter =>
       <section key={filter}>
         <h4>{mapFilterLabel(filter)}</h4>
         <div className='filter-group flex-column flex-wrap'>
@@ -24,7 +24,7 @@ export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) 
 
   function mapOptions(filter) {
     let name = `filter[${filter}]`
-    return filters[filter].map(option =>
+    return properties[filter].map(option =>
       <span key={option}>
         <input type='checkbox' name={name} id={option} onClick={applyFilter} value={option} />
         <label htmlFor={option}> {option}</label>
@@ -57,7 +57,7 @@ export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) 
     setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
 
-  if (filters) {
+  if (properties) {
     return (
       <div className='filters-section'>
         <form className='price-filter'>
