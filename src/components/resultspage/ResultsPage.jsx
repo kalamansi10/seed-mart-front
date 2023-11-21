@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
-import DisplayItems from '../components/global/DisplayItems'
-import SearchFilter from '../components/resultspage/SearchFilter'
+import ItemsDisplay from '../itemsdisplay/ItemsDisplay'
+import SearchFilter from './SearchFilter'
 
 export default function App({isSignedIn}) {
   const [searchAPI, setSearchAPI] = useState()
@@ -17,7 +17,7 @@ export default function App({isSignedIn}) {
       <div className='flex-column align-center'>
         <div className='flex-row'>
           <SearchFilter searchAPI={searchAPI} setSearchAPI={setSearchAPI} searchParams={searchParams}/>
-          {searchAPI && <DisplayItems API={searchAPI} />}
+          {searchAPI && <ItemsDisplay API={searchAPI} />}
         </div>
       </div>
     </>

@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import './display-items.css'
+import './items-display.css'
 
-export default function DisplayItems({API}) {
+export default function ItemsDisplay({API}) {
   const [items, setItems] = useState()
 
   useEffect(() => {

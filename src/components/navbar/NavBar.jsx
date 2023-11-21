@@ -1,6 +1,6 @@
-import Session from './Session'
+import Session from '../global/Session'
 
-export default function Navigation() {
+export default function NavBar() {
   return (
     <nav className='navigation flex-row justify-around'>
       <h1>Seed Mart</h1>

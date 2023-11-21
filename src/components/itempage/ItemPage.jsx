@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import PreviewSlider from '../components/itempage/PreviewSlider'
-import ItemBanner from '../components/itempage/ItemBanner'
+import PreviewSlider from './PreviewSlider'
+import ItemBanner from './ItemBanner'
 
 export default function ItemPage() {
   const [item, setItem] = useState()

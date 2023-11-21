@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Navigation from './components/global/Navigation'
-import HomePage from './pages/HomePage'
-import ResultsPage from './pages/ResultsPage'
-import ItemPage from './pages/ItemPage'
+import NavBar from './components/navbar/NavBar'
+import HomePage from './components/homepage/HomePage'
+import ResultsPage from './components/resultspage/ResultsPage'
+import ItemPage from './components/itempage/ItemPage'
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Navigation />
+      <NavBar />
       <RouterProvider router={router} />
     </>
   )
