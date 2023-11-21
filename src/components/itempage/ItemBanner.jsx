@@ -1,10 +1,11 @@
 import React from 'react'
-import filterModule from '../global/filterModule'
+import useItemFilters from '../global/useItemFilters'
 
 export default function ItemBanner({ item }) {
+  const filters = JSON.parse(useItemFilters())
 
   function mapSpecs() {
-    return Object.keys(filterModule).map(specLabel =>
+    return Object.keys(filters).map(specLabel =>
       <div className='flex-row justify-between' key={specLabel}>
         <span>{mapSpecLabel(specLabel) + ': '}</span>
         <span>{item[specLabel]}</span>
