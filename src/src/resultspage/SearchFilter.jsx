@@ -1,4 +1,4 @@
-import useItemsProps from '../global/useItemsProps'
+import useItemsProps from '../hooks/useItemsProps'
 
 export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) {
   const properties = JSON.parse(useItemsProps())

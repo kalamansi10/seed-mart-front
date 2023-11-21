@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import NavBar from './components/navbar/NavBar'
-import HomePage from './components/homepage/HomePage'
-import ResultsPage from './components/resultspage/ResultsPage'
-import ItemPage from './components/itempage/ItemPage'
+import Navigation from './src/navbar/Navigation'
+import HomePage from './src/homepage/HomePage'
+import ResultsPage from './src/resultspage/ResultsPage'
+import ItemPage from './src/itempage/ItemPage'
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <Navigation />
       <RouterProvider router={router} />
     </>
   )

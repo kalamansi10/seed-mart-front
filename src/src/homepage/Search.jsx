@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import useInput from '../global/useInput'
+import useInput from '../hooks/useInput'
 
 export default function Search() {
   const [keyword, keywordInput] = useInput('text')

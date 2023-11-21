@@ -1,5 +1,5 @@
 import React from 'react'
-import useItemsProps from '../global/useItemsProps'
+import useItemsProps from '../hooks/useItemsProps'
 
 export default function ItemBanner({ item }) {
   const properties = JSON.parse(useItemsProps())
