@@ -8,7 +8,7 @@ function LogInDialog() {
   const [profileDialog, showDialog] = useDialog()
 
   function logIn() {
-    fetch('http://localhost:3000/users/sign_in', {
+    fetch('/users/sign_in', {
       method: 'post',
       'credentials': 'include',
       headers: {
