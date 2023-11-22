@@ -1,0 +1,7 @@
+
+
+.cart-item img{
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}

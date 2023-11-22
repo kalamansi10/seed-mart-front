@@ -4,6 +4,7 @@ import Navigation from './src/navbar/Navigation'
 import HomePage from './src/homepage/HomePage'
 import ResultsPage from './src/resultspage/ResultsPage'
 import ItemPage from './src/itempage/ItemPage'
+import CartPage from './src/cartpage/CartPage'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
@@ -19,11 +20,15 @@ function App() {
     {
       path: '/show/:id',
       element: <ItemPage />
+    },
+    {
+      path: '/cart',
+      element: <CartPage currentUser={currentUser} />
     }
   ])
 
   useEffect(() => {
-    fetch('http://localhost:3000/users/sign_in', {
+    fetch('/users/sign_in', {
       credentials: 'include',
     })
       .then(response => response.json())

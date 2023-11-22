@@ -1,7 +1,10 @@
 import React from 'react'
 import useItemsProps from '../hooks/useItemsProps'
+import useInput from '../hooks/useInput'
+import AddToCart from '../cartpage/AddToCart'
 
 export default function ItemBanner({ item }) {
+  const [amount, setAmount] = useInput('number')
   const properties = JSON.parse(useItemsProps())
 
   function mapSpecs() {
@@ -44,12 +47,12 @@ export default function ItemBanner({ item }) {
         <h3>Amount:</h3>
         <div className='flex-row'>
           <button>-</button>
-          <input type="number" />
+          {setAmount}
           <button>+</button>
         </div>
       </div>
       <div>
-        <button>Add to cart</button>
+        <AddToCart item={item} amount={amount}/>
         <button>Buy now</button>
       </div>
       <div className='specsContainer'>
