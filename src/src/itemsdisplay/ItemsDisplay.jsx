@@ -26,12 +26,6 @@ export default function ItemsDisplay({API}) {
             <hr />
             <div className="flex-row align-center item-padding">
               <h4>PHP {item.price}</h4>
-              <div>
-                <button>Buy now</button>
-              </div>
-              <div>
-                <button>Add to cart</button>
-              </div>
             </div>
           </div>
         </div>
