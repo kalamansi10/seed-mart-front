@@ -3,6 +3,12 @@
   height: 340px;
 }
 
+.item-card h3{
+  white-space: nowrap; 
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
 .item-padding {
   padding-left: 10px;
   padding-right: 10px;
@@ -10,7 +16,7 @@
 
 .item-card img {
   width: 200px;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
 }
 
