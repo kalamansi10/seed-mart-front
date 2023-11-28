@@ -5,6 +5,7 @@ import HomePage from './src/homepage/HomePage'
 import ResultsPage from './src/resultspage/ResultsPage'
 import ItemPage from './src/itempage/ItemPage'
 import CartPage from './src/cartpage/CartPage'
+import CheckOutPage from './src/checkoutpage/CheckOutPage'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
@@ -26,6 +27,7 @@ function App() {
           < Route path='/results?' element={<ResultsPage />} />
           < Route path='/show/:id' element={<ItemPage />} />
           < Route path='/cart' element={<CartPage />} currentUser={currentUser}/>
+          < Route path='/checkout' element={<CartPage />} currentUser={currentUser}/>
         </Routes>
       </BrowserRouter>
     </>

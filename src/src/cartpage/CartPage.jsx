@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './cart-page.css'
 
 export default function CartPage({ currentUser }) {
@@ -53,6 +54,7 @@ export default function CartPage({ currentUser }) {
     return cartItems.map(cartItem => {
       return (
         <div className='cart-item flex-row justify-around align-center' id={cartItem.id} key={cartItem.id}>
+          <input type="checkbox" />
           <img src={cartItem.seed.image_links[0]} alt="" />
           <p>{cartItem.seed.name}</p>
           <p>{'PHP ' + cartItem.seed.price}</p>
@@ -73,6 +75,9 @@ export default function CartPage({ currentUser }) {
 
 
   return (
-    <div>{cart}</div>
+    <>
+      <div>{cart}</div>
+      <Link to='/checkout'>Check out</Link>
+    </>
   )
 }
