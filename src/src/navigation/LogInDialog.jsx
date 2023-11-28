@@ -18,7 +18,8 @@ function LogInDialog() {
       body: JSON.stringify({
         "user": {
           "email": email,
-          "password": password
+          "password": password,
+          "remember_me": document.getElementById('remember-me').checked == true ? '1' : '0'
         }
       })
     })
@@ -41,7 +42,7 @@ function LogInDialog() {
           </div>
           <div className="remember-forgot flex-row justify-between">
             <div>
-              <input type="checkbox" />
+              <input type="checkbox" id="remember-me"/>
               <label>Remember me</label>
             </div>
             <a href="#">Forgot password?</a>
