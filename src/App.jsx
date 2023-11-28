@@ -9,6 +9,14 @@ import CartPage from './src/cartpage/CartPage'
 function App() {
   const [currentUser, setCurrentUser] = useState()
 
+  useEffect(() => {
+    fetch('/users/sign_in', {
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => setCurrentUser(data))
+  }, [])
+
   return (
     <>
       <BrowserRouter>
