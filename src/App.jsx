@@ -26,8 +26,8 @@ function App() {
           < Route path='/' element={<HomePage />} />
           < Route path='/results?' element={<ResultsPage />} />
           < Route path='/show/:id' element={<ItemPage />} />
-          < Route path='/cart' element={<CartPage />} currentUser={currentUser}/>
-          < Route path='/checkout' element={<CartPage />} currentUser={currentUser}/>
+          < Route path='/cart' element={<CartPage currentUser={currentUser} />} />
+          < Route path='/checkout' element={<CheckOutPage currentUser={currentUser}/>} />
         </Routes>
       </BrowserRouter>
     </>
