@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import './promo-banner.css'
 
 export default function PromoBanners() {
@@ -9,13 +9,16 @@ export default function PromoBanners() {
   let pages
 
   useEffect(() => {
-    let pageSlider = setInterval(() => move(1), 5000)
     fetch("/api/v1/active-banners")
       .then(response => response.json())
       .then(activeBanners => mapActiveBanners(activeBanners))
       .then(mappedBanners => setBanners(mappedBanners))
-    return () => clearInterval(pageSlider)
   }, [])
+
+  useEffect(() => {
+    let pageSlider = setInterval(() => move(1), 5000)
+    return () => clearInterval(pageSlider)
+  })
 
   if (banners) {
     bannerCount = banners.length
@@ -70,12 +73,16 @@ export default function PromoBanners() {
         <div className="active-banners flex-row">
           {banners}
         </div>
+        <img className="banner-btns prev"
+          src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-left-round-filled-icon.png'
+          onClick={() => move(-1)}
+        />
+        <img className="banner-btns next"
+          src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-right-round-filled-icon.png'
+          onClick={() => move(1)}
+        />
+        <div className="pages flex-row justify-center">{pages}</div>
       </div>
-      <div className="banner-btns flex-row justify-between">
-        <img src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-left-round-filled-icon.png' className="prev" onClick={() => move(-1)} />
-        <img src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-right-round-filled-icon.png' className="next" onClick={() => move(1)} />
-      </div>
-      <div className="pages flex-row justify-center">{pages}</div>
     </>
   )
 
