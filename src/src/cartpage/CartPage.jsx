@@ -27,6 +27,17 @@ export default function CartPage({ currentUser }) {
     document.getElementById(`total-${carted_id}`).textContent = 'PHP ' + e.target.value * price
   }
 
+  function updateCheckOut(e, carted_id) {
+    let API = '/api/v1/update-cart?' + 'carted_id=' + carted_id + '&checkout=' + e.target.checked
+    fetch(API, {
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        'X-CSRF-Token': document.cookie.split('=')[1]
+      }
+    })
+  }
+
   function updateAmount(e, carted_id) {
     if (e.target.value < 1) return
     let API = '/api/v1/update-cart?' + 'carted_id=' + carted_id + '&amount=' + e.target.value
@@ -49,12 +60,11 @@ export default function CartPage({ currentUser }) {
     })
   }
 
-
   function mapCart(cartItems) {
     return cartItems.map(cartItem => {
       return (
         <div className='cart-item flex-row justify-around align-center' id={cartItem.id} key={cartItem.id}>
-          <input type="checkbox" />
+          <input type="checkbox" onClick={(e) => updateCheckOut(e, cartItem.id)} defaultChecked={cartItem.checkout}/>
           <img src={cartItem.seed.image_links[0]} alt="" />
           <p>{cartItem.seed.name}</p>
           <p>{'PHP ' + cartItem.seed.price}</p>
