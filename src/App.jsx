@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Navigation from './src/navigation/Navigation'
 import HomePage from './src/homepage/HomePage'
 import ResultsPage from './src/resultspage/ResultsPage'
 import ItemPage from './src/itempage/ItemPage'
 import CartPage from './src/cartpage/CartPage'
 import CheckOutPage from './src/checkoutpage/CheckOutPage'
+import ProfilePage from './src/profilepage/ProfilePage'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
@@ -23,11 +24,20 @@ function App() {
       <BrowserRouter>
         <Navigation currentUser={currentUser} />
         <Routes>
-          < Route path='/' element={<HomePage />} />
-          < Route path='/results?' element={<ResultsPage />} />
-          < Route path='/show/:id' element={<ItemPage />} />
-          < Route path='/cart' element={<CartPage currentUser={currentUser} />} />
-          < Route path='/checkout' element={<CheckOutPage currentUser={currentUser}/>} />
+          <Route index element={<HomePage />} />
+          <Route path='/results?' element={<ResultsPage />} />
+          <Route path='/show/:id' element={<ItemPage />} />
+          <Route path='/cart' element={<CartPage currentUser={currentUser} />} />
+          <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} />} />
+          <Route path='/user' element={<ProfilePage currentUser={currentUser} />}>
+            <Route path='/user/profile' element={<div>1</div>} />
+            <Route path='/user/addresses' element={<div>2</div>} />
+            <Route path='/user/payment-methods' element={<div>3</div>} />
+            <Route path='/user/orders' element={<div>4</div>} />
+            <Route path='/user/reviews' element={<div>5</div>} />
+            <Route path='/user' element={<Navigate to='/user/profile' replace />} />
+          </Route>
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
       </BrowserRouter>
     </>
