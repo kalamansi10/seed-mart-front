@@ -1,4 +1,4 @@
-##### I'm currently developing an e-commerce React web app using Vite that connects to a Rails backend. It's a work in progress, and I wanted to share the current status of features:
+##### I'm currently developing an e-commerce React web app using Vite that connects to a Rails API backend. It's a work in progress, and I wanted to share the current status of features:
 
 ##### Implemented Features:
     - Modal log in w/ rememberable session + CSRF authentication
@@ -16,3 +16,7 @@
     - Payment API integration
     - Buyer review
     - Footer
+
+##### After cloning the repository, to run the app make sure that the Rails API backend is already running. Then run the following command:
+    npm install
+    npm run dev
