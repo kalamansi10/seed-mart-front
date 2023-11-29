@@ -1,8 +1,18 @@
-# React + Vite
+###### I'm currently developing an e-commerce React web app using Vite that connects to a Rails backend. It's a work in progress, and I wanted to share the current status of features:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Implemented Features:
+    - Modal log in w/ rememberable session + CSRF authentication
+    - Promo banner slider
+    - Items list fetcher and mapper
+    - Item search + category filter
+    - Items cartpage
+    - Item page
+Features Currently Being Implemented:
+    - Checkout page
+    - Profile and profile settings page
+    - Interactive Nav bar(Profile and cart dropdown)
+Planned Features:
+    - Far better CSS
+    - Payment API integration
+    - Buyer review
+    - Footer
