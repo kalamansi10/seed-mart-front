@@ -1,7 +1,7 @@
 import React from 'react'
 import useItemsProps from '../hooks/useItemsProps'
 import useInput from '../hooks/useInput'
-import AddToCart from '../cartpage/AddToCart'
+import AddToCart from './AddToCart'
 
 export default function ItemBanner({ item }) {
   const [amount, setAmount] = useInput('number')
