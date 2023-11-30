@@ -2,6 +2,7 @@ import { useRef } from 'react'
 
 export default function useDialog() {
   const domNode = useRef()
+  const quickClose = () => domNode.current.close()
 
   const showDialog = () => {
     domNode.current.showModal()
@@ -21,5 +22,5 @@ export default function useDialog() {
     }
   }
 
-  return [domNode, showDialog, closeDialog]
+  return [domNode, showDialog, quickClose]
 }
