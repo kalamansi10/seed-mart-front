@@ -10,6 +10,7 @@ export default function UserOptions() {
         'X-CSRF-Token': document.cookie.split('=')[1]
       }
     })
+    .then(() => window.location.reload())
   }
   return (
     <button onClick={logOut}>Logout</button>
