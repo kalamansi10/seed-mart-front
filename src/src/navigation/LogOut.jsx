@@ -7,4 +7,5 @@ function logOut() {
       'X-CSRF-Token': document.cookie.split('=')[1]
     }
   })
+    .then(() => window.location.reload())
 }

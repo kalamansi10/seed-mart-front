@@ -1,83 +1,139 @@
 import React, { useEffect, useState } from 'react'
 import useInput from '../hooks/useInput'
 import useDialog from '../hooks/useDialog'
-import SignUpDialog from './SignUpDialog'
+import useLogIn from '../hooks/useLogIn'
+import useSignUp from '../hooks/useSignUp'
 import './log-in-dialog.css'
 
 function LogInDialog() {
   const [email, inputEmail] = useInput('email', 'email')
   const [password, inputPassword] = useInput('password', 'password')
+  const [confirmPass, inputConfirmPass] = useInput('password', 'confirm password')
+  const [fname, inputFname] = useInput('text', 'first name')
+  const [lname, inputLname] = useInput('text', 'last name')
+
   const [logInDialog, showLogIn, closeLogIn] = useDialog()
+  const [passwordSetUpDialog, showPasswordSetUp, closePasswordSetUp] = useDialog()
+  const [nameSetUpDialog, showNameSetUp, closeNameSetUp] = useDialog()
+
   const [error, setError] = useState(null)
 
-  function logIn() {
-    fetch('/users/sign_in', {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      },
-      body: JSON.stringify({
-        user: {
-          email: email,
-          password: password,
-          remember_me: document.getElementById('remember-me').checked === true ? '1' : '0'
-        }
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return response.json()
-      })
-      .then(() => {
-        setError(null)
-        window.location.reload()
-      })
-      .catch(error => {
-        console.error('Error during login:', error)
-        setError('Login failed. Please check your credentials and try again.')
-      })
-  }
-
   function renderErrorMessage() {
-    return error && <div className="error-message">{error}</div>;
+    return error && <div className="error-message">{error}</div>
   }
 
-  function renderInputBox(inputElement, iconSrc) {
+  function validateLogIn() {
+    if (!email) {
+      setError("Email can't be blank.")
+    } else if (!password) {
+      setError("Password can't be blank.")
+    } else {
+      setError(null)
+      useLogIn(email, password, setError)
+    }
+  }
+
+  function validatePassword() {
+    if (password != confirmPass) {
+      setError("Password inputs don't match.")
+    } else {
+      setError(null)
+      closePasswordSetUp()
+      showNameSetUp()
+    }
+  }
+
+  function validateSignUp() {
+    if (!fname || !lname) {
+      setError("First name and last name can't be blank.")
+    } else {
+      setError(null)
+      useSignUp(email, password, fname, lname, setError)
+      if (!error) {
+        closeNameSetUp()
+        showLogIn()
+        setError("Sign up successful")
+      }
+    }
+  }
+
+  function renderInput(input) {
     return (
-      <div className='input-box'>
-        {inputElement}
-        <img src={iconSrc} alt="icon" />
+      <div className='input-container'>
+        {input}
       </div>
     )
   }
 
+  function logIn() {
+    setError(null)       
+    showLogIn()
+  }
+
+  function signUp() {
+    setError(null)
+    closeLogIn()
+    showPasswordSetUp()
+  }
+
+  function backToLogIn() {
+    setError(null)
+    closePasswordSetUp()
+    showLogIn()
+  }
+
   return (
     <li>
-      <span onClick={showLogIn}>Sign In</span>
+      <a onClick={logIn}>Sign In</a>
       <dialog className='' ref={logInDialog}>
         <div className='login-dialog flex-column align-center box-shadow'>
           <h1>Seedmart Login</h1>
           {renderErrorMessage()}
-          {renderInputBox(inputEmail, "https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/envelope-line-icon.png")}
-          {renderInputBox(inputPassword, "https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/lock-line-icon.png")}
+          {renderInput(inputEmail)}
+          {renderInput(inputPassword)}
           <div className="remember-forgot flex-row justify-between">
             <div>
               <input type="checkbox" id="remember-me" />
-              <label>Remember me</label>
+              <label> Remember me</label>
             </div>
-            <a href="#">Forgot password?</a>
+            <a>Forgot password?</a>
           </div>
-          <button onClick={logIn}>Log in</button>
+          <button onClick={validateLogIn}>Log in</button>
           <div className="register-link flex-row justify-center">
-            <div>
-              Don't have an account?
-              <SignUpDialog closeLogIn={closeLogIn} />
-            </div>
+            <p>
+              {"Don't have an account? "}
+              <a onClick={signUp}>Register</a>
+            </p>
           </div>
+        </div>
+      </dialog>
+      <dialog className='' ref={passwordSetUpDialog}>
+        <div className='login-dialog flex-column align-center box-shadow'>
+          <h1>Seedmart Sign Up</h1>
+          {renderErrorMessage()}
+          {renderInput(inputEmail)}
+          {renderInput(inputPassword)}
+          {renderInput(inputConfirmPass)}
+          <button onClick={validatePassword}>Next</button>
+          <div className="register-link flex-row justify-center">
+            <p>
+              <a onClick={backToLogIn}>Go back to login</a>
+            </p>
+          </div>
+        </div>
+      </dialog>
+      <dialog className='' ref={nameSetUpDialog}>
+        <div className='login-dialog flex-column align-center box-shadow'>
+          <h1>Seedmart Sign Up</h1>
+          {renderErrorMessage()}
+          {renderInput(inputFname)}
+          {renderInput(inputLname)}          
+          <div className="remember-forgot flex-row justify-center">
+          <p>
+            By signing up, you agree with Seedmart's <a>Terms of Services</a> and <a>Privacy Policy</a>.
+          </p>
+          </div>
+          <button onClick={validateSignUp}>Sign up</button>
         </div>
       </dialog>
     </li>
