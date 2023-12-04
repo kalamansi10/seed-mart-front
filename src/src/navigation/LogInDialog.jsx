@@ -83,8 +83,9 @@ function LogInDialog() {
   }
 
   return (
-    <li>
-      <a onClick={logIn}>Sign In</a>
+    <div>
+      <a onClick={logIn}>Sign In</a>|
+      <a onClick={signUp}>Sign Up</a>
       <dialog className='' ref={logInDialog}>
         <div className='login-dialog flex-column align-center box-shadow'>
           <h1>Seedmart Login</h1>
@@ -136,7 +137,7 @@ function LogInDialog() {
           <button onClick={validateSignUp}>Sign up</button>
         </div>
       </dialog>
-    </li>
+    </div>
   )
 }
 
