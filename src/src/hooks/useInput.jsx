@@ -8,7 +8,7 @@ function useInput(type, placeholder = '') {
                   value={value}
                   placeholder={placeholder}
                 />
-  return [value, input]
+  return [value, input, setValue]
 }
 
 export default useInput
