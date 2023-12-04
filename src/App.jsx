@@ -6,10 +6,12 @@ import ResultsPage from './src/resultspage/ResultsPage'
 import ItemPage from './src/itempage/ItemPage'
 import CartPage from './src/cartpage/CartPage'
 import CheckOutPage from './src/checkoutpage/CheckOutPage'
-import ProfilePage from './src/profilepage/ProfilePage'
+import UserPage from './src/userpage/UserPage'
+import Profile from './src/userpage/Profile'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
+  console.log(currentUser)
 
   useEffect(() => {
     fetch('/users/sign_in', {
@@ -29,8 +31,8 @@ function App() {
           <Route path='/show/:id' element={<ItemPage />} />
           <Route path='/cart' element={<CartPage currentUser={currentUser} />} />
           <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} />} />
-          <Route path='/user' element={<ProfilePage currentUser={currentUser} />}>
-            <Route path='/user/profile' element={<div>1</div>} />
+          <Route path='/user' element={<UserPage currentUser={currentUser} />}>
+            <Route path='/user/profile' element={<Profile currentUser={currentUser}/>} />
             <Route path='/user/addresses' element={<div>2</div>} />
             <Route path='/user/payment-methods' element={<div>3</div>} />
             <Route path='/user/orders' element={<div>4</div>} />
