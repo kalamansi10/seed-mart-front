@@ -1,4 +1,4 @@
-export default function useSignUp(email, password, fname, lname, setError) {
+export default function useSignUp(email, password, name, birthday, gender, setError) {
   fetch('/users', {
     method: 'post',
     'credentials': 'include',
@@ -10,8 +10,7 @@ export default function useSignUp(email, password, fname, lname, setError) {
       "user": {
         "email": email,
         "password": password,
-        "fname": fname,
-        "lname": lname
+        "name": name,
       }
     })
   })
