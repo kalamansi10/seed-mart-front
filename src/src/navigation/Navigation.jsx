@@ -1,53 +1,66 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import useDialog from '../hooks/useDialog'
+import useLogOut from '../hooks/useLogOut'
 import LogInDialog from './LogInDialog'
+import SignUpDialog from './SignUpDialog'
 import './navigation.css'
 
 export default function Navigation({ currentUser }) {
+  const [logInRef, showLogIn, closeLogIn] = useDialog()
+  const [signUpRef, showSignUp, closeSignUp] = useDialog()
   const optionsWrapper = useRef()
 
   function showOptions() {
     optionsWrapper.current.classList.toggle('hidden')
   }
 
-  function logOut() {
-    fetch('/users/sign_out', {
-      method: 'delete',
-      'credentials': 'include',
-      headers: {
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      }
-    })
-      .then(() => window.location.reload())
+  function renderAccountOptions() {
+    if (currentUser) {
+      return (
+        <>
+          <div className='nav-item' onClick={showOptions}>
+            <a>{currentUser.name}</a>
+            <section className='options-wrapper hidden' ref={optionsWrapper} onMouseLeave={showOptions}>
+              <li><Link to='/user/profile'>My Account</Link></li>
+              <li><a>My purchases</a></li>
+              <li><a onClick={useLogOut}>Logout</a></li>
+            </section>
+          </div>
+          <div className='nav-item'>
+            <a>Notifications</a>
+          </div>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <div className='nav-item'>
+            <a onClick={showLogIn}>Log in</a>
+            <dialog className='session-dialog' ref={logInRef}>
+              <LogInDialog closeLogIn={closeLogIn} showSignUp={showSignUp} />
+            </dialog>
+          </div>
+          <div className='nav-item'>
+            <a onClick={showSignUp}>Sign up</a>
+            <dialog className='session-dialog' ref={signUpRef}>
+              <SignUpDialog closeSignUp={closeSignUp} showLogIn={showLogIn} />
+            </dialog>
+          </div>
+        </>
+      )
+    }
   }
 
-  function renderUserOptions() {
-    return (
-      <>
-        <div>
-          <a>Notifications</a>
-        </div>
-        <div className='nav' onClick={showOptions}>
-          <a>{currentUser.fname + ' ' + currentUser.lname}</a>
-          <section className='options-wrapper hidden' ref={optionsWrapper} onMouseLeave={showOptions}>
-            <li><Link to='/user/profile'>My Account</Link></li>
-            <li><a>My purchases</a></li>
-            <li><a onClick={logOut}>Logout</a></li>
-          </section>
-        </div>
-      </>
-    )
-  }
 
   return (
     <nav className='navigation flex-row justify-around align-center'>
       <h1><Link to='/'>Seed Mart</Link></h1>
       <div className="nav-options flex-row">
-        <div>
+        {renderAccountOptions()}
+        <div className='nav-item'>
           <Link to='/cart'>Cart</Link>
         </div>
-        {!currentUser && <LogInDialog />}
-        {currentUser && renderUserOptions()}
       </div>
     </nav>
   )

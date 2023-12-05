@@ -1,3 +1,111 @@
 .options-wrapper {
     position: absolute;
 }
+
+.login-dialog, .signup-dialog {
+    height: auto;
+    background-color: #ffffff;
+    padding: 50px;
+  }
+  
+  .session-dialog input:not(input[type=checkbox]) {
+    width: 100%;
+    height: 5px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 40px;
+    padding: 20px 0px;
+    text-indent: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  }
+  
+  .session-dialog input:focus:not(input[type=checkbox]) {
+    outline: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  
+  .session-dialog input::placeholder {
+    color: #979797;
+  }
+  
+  .session-dialog a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .session-dialog a:hover {
+    text-decoration: underline;
+  }
+  
+  .session-dialog button {
+    width: 100%;
+    height: 45px;
+    border-radius: 40px;
+    outline: none;
+    background: #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    transition: 400ms ease-in-out;
+  }
+  
+  .session-dialog button:hover {
+    color: #000000;
+    background: #ffffff;
+    border: 2px solid rgb(0, 0, 0);
+  }
+  
+  .error-message {
+    grid-column: span 2;
+    margin: 0;
+    font-weight: bold;
+    color: rgba(255, 0, 25, 0.608);
+  }
+  
+  .signup-dialog {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    max-width: 600px;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 20px;
+  }
+  
+  .signup-dialog h1 {
+    grid-column: span 2;
+    margin: 0;
+    margin-bottom: 15px;
+  }
+  
+  .captcha {
+    grid-column: 2 / 3;
+    grid-row: 3 / 5;
+  }
+  
+  .signup-dialog p {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+    font-size: small;
+    margin: 0;
+    margin-top: 15px;
+  }
+  
+  .signup-dialog button {
+    grid-column: 2 / 3;
+    grid-row: 6 / 7;
+  }
+  
+  .login-link {
+    grid-column: 2 / 3;
+  }
+  
+  .login-dialog {
+    row-gap: 20px;
+  }
+  
+  .rememberable {
+    width: 100%;
+    column-gap: 40px;
+  }
