@@ -19,8 +19,6 @@ function App() {
   const logInDialog = useDialog()
   const signUpDialog = useDialog()
 
-  console.log(currentUser)
-
   useEffect(() => {
     fetch('/users/sign_in', {
       credentials: 'include',
@@ -38,7 +36,7 @@ function App() {
           <Route path='/results?' element={<ResultsPage />} />
           <Route path='/show/:id' element={<ItemPage />} />
           <Route path='/cart' element={<CartPage currentUser={currentUser} />} />
-          <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} logInDialog={logInDialog}/>} />
+          <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} />} />
           <Route path='/user' element={<UserPage currentUser={currentUser} />}>
             <Route path='/user/profile' element={<Profile currentUser={currentUser}/>} />
             <Route path='/user/addresses' element={<Addresses currentUser={currentUser}/>} />
