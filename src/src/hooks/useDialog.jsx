@@ -1,26 +1,26 @@
 import { useRef } from 'react'
 
 export default function useDialog() {
-  const domNode = useRef()
-  const quickClose = () => domNode.current.close()
+  const dialogRef = useRef()
+  const closeDialog = () => dialogRef.current.close()
 
   const showDialog = () => {
-    domNode.current.showModal()
-    domNode.current.addEventListener('click', closeDialog)
+    dialogRef.current.showModal()
+    dialogRef.current.addEventListener('click', handleOutsideClick)
   }
 
-  const closeDialog = e => {
-    const dialogDimensions = domNode.current.getBoundingClientRect()
+  const handleOutsideClick = e => {
+    const dialogDimensions = dialogRef.current.getBoundingClientRect()
     if (
       e.clientX < dialogDimensions.left ||
       e.clientX > dialogDimensions.right ||
       e.clientY < dialogDimensions.top ||
       e.clientY > dialogDimensions.bottom
     ) {
-      domNode.current.close()
-      domNode.current.removeEventListener('click', closeDialog)
+      closeDialog()
+      dialogRef.current.removeEventListener('click', closeDialog)
     }
   }
 
-  return [domNode, showDialog, quickClose]
+  return {dialogRef, showDialog, closeDialog}
 }
