@@ -1,14 +1,11 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import useDialog from '../hooks/useDialog'
 import useLogOut from '../hooks/useLogOut'
 import LogInDialog from './LogInDialog'
 import SignUpDialog from './SignUpDialog'
 import './navigation.css'
 
-export default function Navigation({ currentUser }) {
-  const [logInRef, showLogIn, closeLogIn] = useDialog()
-  const [signUpRef, showSignUp, closeSignUp] = useDialog()
+export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
   const optionsWrapper = useRef()
 
   function showOptions() {
@@ -36,16 +33,10 @@ export default function Navigation({ currentUser }) {
       return (
         <>
           <div className='nav-item'>
-            <a onClick={showLogIn}>Log in</a>
-            <dialog className='session-dialog' ref={logInRef}>
-              <LogInDialog closeLogIn={closeLogIn} showSignUp={showSignUp} />
-            </dialog>
+            <LogInDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
           <div className='nav-item'>
-            <a onClick={showSignUp}>Sign up</a>
-            <dialog className='session-dialog' ref={signUpRef}>
-              <SignUpDialog closeSignUp={closeSignUp} showLogIn={showLogIn} />
-            </dialog>
+            <SignUpDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
         </>
       )
