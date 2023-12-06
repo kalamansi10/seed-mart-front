@@ -2,20 +2,43 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './cart-page.css'
 
-export default function CartPage({ currentUser }) {
-  const [cart, setCart] = useState()
+export default function CartPage({ currentUser, checkOutList }) {
+  const [cartRender, setCartRender] = useState()
+  const headers = { 'X-CSRF-Token': document.cookie.split('=')[1] }
 
   useEffect(() => {
-    getCart()
-  }, [])
-
-  function getCart() {
     fetch('api/v1/get-cart', {
       credentials: 'include',
     })
       .then(response => response.json())
-      .then(cartItems => mapCart(cartItems))
-      .then(mappedCart => setCart(mappedCart))
+      .then(cartedItems => mapCart(cartedItems))
+      .then(mappedCart => setCartRender(mappedCart))
+  }, [])
+
+
+  function updateForCheckOut(e, carted_id) {
+    fetch('/api/v1/update-cart?carted_id=' + carted_id + '&is_for_checkout=' + e.target.checked, {
+      method: 'post',
+      credentials: 'include',
+      headers: headers
+    })
+  }
+
+  function updateAmount(e, carted_id) {
+    if (e.target.value < 1) return
+    fetch('/api/v1/update-cart?carted_id=' + carted_id + '&amount=' + e.target.value, {
+      method: 'post',
+      credentials: 'include',
+      headers: headers
+    })
+  }
+
+  function removeItem(carted_id) {
+    fetch('/api/v1/remove-from-cart/' + carted_id, {
+      method: 'delete',
+      credentials: 'include',
+      headers: headers
+    })
   }
 
   function updateTotal(e, carted_id, price) {
@@ -27,56 +50,23 @@ export default function CartPage({ currentUser }) {
     document.getElementById(`total-${carted_id}`).textContent = 'PHP ' + e.target.value * price
   }
 
-  function updateCheckOut(e, carted_id) {
-    let API = '/api/v1/update-cart?' + 'carted_id=' + carted_id + '&checkout=' + e.target.checked
-    fetch(API, {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      }
-    })
-  }
-
-  function updateAmount(e, carted_id) {
-    if (e.target.value < 1) return
-    let API = '/api/v1/update-cart?' + 'carted_id=' + carted_id + '&amount=' + e.target.value
-    fetch(API, {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      }
-    })
-  }
-
-  function removeItem(carted_id) {
-    fetch('/api/v1/remove-from-cart/' + carted_id, {
-      method: 'delete',
-      credentials: 'include',
-      headers: {
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      }
-    })
-  }
-
-  function mapCart(cartItems) {
-    return cartItems.map(cartItem => {
+  function mapCart(cartedItems) {
+    return cartedItems.map(carted => {
       return (
-        <div className='cart-item flex-row justify-around align-center' id={cartItem.id} key={cartItem.id}>
-          <input type="checkbox" onClick={(e) => updateCheckOut(e, cartItem.id)} defaultChecked={cartItem.checkout}/>
-          <img src={cartItem.seed.image_links[0]} alt="" />
-          <p>{cartItem.seed.name}</p>
-          <p>{'PHP ' + cartItem.seed.price}</p>
-          <input 
-            type="number" 
-            min='0' 
+        <div className='cart-item flex-row justify-around align-center' id={carted.id} key={carted.id}>
+          <input type="checkbox" onClick={(e) => updateForCheckOut(e, carted.id)} defaultChecked={carted.is_for_checkout} />
+          <img src={carted.item.image_links[0]} alt="" />
+          <p>{carted.item.name}</p>
+          <p>{'PHP ' + carted.item.price}</p>
+          <input
+            type="number"
+            min='0'
             max='9999'
-            onChange={e => updateTotal(e, cartItem.id, cartItem.seed.price)} 
-            onBlur={e => updateAmount(e, cartItem.id)}
-            defaultValue={cartItem.amount}
+            onChange={e => updateTotal(e, carted.id, carted.item.price)}
+            onBlur={e => updateAmount(e, carted.id)}
+            defaultValue={carted.amount}
           />
-          <p id={'total-' + cartItem.id}>{'PHP ' + cartItem.amount * cartItem.seed.price}</p>
+          <p id={'total-' + carted.id}>{'PHP ' + carted.amount * carted.item.price}</p>
           <button>Delete</button>
         </div>
       )
@@ -86,7 +76,7 @@ export default function CartPage({ currentUser }) {
 
   return (
     <>
-      <div>{cart}</div>
+      <div>{cartRender}</div>
       <Link to='/checkout'>Check out</Link>
     </>
   )
