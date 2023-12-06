@@ -8,9 +8,17 @@ import CartPage from './src/cartpage/CartPage'
 import CheckOutPage from './src/checkoutpage/CheckOutPage'
 import UserPage from './src/userpage/UserPage'
 import Profile from './src/userpage/Profile'
+import Addresses from './src/userpage/Addresses'
+import PaymentMethods from './src/userpage/PaymentMethods'
+import Orders from './src/userpage/Orders'
+import Reviews from './src/userpage/Reviews'
+import useDialog from './src/hooks/useDialog'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
+  const logInDialog = useDialog()
+  const signUpDialog = useDialog()
+
   console.log(currentUser)
 
   useEffect(() => {
@@ -24,19 +32,19 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navigation currentUser={currentUser} />
-        <Routes>
+        <Navigation currentUser={currentUser} logInDialog={logInDialog} signUpDialog={signUpDialog}/>
+        <Routes>closeSignUp
           <Route index element={<HomePage />} />
           <Route path='/results?' element={<ResultsPage />} />
           <Route path='/show/:id' element={<ItemPage />} />
           <Route path='/cart' element={<CartPage currentUser={currentUser} />} />
-          <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} />} />
+          <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} logInDialog={logInDialog}/>} />
           <Route path='/user' element={<UserPage currentUser={currentUser} />}>
             <Route path='/user/profile' element={<Profile currentUser={currentUser}/>} />
-            <Route path='/user/addresses' element={<div>2</div>} />
-            <Route path='/user/payment-methods' element={<div>3</div>} />
-            <Route path='/user/orders' element={<div>4</div>} />
-            <Route path='/user/reviews' element={<div>5</div>} />
+            <Route path='/user/addresses' element={<Addresses currentUser={currentUser}/>} />
+            <Route path='/user/payment-methods' element={<PaymentMethods currentUser={currentUser}/>} />
+            <Route path='/user/orders' element={<Orders currentUser={currentUser}/>} />
+            <Route path='/user/reviews' element={<Reviews currentUser={currentUser}/>} />
             <Route path='/user' element={<Navigate to='/user/profile' replace />} />
           </Route>
           <Route path='*' element={<Navigate to='/' replace />} />

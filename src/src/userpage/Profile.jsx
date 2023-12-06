@@ -6,7 +6,7 @@ if (currentUser) {
   return (
     <div>
       <div>
-        Name: {currentUser.fname} {currentUser.lname}
+        Name: {currentUser.name}
       </div>
       <div>
         Email: {currentUser.email}
