@@ -10,10 +10,8 @@
   
   .session-dialog input:not(input[type=checkbox]) {
     width: 100%;
-    height: 5px;
+    height: 45px;
     border: 2px solid rgb(0, 0, 0);
-    border-radius: 40px;
-    padding: 20px 0px;
     text-indent: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
   }
@@ -39,21 +37,18 @@
   .session-dialog button {
     width: 100%;
     height: 45px;
-    border-radius: 40px;
-    outline: none;
+    border: 2px solid rgb(0, 0, 0);
     background: #000000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
     cursor: pointer;
-    font-size: 16px;
     color: #ffffff;
-    font-weight: 600;
+    font-weight: bold;
     transition: 400ms ease-in-out;
   }
   
   .session-dialog button:hover {
     color: #000000;
     background: #ffffff;
-    border: 2px solid rgb(0, 0, 0);
   }
   
   .error-message {
