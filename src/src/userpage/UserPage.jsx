@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import './user-page.css'
 
 export default function UserPage({ currentUser }) {
 
