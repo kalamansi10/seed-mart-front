@@ -33,9 +33,11 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
       return (
         <>
           <div className='nav-item'>
+            <a onClick={logInDialog.showDialog}>Log in</a>
             <LogInDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
           <div className='nav-item'>
+            <a onClick={signUpDialog.showDialog}>Sign up</a>
             <SignUpDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
         </>

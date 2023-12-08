@@ -32,7 +32,6 @@ export default function SignUpDialog({ currentUser, logInDialog, signUpDialog })
 
   return (
     <>
-      <a onClick={signUpDialog.showDialog}>Sign up</a>
       <dialog className='session-dialog' ref={signUpDialog.dialogRef}>
         <div className='signup-dialog box-shadow'>
           <h1>Seedmart Sign Up</h1>

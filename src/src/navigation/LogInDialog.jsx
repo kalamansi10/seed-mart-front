@@ -24,7 +24,6 @@ function LogInDialog({ currentUser, logInDialog, signUpDialog }) {
   }
   return (
     <>
-      <a onClick={logInDialog.showDialog}>Log in</a>
       <dialog className='session-dialog' ref={logInDialog.dialogRef}>
         <div className='login-dialog flex-column justify-center align-center box-shadow'>
           <h1>Seedmart Login</h1>
