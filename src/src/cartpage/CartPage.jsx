@@ -57,16 +57,14 @@ export default function CartPage({ currentUser, checkOutList }) {
           <input type="checkbox" onClick={(e) => updateForCheckOut(e, carted.id)} defaultChecked={carted.is_for_checkout} />
           <img src={carted.item.image_links[0]} alt="" />
           <p>{carted.item.name}</p>
-          <p>{'PHP ' + carted.item.price}</p>
+          <p>{carted.item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</p>
           <input
             type="number"
-            min='0'
-            max='9999'
             onChange={e => updateTotal(e, carted.id, carted.item.price)}
             onBlur={e => updateAmount(e, carted.id)}
             defaultValue={carted.amount}
           />
-          <p id={'total-' + carted.id}>{'PHP ' + carted.amount * carted.item.price}</p>
+          <p id={'total-' + carted.id}>{(carted.amount * carted.item.price).toLocaleString("en-US", { style: "currency", currency: "PHP" })}</p>
           <button>Delete</button>
         </div>
       )
@@ -77,7 +75,7 @@ export default function CartPage({ currentUser, checkOutList }) {
   return (
     <>
       <div>{cartRender}</div>
-      <Link to='/checkout'>Check out</Link>
+      <Link to='/checkout' state={{ from: 'cartpage' }}><button>Checkout</button></Link>
     </>
   )
 }
