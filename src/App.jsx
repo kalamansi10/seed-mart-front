@@ -16,6 +16,7 @@ import useDialog from './src/hooks/useDialog'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
+  
   const logInDialog = useDialog()
   const signUpDialog = useDialog()
 
