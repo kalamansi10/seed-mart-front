@@ -1,4 +1,5 @@
 import useItemsProps from '../hooks/useItemsProps'
+import './resultspage.css'
 
 export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) {
   const properties = JSON.parse(useItemsProps())

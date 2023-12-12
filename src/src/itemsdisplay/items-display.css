@@ -1,11 +1,20 @@
-.item-card {
-  width: 200px;
-  height: 340px;
+.items-container {
+  width: 100%;
+  margin: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  gap: 15px;
+  padding-bottom: 20px;
 }
 
-.item-card h3{
-  white-space: nowrap; 
-  overflow:hidden;
+.item-card {
+  width: 200px;
+  height: 300px;
+}
+
+.item-card h4 {
+  margin: 7px 0px;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -16,13 +25,15 @@
 
 .item-card img {
   width: 200px;
-  height: 200px;
+  height: 175px;
   object-fit: cover;
 }
 
-.items-grid {
-  max-width: 1000px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 40px 30px;
+.items-container a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.item-padding span {
+  color: var(--accent)
 }

@@ -14,10 +14,12 @@ export default function App({isSignedIn}) {
 
   return (
     <>
-      <div className='flex-column align-center'>
-        <div className='flex-row'>
+      <div className='flex-row justify-center'>
+        <div className='results-page'>
           <SearchFilter searchAPI={searchAPI} setSearchAPI={setSearchAPI} searchParams={searchParams}/>
-          {searchAPI && <ItemsDisplay API={searchAPI} />}
+          <div className="item-display">
+            {searchAPI && <ItemsDisplay API={searchAPI} />}
+          </div>
         </div>
       </div>
     </>

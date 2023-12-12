@@ -18,14 +18,9 @@ export default function ItemsDisplay({API}) {
         <div className="item-card flex-column justify-between box-shadow">
           <div>
             <img src={item.image_links[0]} alt="placeholder" />
-            <div className="item-padding">
-              <h3>{item.name}</h3>
-            </div>
-          </div>
-          <div>
-            <hr />
-            <div className="flex-row align-center item-padding">
-              <h4>PHP {item.price}</h4>
+            <div className='item-padding'>
+              <h4>{item.name}</h4>
+              <span>{item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
             </div>
           </div>
         </div>
@@ -34,7 +29,7 @@ export default function ItemsDisplay({API}) {
   }
 
   return (
-    <div className="items-grid">
+    <div className="items-container">
       {items}
     </div>
   )

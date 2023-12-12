@@ -1,12 +1,15 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import useLogOut from '../hooks/useLogOut'
+import useInput from '../hooks/useInput'
 import LogInDialog from './LogInDialog'
 import SignUpDialog from './SignUpDialog'
 import './navigation.css'
 
 export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
   const optionsWrapper = useRef()
+  const [keyword, keywordInput] = useInput('text')
+
 
   function showOptions() {
     optionsWrapper.current.classList.toggle('hidden')
@@ -47,11 +50,17 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
 
 
   return (
-    <nav className='navigation flex-row justify-around align-center'>
+    <nav className='navigation flex-row align-center'>
       <h1><Link to='/'>Seed Mart</Link></h1>
+      <div className='search-container flex-row'>
+        {keywordInput}
+        <Link to={'results?keyword=' + keyword}>
+          <button>Search</button>
+        </Link>
+      </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}
-        <div className='nav-item'>
+        <div className='nav-item cart'>
           <Link to='/cart'>Cart</Link>
         </div>
       </div>

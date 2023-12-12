@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './promo-banner.css'
 
 export default function PromoBanners() {
   const [banners, setBanners] = useState()
@@ -68,7 +67,7 @@ export default function PromoBanners() {
   }
 
   return (
-    <>
+    <div className="promo-banners flex-row justify-center">
       <div className="slider box-shadow">
         <div className="active-banners flex-row">
           {banners}
@@ -83,7 +82,7 @@ export default function PromoBanners() {
         />
         <div className="pages flex-row justify-center">{pages}</div>
       </div>
-    </>
+    </div>
   )
 
 }

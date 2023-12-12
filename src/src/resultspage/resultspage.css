@@ -1,0 +1,11 @@
+.results-page {
+  width: 1350px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  justify-items: center;
+  margin: 20px;
+}
+
+.item-display {
+  width: 100%;
+}
