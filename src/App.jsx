@@ -7,12 +7,14 @@ import ItemPage from './src/itempage/ItemPage'
 import CartPage from './src/cartpage/CartPage'
 import CheckOutPage from './src/checkoutpage/CheckOutPage'
 import UserPage from './src/userpage/UserPage'
+import Footer from './src/hooks/Footer'
 import Profile from './src/userpage/Profile'
 import Addresses from './src/userpage/Addresses'
 import PaymentMethods from './src/userpage/PaymentMethods'
 import Orders from './src/userpage/Orders'
 import Reviews from './src/userpage/Reviews'
 import useDialog from './src/hooks/useDialog'
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
@@ -48,6 +50,7 @@ function App() {
           </Route>
           <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   )
