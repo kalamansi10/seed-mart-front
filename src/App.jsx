@@ -18,6 +18,7 @@ import useDialog from './src/hooks/useDialog'
 
 function App() {
   const [currentUser, setCurrentUser] = useState()
+  const [searchAPI, setSearchAPI] = useState()
   
   const logInDialog = useDialog()
   const signUpDialog = useDialog()
@@ -33,10 +34,10 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navigation currentUser={currentUser} logInDialog={logInDialog} signUpDialog={signUpDialog}/>
+        <Navigation currentUser={currentUser} logInDialog={logInDialog} signUpDialog={signUpDialog} searchAPI={searchAPI} setSearchAPI={setSearchAPI}/>
         <Routes>closeSignUp
           <Route index element={<HomePage />} />
-          <Route path='/results?' element={<ResultsPage />} />
+          <Route path='/results?' element={<ResultsPage searchAPI={searchAPI} setSearchAPI={setSearchAPI}/>} />
           <Route path='/show/:id' element={<ItemPage />} />
           <Route path='/cart' element={<CartPage currentUser={currentUser} />} />
           <Route path='/checkout' element={<CheckOutPage currentUser={currentUser} />} />

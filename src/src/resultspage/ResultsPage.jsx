@@ -3,8 +3,8 @@ import { useSearchParams } from "react-router-dom"
 import ItemsDisplay from '../itemsdisplay/ItemsDisplay'
 import SearchFilter from './SearchFilter'
 
-export default function App({isSignedIn}) {
-  const [searchAPI, setSearchAPI] = useState()
+export default function App({searchAPI, setSearchAPI}) {
+  const [] = useState()
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('keyword')
  
@@ -16,7 +16,7 @@ export default function App({isSignedIn}) {
     <>
       <div className='flex-row justify-center'>
         <div className='results-page'>
-          <SearchFilter searchAPI={searchAPI} setSearchAPI={setSearchAPI} searchParams={searchParams}/>
+          <SearchFilter setSearchAPI={setSearchAPI} />
           <div className="item-display">
             {searchAPI && <ItemsDisplay API={searchAPI} />}
           </div>

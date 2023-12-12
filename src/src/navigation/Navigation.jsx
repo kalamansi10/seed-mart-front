@@ -1,15 +1,30 @@
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import useLogOut from '../hooks/useLogOut'
-import useInput from '../hooks/useInput'
 import LogInDialog from './LogInDialog'
 import SignUpDialog from './SignUpDialog'
 import './navigation.css'
 
-export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
+export default function Navigation({ currentUser, logInDialog, signUpDialog, setSearchAPI }) {
   const optionsWrapper = useRef()
-  const [keyword, keywordInput] = useInput('text')
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const [keyword, setKeyword] = useState('')
 
+  function showResults() {
+    navigate('/results?keyword=' + keyword)
+    searchParams.delete('keyword')
+    searchParams.append('keyword', keyword)
+    console.log(searchParams.toString())
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
+  }
+
+  function handlePressEnter(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      showResults()
+    }
+  }
 
   function showOptions() {
     optionsWrapper.current.classList.toggle('hidden')
@@ -53,10 +68,12 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
     <nav className='navigation flex-row align-center'>
       <h1><Link to='/'>Seed Mart</Link></h1>
       <div className='search-container flex-row'>
-        {keywordInput}
-        <Link to={'results?keyword=' + keyword}>
-          <button>Search</button>
-        </Link>
+        <input type="text"
+          onKeyDown={handlePressEnter}
+          onChange={e => setKeyword(e.target.value)}
+          value={keyword}
+        />
+        <button onClick={showResults}>Search</button>
       </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}

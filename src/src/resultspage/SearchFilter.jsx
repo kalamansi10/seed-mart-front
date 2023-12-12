@@ -1,8 +1,10 @@
+import { useSearchParams } from "react-router-dom"
 import useItemsProps from '../hooks/useItemsProps'
 import './resultspage.css'
 
-export default function SearchFilter({ searchAPI, setSearchAPI, searchParams }) {
+export default function SearchFilter({ setSearchAPI }) {
   const properties = JSON.parse(useItemsProps())
+  const [searchParams] = useSearchParams()
 
   function mapFilters() {
     return Object.keys(properties).map(filter =>
