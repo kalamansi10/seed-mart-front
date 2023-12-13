@@ -55,7 +55,7 @@ export default function ItemBanner({ item }) {
       </div>
       <div>
         <h3>Amount:</h3>
-        <div className='flex-row'>
+        <div className='amount-input flex-row'>
           <button onClick={() => handleClickAmount(-1)}>-</button>
           {inputAmount}
           <button onClick={() => handleClickAmount(1)}>+</button>
