@@ -12,10 +12,9 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog, set
   const [keyword, setKeyword] = useState('')
 
   function showResults() {
-    navigate('/results?keyword=' + keyword)
     searchParams.delete('keyword')
     searchParams.append('keyword', keyword)
-    console.log(searchParams.toString())
+    navigate('/results?' + searchParams.toString())
     setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
 

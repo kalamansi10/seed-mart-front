@@ -140,12 +140,10 @@
   cursor: pointer;
   color: #ffffff;
   font-weight: bold;
-  transition: 400ms ease-in-out;
 }
 
 .search-container button:hover {
-  color: var(--primary);
-  background: #ffffff;
+  opacity: 80%;
 }
 
 .search-container input {

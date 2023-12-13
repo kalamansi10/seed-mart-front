@@ -1,10 +1,16 @@
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import useItemsProps from '../hooks/useItemsProps'
 import './resultspage.css'
+import { useEffect } from "react"
 
 export default function SearchFilter({ setSearchAPI }) {
   const properties = JSON.parse(useItemsProps())
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
+  }, [searchParams])
 
   function mapFilters() {
     return Object.keys(properties).map(filter =>
@@ -29,7 +35,13 @@ export default function SearchFilter({ setSearchAPI }) {
     let name = `filter[${filter}]`
     return properties[filter].map(option =>
       <span key={option}>
-        <input type='checkbox' name={name} id={option} onClick={applyFilter} value={option} />
+        <input type='checkbox' 
+          name={name} 
+          id={option} 
+          onClick={applyFilter} 
+          value={option}
+          checked={searchParams.get(name) == option}
+        />
         <label htmlFor={option}> {option}</label>
       </span>
     )
@@ -42,7 +54,7 @@ export default function SearchFilter({ setSearchAPI }) {
       e.target.checked = true
       searchParams.append(e.target.name, e.target.value)
     }
-    setSearchAPI('/api/v1/search?' + searchParams.toString())
+    navigate('/results?' + searchParams.toString())
   }
 
   function clearGroup(name) {
@@ -57,7 +69,7 @@ export default function SearchFilter({ setSearchAPI }) {
       searchParams.delete(filter.name)
       if (filter.value != '') { searchParams.append(filter.name, filter.value) }
     })
-    setSearchAPI('/api/v1/search?' + searchParams.toString())
+    navigate('/results?' + searchParams.toString())
   }
 
   if (properties) {

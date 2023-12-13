@@ -4,7 +4,6 @@ import ItemsDisplay from '../itemsdisplay/ItemsDisplay'
 import SearchFilter from './SearchFilter'
 
 export default function App({searchAPI, setSearchAPI}) {
-  const [] = useState()
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('keyword')
  

@@ -1,21 +1,17 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import useItemsProps from '../hooks/useItemsProps'
 
 export default function Categories() {
   const properties = JSON.parse(useItemsProps())
 
-  function getItem() {
-    fetch('/api/v1/get-item/' + id)
-      .then(response => response.json())
-
-  }
-
   function renderCategories() {
     return properties[Object.keys(properties)[0]].map((category) => {
       return (
-        <div className='category flex-column align-center' key={category}>
-          <img src="https://placehold.co/200x200" alt="placeholder" />
-          <h5>{category}</h5>
+        <div className='category' key={category}>
+          <Link to={'/results?keyword=&filter%5Bplant_type%5D=' + category} className='flex-column align-center'>
+            <img src="https://placehold.co/200x200" alt="placeholder" />
+            <h5>{category}</h5>
+          </Link>
         </div>
       )
     })
