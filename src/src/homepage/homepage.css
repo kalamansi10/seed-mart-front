@@ -72,3 +72,8 @@
   height: auto;
   border-radius: 50%;
 }
+
+.category a {
+  color: var(--primary);
+  text-decoration: none;
+}
