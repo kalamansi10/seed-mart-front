@@ -1,19 +1,26 @@
-import {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import './items-display.css'
 
-export default function ItemsDisplay({API}) {
+export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
   const [items, setItems] = useState()
+  const [searchParams] = useSearchParams()
+
+  const itemCount = useRef()
+  const page = useRef(1)
 
   useEffect(() => {
-    fetch(API)
-    .then(response => response.json())
-    .then(items => mapItems(items))
-    .then(mappedItems => setItems(mappedItems))
-  }, [API])
+    fetch(searchAPI)
+      .then(response => response.json())
+      .then(items => {
+        itemCount.current = items.item_count
+        return mapItems(items.item_list)
+      })
+      .then(mappedItems => setItems(mappedItems))
+  }, [searchAPI])
 
-  function mapItems(items) {
-    return items.map((item) =>
+  function mapItems(item_list) {
+    return item_list.map((item) =>
       <Link to={'/show/' + item.id} key={item.id}>
         <div className="item-card flex-column justify-between box-shadow">
           <div>
@@ -28,9 +35,59 @@ export default function ItemsDisplay({API}) {
     )
   }
 
+  function renderPages() {
+    let result = []
+    let pages = itemCount.current / 20
+    for (let i = 1; i < pages + 1; i++) {
+      let render = i == page.current ? <span key={i}>{i}</span> : <button onClick={handlePageClick} key={i}>{i}</button>
+      result.push(render)
+    }
+    return result
+  }
+
+  function handlePageClick(e) {
+    page.current = Number(e.target.textContent)
+    movePage()
+  }
+
+  function handleNextPrev(increment) {
+    console.log(page.current)
+    console.log(increment)
+    console.log(page.current + increment)
+    page.current = page.current + increment
+    movePage()
+  }
+
+  function movePage() {
+    searchParams.delete('offset')
+    searchParams.append('offset', ((page.current- 1 )* 20))
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
+
+  function renderPrevButton() {
+    if (page.current > 1) {
+      return <button onClick={() => handleNextPrev(-1)}>{'prev'}</button>
+    }
+  }
+
+  function renderNextButton() {
+    if (page.current < (itemCount.current / 20)) {
+      return <button onClick={() => handleNextPrev(1)}>{'next'}</button>
+    }
+  }
+
   return (
     <div className="items-container">
       {items}
+      <div className='pages-container flex-row justify-center'>
+        {renderPrevButton()}
+        {itemCount.current && renderPages()}
+        {renderNextButton()}
+      </div>
     </div>
   )
 }

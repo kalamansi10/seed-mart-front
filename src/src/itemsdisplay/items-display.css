@@ -37,3 +37,18 @@
 .item-padding span {
   color: var(--accent)
 }
+
+.pages-container {
+  grid-column: span 5;
+  gap: 10px;
+}
+
+.pages-container span {
+  color: var(--accent);
+}
+
+.pages-container button {
+  all: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
