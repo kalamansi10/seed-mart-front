@@ -12,7 +12,7 @@ export default function App() {
         <Categories />
         <div className='flex-row justify-center'>
           <div className='items-display'>
-            <ItemsDisplay API='/api/v1/most-recent' />
+            <ItemsDisplay searchAPI='/api/v1/most-recent' />
           </div>
 
         </div>

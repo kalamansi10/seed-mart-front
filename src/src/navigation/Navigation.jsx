@@ -1,41 +1,58 @@
-import { useState, useRef } from 'react'
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { useState, useRef, useEffect } from 'react'
+import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import useLogOut from '../hooks/useLogOut'
 import LogInDialog from './LogInDialog'
 import SignUpDialog from './SignUpDialog'
 import './navigation.css'
 
 export default function Navigation({ currentUser, logInDialog, signUpDialog, setSearchAPI }) {
-  const optionsWrapper = useRef()
+  // Ref for options wrapper
+  const optionsWrapperRef = useRef()
+  // Hook for managing search parameters
   const [searchParams] = useSearchParams()
+  // Hook for programmatic navigation
   const navigate = useNavigate()
+  // Hook for accessing the current location
+  const location = useLocation()
+  // State for the search keyword
   const [keyword, setKeyword] = useState('')
 
-  function showResults() {
+  // Clear the keyword when navigating away from the results page
+  useEffect(() => {
+    if (location.pathname !== '/results') {
+      setKeyword('')
+    }
+  }, [location])
+
+  // Update search parameters and navigate to results
+  function updateSearchParamsAndNavigate() {
     searchParams.delete('keyword')
     searchParams.append('keyword', keyword)
     navigate('/results?' + searchParams.toString())
     setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
 
-  function handlePressEnter(e) {
+  // Handle pressing Enter key to trigger search
+  function handleKeyPressEnter(e) {
     if (e.key === 'Enter') {
       e.preventDefault()
-      showResults()
+      updateSearchParamsAndNavigate()
     }
   }
 
-  function showOptions() {
-    optionsWrapper.current.classList.toggle('hidden')
+  // Toggle visibility of account options
+  function toggleOptionsVisibility() {
+    optionsWrapperRef.current.classList.toggle('hidden')
   }
 
+  // Render account options based on user authentication status
   function renderAccountOptions() {
     if (currentUser) {
       return (
         <>
-          <div className='nav-item' onClick={showOptions}>
+          <div className='nav-item' onClick={toggleOptionsVisibility}>
             <a>{currentUser.name}</a>
-            <section className='options-wrapper hidden' ref={optionsWrapper} onMouseLeave={showOptions}>
+            <section className='options-wrapper hidden' ref={optionsWrapperRef} onMouseLeave={toggleOptionsVisibility}>
               <li><Link to='/user/profile'>My Account</Link></li>
               <li><a>My purchases</a></li>
               <li><a onClick={useLogOut}>Logout</a></li>
@@ -62,17 +79,18 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog, set
     }
   }
 
-
+  // Main navigation component
   return (
-    <nav className='navigation flex-row align-center'>
-      <h1><Link to='/'>Seed Mart</Link></h1>
+    <nav className='navigation justify-center flex-row align-center'>
+      <h1 className='nav-icon'><Link to='/'>Seed Mart</Link></h1>
       <div className='search-container flex-row'>
-        <input type="text"
-          onKeyDown={handlePressEnter}
+        <input
+          type="text"
+          onKeyDown={handleKeyPressEnter}
           onChange={e => setKeyword(e.target.value)}
           value={keyword}
         />
-        <button onClick={showResults}>Search</button>
+        <button onClick={updateSearchParamsAndNavigate}>Search</button>
       </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}

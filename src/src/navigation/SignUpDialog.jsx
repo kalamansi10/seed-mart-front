@@ -2,29 +2,34 @@ import { useState } from 'react'
 import useInput from '../hooks/useInput'
 import useSignUp from '../hooks/useSignUp'
 
-export default function SignUpDialog({ currentUser, logInDialog, signUpDialog }) {
+export default function SignUpDialog({ logInDialog, signUpDialog }) {
+  // State for input values and errors
   const [email, inputEmail] = useInput('email', 'email')
   const [name, inputName] = useInput('text', 'full name')
   const [password, inputPassword] = useInput('password', 'password')
   const [confirmPass, inputConfirmPass] = useInput('password', 'confirm password')
   const [error, setError] = useState(null)
 
-  function validateInputs() {
+  // Handle sign-up validation
+  function handleSignUpValidation() {
     if (!email || !name || !password || !confirmPass) {
-      setError('Placeholder error message.')
-    } else if (password != confirmPass) {
+      setError('Please fill in all fields.')
+    } else if (password !== confirmPass) {
       setError("Password inputs don't match.")
     } else {
       setError(null)
-      useSignUp(email, password, name, setError)
-      if (!error) {
-        signUpDialog.closeDialog()
-        logInDialog.showDialog()
-        setError("Sign up successful")
-      }
+      useSignUp(email, password, name, setError, handleSignUpSuccess)
     }
   }
 
+  // Handle sign-up success
+  function handleSignUpSuccess() {
+    signUpDialog.closeDialog()
+    logInDialog.showDialog()
+    setError('Sign up successful')
+  }
+
+  // Navigate back to login
   function backToLogIn() {
     signUpDialog.closeDialog()
     logInDialog.showDialog()
@@ -46,12 +51,13 @@ export default function SignUpDialog({ currentUser, logInDialog, signUpDialog })
           <p>
             By signing up, you agree with Seedmart's
             <br />
-            <a>Terms of Services</a> and <a>Privacy Policy</a>.
+            <a href="/terms-of-service">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.
           </p>
-          <button onClick={validateInputs}>Sign up</button>
+          <button onClick={handleSignUpValidation}>Sign up</button>
           <section className='login-link'><a onClick={backToLogIn}>Back to Log in</a></section>
         </div>
       </dialog>
     </>
   )
 }
+
