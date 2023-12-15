@@ -17,7 +17,7 @@ export default function App({searchAPI, setSearchAPI}) {
         <div className='results-page'>
           <SearchFilter setSearchAPI={setSearchAPI} />
           <div className="item-display">
-            {searchAPI && <ItemsDisplay API={searchAPI} />}
+            {searchAPI && <ItemsDisplay searchAPI={searchAPI} setSearchAPI={setSearchAPI}/>}
           </div>
         </div>
       </div>
