@@ -51,9 +51,6 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
   }
 
   function handleNextPrev(increment) {
-    console.log(page.current)
-    console.log(increment)
-    console.log(page.current + increment)
     page.current = page.current + increment
     movePage()
   }
