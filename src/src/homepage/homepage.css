@@ -1,5 +1,42 @@
+.promotion-section {
+  padding-top: 20px;
+  background-color: white;
+}
+
 .promo-banners {
   padding-bottom: 20px;
+}
+
+.items-section {
+  padding: 20px 0;
+  background-color: var(--background);
+}
+
+.items-section header {
+  width: 1060px;
+  background-color: white;
+  color: var(--primary);
+  font-weight: bold;
+  font-size: x-large;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--primary);
+}
+
+.see-more-button {
+  width: 1060px;
+  height: 45px;
+  border: 2px solid var(--primary);
+  background: white;
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: var(--primary);
+  font-weight: bold;
+  transition: 400ms ease-in-out;
+
+  &:hover {
+    background: rgb(239, 239, 239);
+  }
 }
 
 .items-display {
@@ -43,7 +80,7 @@
   position: absolute;
   right: 50%;
   bottom: 5%;
-  transform: translate(50%,-50%);
+  transform: translate(50%, -50%);
 }
 
 .page-dot {
@@ -63,7 +100,8 @@
 
 .categories-container {
   flex-wrap: wrap;
-  margin: 20px 0;
+  margin-bottom: 10px;
+  padding: 30px 0;
   gap: 50px;
 }
 
