@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 export default function CheckOutPage({ currentUser}) {
   const [renderCheckOutItems, setRenderCheckOutItems] = useState()
-  const forCheckout = useLocation()
-  const {from, item, amount} = forCheckout.state
+  const locationState = useLocation()
+  const {from, item, amount} = locationState.state
 
   useEffect(() => {
     if (from == 'itempage') {
