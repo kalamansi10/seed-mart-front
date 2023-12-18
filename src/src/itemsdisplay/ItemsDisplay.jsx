@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useLocation } from 'react-router-dom'
 import './items-display.css'
 
 export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
   const [items, setItems] = useState()
   const [searchParams] = useSearchParams()
+  const location = useLocation()
 
   const itemCount = useRef()
   const page = useRef(1)
@@ -35,7 +36,7 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
     )
   }
 
-  function renderPages() {
+  function mapPages() {
     let result = []
     let pages = itemCount.current / 20
     for (let i = 1; i < pages + 1; i++) {
@@ -57,7 +58,7 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
 
   function movePage() {
     searchParams.delete('offset')
-    searchParams.append('offset', ((page.current- 1 )* 20))
+    searchParams.append('offset', ((page.current - 1) * 20))
     setSearchAPI('/api/v1/search?' + searchParams.toString())
     window.scrollTo({
       top: 0,
@@ -77,14 +78,41 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
     }
   }
 
+  function handleSortChange(e) {
+    searchParams.delete('sort_by')
+    if (e.target.value != "most-recent") {
+      searchParams.append('sort_by', e.target.value)
+    }
+    setSearchAPI('/api/v1/search?' + searchParams.toString())
+  }
+
+  function renderItemsDisplay() {
+    if (location.pathname == '/results') {
+      return (
+        <>
+          <div className='sorter-wrapper'>
+            <select onChange={handleSortChange}>
+              <option value="most-recent">most recent</option>
+              <option value="price-lowest">price: lowest</option>
+              <option value="price-highest">price: highest</option>
+            </select>
+          </div>
+          {items}
+          <div className='pages-container flex-row justify-center'>
+            {renderPrevButton()}
+            {mapPages()}
+            {renderNextButton()}
+          </div>
+        </>
+      )
+    } else {
+      return items
+    }
+  }
+
   return (
     <div className="items-container">
-      {items}
-      <div className='pages-container flex-row justify-center'>
-        {renderPrevButton()}
-        {itemCount.current && renderPages()}
-        {renderNextButton()}
-      </div>
+      {renderItemsDisplay()}
     </div>
   )
 }
