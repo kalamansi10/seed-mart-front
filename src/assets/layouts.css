@@ -1,9 +1,13 @@
 :root {
   --text: #0f0f0f;
-  --background: #ffffff;
+  --background: #d7e4dc;
   --primary: #155831;
-  --secondary: #d7e4dc;
+  --secondary: #95fe79;
   --accent: #c20002;
+}
+
+body {
+  background-color: var(--background);
 }
 
 .flex-column {
