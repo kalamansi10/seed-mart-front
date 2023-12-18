@@ -65,3 +65,55 @@ dialog {
 dialog::backdrop {
   backdrop-filter: blur(7px);
 }
+
+[type="checkbox"] {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+}
+
+[type="checkbox"] {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    content: "";
+  }
+
+  &::before {
+    top: -1px;
+    left: -1px;
+    width: inherit;
+    height: inherit;
+    border: 1px solid var(--accent);
+  }
+
+  &::after {
+    top: 2px;
+    left: 1px;
+    width: 5px;
+    height: 2px;
+    border-bottom: 2px solid white;
+    border-left: 2px solid white;
+    transform: rotate(-45deg);
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  &:checked {
+    background-color: var(--accent);
+  }
+
+  &:checked::after {
+    opacity: 1;
+  }
+}
