@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
+import useInput from '../hooks/useInput'
 import useLogOut from '../hooks/useLogOut'
 import LogInDialog from './LogInDialog'
 import SignUpDialog from './SignUpDialog'
@@ -15,19 +16,19 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog, set
   // Hook for accessing the current location
   const location = useLocation()
   // State for the search keyword
-  const [keyword, setKeyword] = useState('')
+  const searchKeyword = useInput('text', 'search')
 
   // Clear the keyword when navigating away from the results page
   useEffect(() => {
     if (location.pathname !== '/results') {
-      setKeyword('')
+      searchKeyword.setValue('')
     }
   }, [location])
 
   // Update search parameters and navigate to results
   function updateSearchParamsAndNavigate() {
     searchParams.delete('keyword')
-    searchParams.append('keyword', keyword)
+    searchParams.append('keyword', searchKeyword.value)
     navigate('/results?' + searchParams.toString())
     setSearchAPI('/api/v1/search?' + searchParams.toString())
   }
@@ -87,8 +88,8 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog, set
         <input
           type="text"
           onKeyDown={handleKeyPressEnter}
-          onChange={e => setKeyword(e.target.value)}
-          value={keyword}
+          onChange={e => searchKeyword.setValue(e.target.value)}
+          value={searchKeyword.value}
         />
         <button onClick={updateSearchParamsAndNavigate}>Search</button>
       </div>

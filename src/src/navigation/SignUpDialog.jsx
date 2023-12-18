@@ -4,21 +4,21 @@ import useSignUp from '../hooks/useSignUp'
 
 export default function SignUpDialog({ logInDialog, signUpDialog }) {
   // State for input values and errors
-  const [email, inputEmail] = useInput('email', 'email')
-  const [name, inputName] = useInput('text', 'full name')
-  const [password, inputPassword] = useInput('password', 'password')
-  const [confirmPass, inputConfirmPass] = useInput('password', 'confirm password')
+  const userEmail = useInput('email', 'email')
+  const userName = useInput('text', 'full name')
+  const userPass = useInput('password', 'password')
+  const confirmPass = useInput('password', 'confirm password')
   const [error, setError] = useState(null)
 
   // Handle sign-up validation
   function handleSignUpValidation() {
-    if (!email || !name || !password || !confirmPass) {
+    if (!userEmail.value || !userName.value || !userPass.value || !confirmPass.value) {
       setError('Please fill in all fields.')
-    } else if (password !== confirmPass) {
+    } else if (userPass.value !== confirmPass.value) {
       setError("Password inputs don't match.")
     } else {
       setError(null)
-      useSignUp(email, password, name, setError, handleSignUpSuccess)
+      useSignUp(userEmail.value, userName.value, userPass.value, setError, handleSignUpSuccess)
     }
   }
 
@@ -41,10 +41,10 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
         <div className='signup-dialog box-shadow'>
           <h1>Seedmart Sign Up</h1>
           <div className="error-message">{error}</div>
-          {inputEmail}
-          {inputName}
-          {inputPassword}
-          {inputConfirmPass}
+          {userEmail.input}
+          {userName.input}
+          {userPass.input}
+          {confirmPass.input}
           <div className='captcha'>
             Captcha Placeholder
           </div>
