@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import ItemsDisplay from '../itemsdisplay/ItemsDisplay'
 import SearchFilter from './SearchFilter'
