@@ -5,10 +5,10 @@ import useInput from '../hooks/useInput'
 import AddToCart from './AddToCart'
 
 export default function ItemBanner({ item }) {
-  const [amount, inputAmount, setAmount] = useInput('number', '')
+  const itemAmount = useInput('number', '')
   const properties = JSON.parse(useItemsProps())
 
-  useEffect(() => setAmount(1), [])
+  useEffect(() => itemAmount.setValue(1), [])
 
   function mapSpecs() {
     return Object.keys(properties).map(specLabel =>
@@ -28,10 +28,19 @@ export default function ItemBanner({ item }) {
   }
 
   function handleClickAmount(adjustment) {
-    setAmount(prev => {
+    itemAmount.setValue(prev => {
       let result = adjustment + prev
-      return result < 0 || result > 999 ? prev : result
+      return result > 0 && result < 1000 ? result : prev
     })
+  }
+
+  function handlePriceFilterChange(e, setValue) {
+    let value = e.target.value
+    if (value == '') {
+      setValue(1)
+    } else if (Number(value) && value.length < 4) {
+      setValue(Number(value))
+    }
   }
 
   return (
@@ -57,13 +66,18 @@ export default function ItemBanner({ item }) {
         <h3>Amount:</h3>
         <div className='amount-input flex-row'>
           <button onClick={() => handleClickAmount(-1)}>-</button>
-          {inputAmount}
+          <input 
+              type='text' 
+              name='minimum' 
+              onChange={e => handlePriceFilterChange(e, itemAmount.setValue)}
+              value={itemAmount.value}
+            />
           <button onClick={() => handleClickAmount(1)}>+</button>
         </div>
       </div>
       <div>
-        <AddToCart item={item} amount={amount}/>
-        <Link to='/checkout' state={{ from: 'itempage', item: item, amount: amount}}><button>Buy now</button></Link>
+        <AddToCart item={item} amount={itemAmount.value}/>
+        <Link to='/checkout' state={{ from: 'itempage', item: item, amount: itemAmount.value}}><button>Buy now</button></Link>
       </div>
       <div className='specsContainer'>
         {mapSpecs()}
