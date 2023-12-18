@@ -1,17 +1,14 @@
 .results-page {
-  width: 1350px;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  justify-items: center;
-  margin: 20px;
-}
-
-.item-display {
-  width: 100%;
+  margin-top: 20px;
+  gap: 20px;
+  height: 1400px;
 }
 
 .filters-section {
   width: 200px;
+  height: 1200px;
+  padding: 15px;
+  background-color: white;
 }
 
 .filter-group {
@@ -19,9 +16,34 @@
 }
 
 .price-filter {
-  width: 200px;
+  color: var(--primary);
+  margin-top: 30px;
 }
 
-.price-input {
-  width: 70px;
+.price-filter button {
+  width: 100%;
+  height: 40px;
+  border: 2px solid var(--background);
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+
+  &:hover {
+    opacity: 80%;
+  }
+}
+
+.price-filter input {
+  width: 100%;
+  height: 25px;
+  font-size: medium;
+  text-indent: 10px;
+  padding: 0;
+  border: 2px solid var(--primary);
+
+  &:focus {
+    outline: 1px solid rgba(0, 0, 0, 0.3);
+  }
 }

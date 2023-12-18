@@ -14,9 +14,9 @@ export default function App({searchAPI, setSearchAPI}) {
   return (
     <>
       <div className='flex-row justify-center'>
-        <div className='results-page'>
+        <div className='results-page flex-row justify-center'>
           <SearchFilter setSearchAPI={setSearchAPI} />
-          <div className="item-display">
+          <div className="items-display">
             {searchAPI && <ItemsDisplay searchAPI={searchAPI} setSearchAPI={setSearchAPI}/>}
           </div>
         </div>

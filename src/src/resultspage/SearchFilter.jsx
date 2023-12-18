@@ -83,7 +83,7 @@ export default function SearchFilter({ setSearchAPI }) {
 
   if (properties) {
     return (
-      <div className='filters-section'>
+      <div className='filters-section box-shadow'>
         {mapFilters()}
         <form className='price-filter'>
           <div className='flex-row justify-center align-center'>
