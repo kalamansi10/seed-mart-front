@@ -1,9 +1,12 @@
+import { useEffect } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import useItemsProps from '../hooks/useItemsProps'
+import useInput from "../hooks/useInput"
 import './resultspage.css'
-import { useEffect } from "react"
 
 export default function SearchFilter({ setSearchAPI }) {
+  const minPrice = useInput()
+  const maxPrice = useInput()
   const properties = JSON.parse(useItemsProps())
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -38,11 +41,11 @@ export default function SearchFilter({ setSearchAPI }) {
         <input type='checkbox' 
           name={name} 
           id={option} 
-          onClick={applyFilter} 
+          onChange={applyFilter} 
           value={option}
           checked={searchParams.get(name) == option}
         />
-        <label htmlFor={option}> {option}</label>
+        <label htmlFor={option}>&nbsp;&nbsp;{option}</label>
       </span>
     )
   }
@@ -51,7 +54,6 @@ export default function SearchFilter({ setSearchAPI }) {
     searchParams.delete(e.target.name)
     if (e.target.checked == true) {
       clearGroup(e.target.name)
-      e.target.checked = true
       searchParams.append(e.target.name, e.target.value)
     }
     navigate('/results?' + searchParams.toString())
@@ -61,6 +63,13 @@ export default function SearchFilter({ setSearchAPI }) {
     document.getElementsByName(`${name}`).forEach(option => {
       option.checked = false
     })
+  }
+
+  function handlePriceFilterChange(e, setValue) {
+    let value = e.target.value
+    if (value == '' || Number(value) && value.length < 6) {
+      setValue(value)
+    }
   }
 
   function applyPriceFilter(e) {
@@ -75,16 +84,30 @@ export default function SearchFilter({ setSearchAPI }) {
   if (properties) {
     return (
       <div className='filters-section'>
+        {mapFilters()}
         <form className='price-filter'>
-          <div className='flex-row justify-center'>
-            <input className='price-input' type='number' name='minimum' placeholder='min' />
+          <div className='flex-row justify-center align-center'>
+            <input 
+              className='price-input' 
+              type='text' 
+              name='minimum' 
+              placeholder='min' 
+              onChange={e => handlePriceFilterChange(e, minPrice.setValue)}
+              value={minPrice.value}
+            />
             &nbsp;-&nbsp;
-            <input className='price-input' type='number' name='maximum' placeholder='max' />
+            <input 
+              className='price-input' 
+              type='text' 
+              name='maximum' 
+              placeholder='max' 
+              onChange={e => handlePriceFilterChange(e, maxPrice.setValue)}
+              value={maxPrice.value}
+            />
           </div>
           <br />
           <button onClick={applyPriceFilter}>Apply</button>
         </form>
-        {mapFilters()}
       </div>)
   }
 }
