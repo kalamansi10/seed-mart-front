@@ -38,7 +38,7 @@ export default function Addresses({ currentUser }) {
   function mapShippingAddresses(shippingAddresses) {
     return shippingAddresses.map(shippingAddress => (
       <div key={shippingAddress.id}>
-        {`${shippingAddress.street_address}, ${shippingAddress.barangay}, ${shippingAddress.city}, ${shippingAddress.province}, ${shippingAddress.region}`}
+        {`${shippingAddress.street_address}, ${shippingAddress.barangay}, ${shippingAddress.city}, ${shippingAddress.province}, ${shippingAddress.region}, ${shippingAddress.is_main}`}
         <button onClick={() => handleClickDeleteAddress(shippingAddress)}>Delete</button>
       </div>
     ));

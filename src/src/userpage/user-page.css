@@ -9,7 +9,7 @@
   row-gap: 20px;
 }
 
-.address-dialog h1,
+.address-dialog h2,
 .input-warpper,
 .address-dialog button {
   grid-column: span 2;
@@ -60,4 +60,8 @@
   .address-dialog button:hover {
     color: #000000;
     background: #ffffff;
+  }
+
+  .address-dialog label{
+    grid-column: span 2;
   }
