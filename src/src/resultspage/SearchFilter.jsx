@@ -17,7 +17,6 @@ export default function SearchFilter() {
     }
   }, [location])
 
-
   function mapFilters() {
     return Object.keys(properties).map(filter =>
       <section key={filter}>
@@ -41,10 +40,10 @@ export default function SearchFilter() {
     let name = `filter[${filter}]`
     return properties[filter].map(option =>
       <span key={option}>
-        <input type='checkbox' 
-          name={name} 
-          id={option} 
-          onChange={applyFilter} 
+        <input type='checkbox'
+          name={name}
+          id={option}
+          onChange={applyFilter}
           value={option}
           checked={searchParams.get(name) == option}
         />
@@ -59,7 +58,7 @@ export default function SearchFilter() {
       clearGroup(e.target.name)
       searchParams.append(e.target.name, e.target.value)
     }
-    navigate('/results?' + searchParams.toString())
+    updateParams()
   }
 
   function clearGroup(name) {
@@ -68,7 +67,7 @@ export default function SearchFilter() {
     })
   }
 
-  function handlePriceFilterChange(e, setValue) {
+  function validatePriceFilter(e, setValue) {
     let value = e.target.value
     if (value == '' || Number(value) && value.length < 6) {
       setValue(value)
@@ -81,6 +80,22 @@ export default function SearchFilter() {
       searchParams.delete(filter.name)
       if (filter.value != '') { searchParams.append(filter.name, filter.value) }
     })
+    updateParams()
+  }
+
+  function resetFilters() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+    navigate('/results?keyword=' + searchParams.get('keyword'))
+  }
+
+  function updateParams() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     navigate('/results?' + searchParams.toString())
   }
 
@@ -90,27 +105,28 @@ export default function SearchFilter() {
         {mapFilters()}
         <form className='price-filter'>
           <div className='flex-row justify-center align-center'>
-            <input 
-              className='price-input' 
-              type='text' 
-              name='minimum' 
-              placeholder='min' 
-              onChange={e => handlePriceFilterChange(e, minPrice.setValue)}
+            <input
+              className='price-input'
+              type='text'
+              name='minimum'
+              placeholder='min'
+              onChange={e => validatePriceFilter(e, minPrice.setValue)}
               value={minPrice.value}
             />
             &nbsp;-&nbsp;
-            <input 
-              className='price-input' 
-              type='text' 
-              name='maximum' 
-              placeholder='max' 
-              onChange={e => handlePriceFilterChange(e, maxPrice.setValue)}
+            <input
+              className='price-input'
+              type='text'
+              name='maximum'
+              placeholder='max'
+              onChange={e => validatePriceFilter(e, maxPrice.setValue)}
               value={maxPrice.value}
             />
           </div>
           <br />
           <button onClick={applyPriceFilter}>Apply</button>
         </form>
+        <button className='reset-filters' onClick={resetFilters}>Reset Filters</button>
       </div>)
   }
 }
