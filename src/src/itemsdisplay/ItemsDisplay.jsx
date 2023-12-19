@@ -13,13 +13,13 @@ export default function ItemsDisplay() {
   const itemCount = useRef()
   const page = useRef(1)
   useEffect(() => {
+    setItems(null)
     fetch('/api/v1/search?' + searchParams.toString())
       .then(response => response.json())
       .then(items => {
         itemCount.current = items.item_count
-        return mapItems(items.item_list)
+        setItems(mapItems(items.item_list))
       })
-      .then(mappedItems => setItems(mappedItems))
   }, [searchParams])
 
   function mapItems(item_list) {
@@ -59,25 +59,13 @@ export default function ItemsDisplay() {
   }
 
   function movePage() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
     searchParams.delete('offset')
     searchParams.append('offset', ((page.current - 1) * 20))
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     navigate('/results?' + searchParams.toString())
-  }
-
-  function renderPrevButton() {
-    if (page.current > 1) {
-      return <button onClick={() => handleNextPrev(-1)}>{'prev'}</button>
-    }
-  }
-
-  function renderNextButton() {
-    if (page.current < (itemCount.current / 20)) {
-      return <button onClick={() => handleNextPrev(1)}>{'next'}</button>
-    }
   }
 
   function handleSortChange(e) {
@@ -85,10 +73,12 @@ export default function ItemsDisplay() {
     if (e.target.value != "most-recent") {
       searchParams.append('sort_by', e.target.value)
     }
+    page.current = 1
+    searchParams.delete('offset')
     navigate('/results?' + searchParams.toString())
   }
 
-  function renderItemsDisplay() {
+  function renderDisplayItems() {
     if (location.pathname == '/results') {
       return (
         <>
@@ -99,15 +89,21 @@ export default function ItemsDisplay() {
               <option value="price-highest">price: highest</option>
             </select>
           </div>
-          <div className='items-container'>
-            {items}
-          </div>
-          <div className='pages-container flex-row justify-center'>
-            {renderPrevButton()}
-            {mapPages()}
-            {renderNextButton()}
-          </div>
+          {renderItemList()}
+          {renderPages()}
         </>
+      )
+    } else {
+      return renderItemList()
+    }
+  }
+
+  function renderItemList() {
+    if (!items) {
+      return (
+        <div className='flex-row justify-center'>
+          <div class="loading-indicator"></div>
+        </div>
       )
     } else {
       return (
@@ -118,9 +114,21 @@ export default function ItemsDisplay() {
     }
   }
 
+  function renderPages() {
+    if (items) {
+      return (
+        <div className='pages-container flex-row justify-center'>
+          {page.current > 1 && <button onClick={() => handleNextPrev(-1)}>{'prev'}</button>}
+          {mapPages()}
+          {page.current < (itemCount.current / 20) && <button onClick={() => handleNextPrev(1)}>{'next'}</button>}
+        </div>
+      )
+    }
+  }
+
   return (
     <div className="display-items">
-      {renderItemsDisplay()}
+      {renderDisplayItems()}
     </div>
   )
 }
