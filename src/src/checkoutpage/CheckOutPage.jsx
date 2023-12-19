@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-export default function CheckOutPage({ currentUser}) {
+
+export default function CheckOutPage({ currentUser }) {
   const [renderCheckOutItems, setRenderCheckOutItems] = useState()
   const locationState = useLocation()
-  const {from, item, amount} = locationState.state
+  const { from, item, amount } = locationState.state
 
   useEffect(() => {
     if (from == 'itempage') {
-      setRenderCheckOutItems(mapCheckOutItems([{ id: 1, item_id: item.id, amount: amount, item: item}]))
+      setRenderCheckOutItems(mapCheckOutItems([{ id: 1, item_id: item.id, amount: amount, item: item }]))
     } else if (from == 'cartpage') {
       getCart()
     }
   }, [])
-  
+
   function getCart() {
     fetch('api/v1/get-cart', {
       credentials: 'include',
@@ -29,9 +30,9 @@ export default function CheckOutPage({ currentUser}) {
         <div className='cart-item flex-row justify-around align-center' id={checkOutItem.id} key={checkOutItem.id}>
           <img src={checkOutItem.item.image_links[0]} alt="" />
           <p>{checkOutItem.item.name}</p>
-          <p>{checkOutItem.item.price.toLocaleString("en-US", {style:"currency", currency:"PHP"})}</p>
+          <p>{checkOutItem.item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</p>
           <p>{checkOutItem.amount}</p>
-          <p>{(checkOutItem.amount * checkOutItem.item.price).toLocaleString("en-US", {style:"currency", currency:"PHP"})}</p>
+          <p>{(checkOutItem.amount * checkOutItem.item.price).toLocaleString("en-US", { style: "currency", currency: "PHP" })}</p>
         </div>
       )
     })
