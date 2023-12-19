@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom'
 import ItemsDisplay from '../itemsdisplay/ItemsDisplay'
 import PromoBanners from './PromoBanners'
 import Categories from './Categories'
@@ -8,11 +8,11 @@ export default function App() {
   const navigate = useNavigate()
 
   function handleSeeMore() {
-    navigate('/results?keyword=')
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     })
+    navigate('/results')
   }
 
   return (
@@ -24,9 +24,7 @@ export default function App() {
         </section>
         <section className='items-section flex-column align-center'>
           <header className='box-shadow text-center'>New Additions</header>
-          <div className='items-display'>
-            <ItemsDisplay searchAPI='/api/v1/search?keyword=' />
-          </div>
+          <ItemsDisplay />
           <button className='see-more-button box-shadow' onClick={handleSeeMore}>See more</button>
         </section>
       </div>

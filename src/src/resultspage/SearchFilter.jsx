@@ -1,19 +1,22 @@
 import { useEffect } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
 import useItemsProps from '../hooks/useItemsProps'
 import useInput from "../hooks/useInput"
 import './resultspage.css'
 
-export default function SearchFilter({ setSearchAPI }) {
+export default function SearchFilter() {
   const minPrice = useInput()
   const maxPrice = useInput()
   const properties = JSON.parse(useItemsProps())
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
-    setSearchAPI('/api/v1/search?' + searchParams.toString())
-  }, [searchParams])
+    if (location.pathname !== '/results') {
+    }
+  }, [location])
+
 
   function mapFilters() {
     return Object.keys(properties).map(filter =>

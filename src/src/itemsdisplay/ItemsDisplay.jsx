@@ -1,24 +1,26 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useSearchParams, useLocation } from 'react-router-dom'
+import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import './items-display.css'
 
-export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
+export default function ItemsDisplay() {
   const [items, setItems] = useState()
-  const [searchParams] = useSearchParams()
+
+  const [searchParams] = useSearchParams('keyword=')
   const location = useLocation()
+
+  const navigate = useNavigate()
 
   const itemCount = useRef()
   const page = useRef(1)
-
   useEffect(() => {
-    fetch(searchAPI)
+    fetch('/api/v1/search?' + searchParams.toString())
       .then(response => response.json())
       .then(items => {
         itemCount.current = items.item_count
         return mapItems(items.item_list)
       })
       .then(mappedItems => setItems(mappedItems))
-  }, [searchAPI])
+  }, [searchParams])
 
   function mapItems(item_list) {
     return item_list.map((item) =>
@@ -57,13 +59,13 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
   }
 
   function movePage() {
-    searchParams.delete('offset')
-    searchParams.append('offset', ((page.current - 1) * 20))
-    setSearchAPI('/api/v1/search?' + searchParams.toString())
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     })
+    searchParams.delete('offset')
+    searchParams.append('offset', ((page.current - 1) * 20))
+    navigate('/results?' + searchParams.toString())
   }
 
   function renderPrevButton() {
@@ -83,7 +85,7 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
     if (e.target.value != "most-recent") {
       searchParams.append('sort_by', e.target.value)
     }
-    setSearchAPI('/api/v1/search?' + searchParams.toString())
+    navigate('/results?' + searchParams.toString())
   }
 
   function renderItemsDisplay() {
@@ -91,13 +93,15 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
       return (
         <>
           <div className='sorter-wrapper'>
-            <select onChange={handleSortChange}>
+            <select onChange={handleSortChange} value={searchParams.get('sort_by') || 'most_recent'}>
               <option value="most-recent">most recent</option>
               <option value="price-lowest">price: lowest</option>
               <option value="price-highest">price: highest</option>
             </select>
           </div>
-          {items}
+          <div className='items-container'>
+            {items}
+          </div>
           <div className='pages-container flex-row justify-center'>
             {renderPrevButton()}
             {mapPages()}
@@ -106,12 +110,16 @@ export default function ItemsDisplay({ searchAPI, setSearchAPI }) {
         </>
       )
     } else {
-      return items
+      return (
+        <div className='items-container'>
+          {items}
+        </div>
+      )
     }
   }
 
   return (
-    <div className="items-container">
+    <div className="display-items">
       {renderItemsDisplay()}
     </div>
   )
