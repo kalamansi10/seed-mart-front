@@ -102,7 +102,7 @@ export default function ItemsDisplay() {
     if (!items) {
       return (
         <div className='flex-row justify-center'>
-          <div class="loading-indicator"></div>
+          <div className="loading-indicator"></div>
         </div>
       )
     } else {
