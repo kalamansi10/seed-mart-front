@@ -22,13 +22,13 @@ function LogInDialog({ logInDialog, signUpDialog }) {
 
   // Initiate sign-up process
   function handleSignUpInitiation() {
-    logInDialog.closeDialog()
-    signUpDialog.showDialog()
+    logInDialog.close()
+    signUpDialog.show()
   }
 
   return (
     <>
-      <dialog className='session-dialog' ref={logInDialog.dialogRef}>
+      <dialog className='session-dialog' ref={logInDialog.ref}>
         <div className='login-dialog flex-column justify-center align-center box-shadow'>
           <h1>Seedmart Login</h1>
           <div className="error-message">{error}</div>

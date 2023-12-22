@@ -24,20 +24,20 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
 
   // Handle sign-up success
   function handleSignUpSuccess() {
-    signUpDialog.closeDialog()
-    logInDialog.showDialog()
+    signUpDialog.close()
+    logInDialog.show()
     setError('Sign up successful')
   }
 
   // Navigate back to login
   function backToLogIn() {
-    signUpDialog.closeDialog()
-    logInDialog.showDialog()
+    signUpDialog.close()
+    logInDialog.show()
   }
 
   return (
     <>
-      <dialog className='session-dialog' ref={signUpDialog.dialogRef}>
+      <dialog className='session-dialog' ref={signUpDialog.ref}>
         <div className='signup-dialog box-shadow'>
           <h1>Seedmart Sign Up</h1>
           <div className="error-message">{error}</div>
