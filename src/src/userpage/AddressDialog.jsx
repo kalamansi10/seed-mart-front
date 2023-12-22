@@ -99,7 +99,7 @@ export default function AddressDialog({ addressDialog, fetchShippingAddresses })
 
   return (
     <>
-      <dialog ref={addressDialog.dialogRef}>
+      <dialog ref={addressDialog.ref}>
         <div className='address-dialog'>
           <h2>New Address:</h2>
           {renderSelectors('Region', 'regions', regions, selectedRegion, setSelectedRegion)}

@@ -47,7 +47,7 @@ export default function Addresses({ currentUser }) {
   return (
     <div>
       {renderAddresses}
-      <button onClick={addressDialog.showDialog}>New Address</button>
+      <button onClick={addressDialog.show}>New Address</button>
       <AddressDialog addressDialog={addressDialog} fetchShippingAddresses={fetchShippingAddresses}/>
     </div>
   );
