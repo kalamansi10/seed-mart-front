@@ -13,15 +13,10 @@ import Addresses from './src/userpage/Addresses'
 import PaymentMethods from './src/userpage/PaymentMethods'
 import Orders from './src/userpage/Orders'
 import Reviews from './src/userpage/Reviews'
-import useDialog from './src/hooks/useDialog'
 
 function App() {
   // State for the current user and search API
   const [currentUser, setCurrentUser] = useState(null)
-
-  // Custom hooks for login and sign-up dialogs
-  const logInDialog = useDialog()
-  const signUpDialog = useDialog()
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -45,7 +40,7 @@ function App() {
       {/* Set up BrowserRouter for client-side navigation */}
       <BrowserRouter>
         {/* Navigation component with props */}
-        <Navigation currentUser={currentUser} logInDialog={logInDialog} signUpDialog={signUpDialog} />
+        <Navigation currentUser={currentUser} />
 
         {/* Define routes for different pages */}
         <Routes>

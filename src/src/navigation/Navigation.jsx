@@ -2,11 +2,12 @@ import { useRef, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useInput from '../hooks/useInput'
 import useLogOut from '../hooks/useLogOut'
-import LogInDialog from './LogInDialog'
-import SignUpDialog from './SignUpDialog'
+import useDialog from '../hooks/useDialog'
+import LogInDialog from '../dialogs/LogInDialog'
+import SignUpDialog from '../dialogs/SignUpDialog'
 import './navigation.css'
 
-export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
+export default function Navigation({ currentUser }) {
   // Ref for options container
   const optionsContainer = useRef()
   // Hook for programmatic navigation
@@ -15,6 +16,10 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
   const location = useLocation()
   // State for the search keyword
   const searchKeyword = useInput('text', 'search')
+
+  // Custom hooks for login and sign-up dialogs
+  const logInDialog = useDialog()
+  const signUpDialog = useDialog()
 
   // Clear the keyword when navigating away from the results page
   useEffect(() => {
@@ -58,11 +63,11 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
       return (
         <>
           <div className='nav-item'>
-            <a onClick={logInDialog.showDialog}>Log in</a>
+            <a onClick={logInDialog.show}>Log in</a>
             <LogInDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
           <div className='nav-item'>
-            <a onClick={signUpDialog.showDialog}>Sign up</a>
+            <a onClick={signUpDialog.show}>Sign up</a>
             <SignUpDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
         </>
