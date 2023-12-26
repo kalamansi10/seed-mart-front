@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
+import './address-dialog.css'
 
 export default function AddressDialog({ addressDialog, fetchShippingAddresses }) {
   const [regions, setRegions] = useState([]);
@@ -65,7 +66,7 @@ export default function AddressDialog({ addressDialog, fetchShippingAddresses })
       <div className='selector-warpper flex-column'>
         <label htmlFor={id}>{label}: </label>
         <select id={id} onChange={e => setter(e.target.value)} value={getter}>
-          <option></option>
+          <option>-----</option>
           {options}
         </select>
       </div>

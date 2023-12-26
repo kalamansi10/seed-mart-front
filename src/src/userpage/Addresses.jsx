@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AddressDialog from './AddressDialog';
+import AddressDialog from '../dialogs/AddressDialog';
 import useDialog from '../hooks/useDialog';
 
 export default function Addresses({ currentUser }) {
