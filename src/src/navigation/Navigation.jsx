@@ -1,6 +1,5 @@
-import { useRef, useEffect } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
-import useInput from '../hooks/useInput'
+import { useState, useRef, useEffect } from 'react'
+import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import useLogOut from '../hooks/useLogOut'
 import useDialog from '../hooks/useDialog'
 import LogInDialog from '../dialogs/LogInDialog'
@@ -10,13 +9,14 @@ import './navigation.css'
 export default function Navigation({ currentUser }) {
   // Ref for options container
   const optionsContainer = useRef()
+  // Hoor for query parameters
+  const [searchParams] = useSearchParams()
   // Hook for programmatic navigation
   const navigate = useNavigate()
   // Hook for accessing the current location
   const location = useLocation()
   // State for the search keyword
-  const searchKeyword = useInput('text', 'search')
-
+  const [searchKeyword, setSearchKeyword] = useState(searchParams.get('keyword'))
   // Custom hooks for login and sign-up dialogs
   const logInDialog = useDialog()
   const signUpDialog = useDialog()
@@ -24,7 +24,7 @@ export default function Navigation({ currentUser }) {
   // Clear the keyword when navigating away from the results page
   useEffect(() => {
     if (location.pathname !== '/results') {
-      searchKeyword.setValue('')
+      setSearchKeyword('')
     }
   }, [location])
 
@@ -32,7 +32,7 @@ export default function Navigation({ currentUser }) {
   function handleKeyPressEnter(e) {
     if (e.key === 'Enter') {
       e.preventDefault()
-      navigate('/results?keyword=' + searchKeyword.value)
+      navigate('/results?keyword=' + searchKeyword)
     }
   }
 
@@ -83,10 +83,10 @@ export default function Navigation({ currentUser }) {
         <input
           type="text"
           onKeyDown={handleKeyPressEnter}
-          onChange={e => searchKeyword.setValue(e.target.value)}
-          value={searchKeyword.value}
+          onChange={e => setSearchKeyword(e.target.value)}
+          value={searchKeyword}
         />
-        <button onClick={() => navigate('/results?keyword=' + searchKeyword.value)}>Search</button>
+        <button onClick={() => navigate('/results?keyword=' + searchKeyword)}>Search</button>
       </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}
