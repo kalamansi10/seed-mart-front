@@ -70,7 +70,8 @@ dialog::backdrop {
   backdrop-filter: blur(7px);
 }
 
-[type="checkbox"] {
+[type="checkbox"],
+[type="radio"] {
   margin: 0;
   padding: 0;
   background: none;
@@ -121,3 +122,48 @@ dialog::backdrop {
     opacity: 1;
   }
 }
+
+input[type='radio']:after {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid var(--accent);
+}
+
+input[type='radio']:checked:after {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--accent);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid var(--accent);
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: var(--accent) #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
