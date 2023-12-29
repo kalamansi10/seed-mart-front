@@ -1,0 +1,46 @@
+.check-out-page {
+  margin-top: 20px;
+  width: 1220px;
+}
+
+.check-out-address {
+  background-color: white;
+}
+
+.selected-address-container {
+  padding: 20px 40px;
+  border-bottom: 2px solid var(--primary);
+}
+
+.address-selection-container {
+  padding: 50px 40px 30px;
+}
+
+.address-select-button {
+  width: 100px;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: var(--accent);
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.address-wrapper {
+  height: 40px;
+  width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-items-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
