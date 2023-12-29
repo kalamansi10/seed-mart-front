@@ -1,6 +1,5 @@
-.address-dialog {
+.address-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   max-width: 600px;
   height: auto;
   background-color: white;
@@ -9,70 +8,59 @@
   row-gap: 20px;
 }
 
-.address-dialog h2,
-.input-warpper,
-.address-dialog button {
-  color: var(--primary);
+.address-form .header,
+.default-address-checkbox,
+.submit-button {
+  grid-column: span 6;
+}
+
+.address-form .name,
+.address-form .number{
+  grid-column: span 3;
+}
+
+.address-form .region,
+.address-form .province,
+.address-form .city,
+.address-form .barangay {
   grid-column: span 2;
 }
 
-.selector-warpper select {
-  width: 300px;
-  text-indent: 7px;
-  background-color: white;
+.address-form .street {
+  grid-column: span 4;
 }
 
-.input-warpper input {
-  padding: 0;
+.input-wrapper input {
   width: 100%;
-  text-indent: 20px;
 }
 
-.input-warpper input,
-.selector-warpper select {
-  height: 50px;
-  border-radius: 4px;
-  border: 1px solid gray;
-
-  &:focus {
-    border: 1px solid var(--primary);
-    outline: none;
-  }
+.default-address-checkbox {
+  margin-top: 30px;
 }
 
-.selector-warpper,
-.input-warpper {
-  position: relative
-}
-
-.selector-warpper label,
-.input-warpper label {
-  font-size: small;
-  background-color: white;
-  bottom: 85%;
-  left: 10px;
-  padding: 0px 1px;
-  position: absolute;
-}
-
-.address-dialog button {
+.submit-button {
   width: 100%;
-    height: 45px;
-    border: 2px solid var(--primary);
-    background: var(--primary);
-    box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    transition: 400ms ease-in-out;
-  }
-  
-  .address-dialog button:hover {
+  height: 45px;
+  border: 2px solid var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 400ms ease-in-out;
+
+  &:hover {
     color: var(--primary);
     background: white;
   }
+}
 
-  .address-dialog label{
-    color: var(--primary);
-    grid-column: span 2;
+.default-address-checkbox input{
+  &::before {
+    border: 1px solid var(--primary);
   }
+
+  &:checked {
+    background-color: var(--primary);
+  }
+}
