@@ -1,7 +1,7 @@
 .items-container {
   display: grid;
-  grid-template-columns: repeat(5, 200px);
-  gap: 15px;
+  grid-template-columns: repeat(5, auto);
+  gap: 10px;
   padding-bottom: 20px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .sorter-wrapper {
-  width: 1025px;
+  width: 1000px;
   background-color: white;
   border-bottom: 2px solid var(--primary);
   padding: 15px 20px;
