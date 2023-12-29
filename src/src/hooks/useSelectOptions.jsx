@@ -5,15 +5,11 @@ export default function useSelectOptions(options = [], placeholder = '') {
   const [value, setValue] = useState('')
   const optionsList = useRef()
 
-  useEffect(() => {
-    toggleOptionsScroll()
-  })
-
   const input = (
     <div className='input-wrapper'>
       <input className='input'
         type='text'
-        onChange={e => setValue(e.target.value)}
+        onChange={handleOnChange}
         onFocus={() => optionsList.current.classList.toggle('hidden')}
         onBlur={() => optionsList.current.classList.toggle('hidden')}
         placeholder=''
@@ -22,41 +18,29 @@ export default function useSelectOptions(options = [], placeholder = '') {
         required
       />
       <span className='placeholder'>{placeholder}</span>
-      <ol ref={optionsList} className='options-list box-shadow hidden'>
+      <div ref={optionsList} className='options-list box-shadow hidden'>
         {renderOptions()}
-      </ol>
+      </div>
     </div>
   )
 
-  function toggleOptionsScroll() {
-    if (optionsList.current.offsetHeight < 100) {
-      optionsList.current.style.overflowY = 'visible'
-    } else if (optionsList.current.offsetHeight > 100) {
-      optionsList.current.style.overflowY = 'scroll'
-    }
+  function handleOnChange(e) {
+    setValue(e.target.value)
   }
 
   function renderOptions() {
-    let filteredOptions = options.filter(option => option.toString().includes(value))
-    if (filteredOptions.length == 0) {
-      return [(
-        <li>
-          <div className='option-wrapper flex-row align-center'>
-            No results
-          </div>
-        </li>
-      )]
-    } else {
-      return filteredOptions.sort().map(option => {
-        return (
-          <li onMouseDown={() => setValue(option)}>
-            <div className='option-wrapper flex-row align-center' >
-              {option}
-            </div>
-          </li>
-        )
-      })  
-    }
+    let filteredOptions = options.filter(
+      option => option.toString()
+        .toLowerCase()
+        .includes(value.toLowerCase())
+    )
+    return filteredOptions.sort().map(option => {
+      return (
+        <button className='option-wrapper flex-row align-center' onMouseDown={() => setValue(option)} >
+          {option}
+        </button>
+      )
+    })
   }
 
   return { value, input, setValue }
