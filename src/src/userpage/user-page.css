@@ -1,0 +1,25 @@
+.user-page {
+  padding: 20px;
+  gap: 20px;
+}
+
+.user-options {
+  width: 200px;
+  height: 1000px;
+  line-height: 20px
+}
+
+.user-options a{
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.options-section {
+  width: 1000px;
+  background-color: white;
+}
