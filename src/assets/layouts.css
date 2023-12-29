@@ -24,6 +24,10 @@ body {
   justify-content: center;
 }
 
+.justify-end {
+  justify-content: end;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -63,7 +67,7 @@ body {
 dialog {
   border: none !important;
   background-color: rgba(0, 0, 0, 0);
-  overflow: hidden;
+  overflow: visible;
 }
 
 dialog::backdrop {
