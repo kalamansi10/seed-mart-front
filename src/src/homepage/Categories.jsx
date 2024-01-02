@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import useItemsProps from '../hooks/useItemsProps'
 
 export default function Categories({  }) {
-  const properties = JSON.parse(useItemsProps())
+  const properties = useItemsProps()
   const navigate = useNavigate()
 
   function handleClickCategory(category) {
@@ -14,7 +14,7 @@ export default function Categories({  }) {
   }
 
   function renderCategories() {
-    return properties[Object.keys(properties)[0]].map((category) => {
+    return properties.list[properties.getCategories()[0]].map((category) => {
       return (
         <div className='category' key={category}>
           <a className='flex-column align-center' onClick={() => handleClickCategory(category)}>
@@ -28,7 +28,7 @@ export default function Categories({  }) {
 
   return (
     <div className='categories-container flex-row justify-center'>
-      {renderCategories()}
+      {properties.list && renderCategories()}
     </div>
   )
 }

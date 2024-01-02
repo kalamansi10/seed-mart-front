@@ -1,15 +1,28 @@
-function useItemsProps() {
-  const itemsProps = localStorage.getItem('itemsProps')
+import { useState, useEffect } from "react"
 
-  if (itemsProps) {
-    return itemsProps
-  } else {
-    fetch('/api/v1/items-properties')
-    .then(response => response.json())
-    .then(data => localStorage.setItem('itemsProps', JSON.stringify(data)))
+function useItemsProps() {
+  const [list, setList] = useState()
+
+  useEffect(() => {
+    if (localStorage.getItem('itemsProps')) {
+      setList(JSON.parse(localStorage.getItem('itemsProps')))
+    } else {
+      fetch('/api/v1/items-properties')
+        .then(response => response.json())
+        .then(data => setList(data))
+        .then(storeLocalItemsProps)
+    } 
+  }, [])
+
+  function storeLocalItemsProps() {
+    localStorage.setItem('itemsProps', JSON.stringify(list))
   }
 
-  return itemsProps
+  function getCategories() {
+    return Object.keys(list)
+  }
+
+  return { list, getCategories }
 }
 
 export default useItemsProps
