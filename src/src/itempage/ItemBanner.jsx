@@ -6,12 +6,12 @@ import AddToCart from './AddToCart'
 
 export default function ItemBanner({ item }) {
   const itemAmount = useInput('number', '')
-  const properties = JSON.parse(useItemsProps())
+  const properties = useItemsProps()
 
   useEffect(() => itemAmount.setValue(1), [])
 
   function mapSpecs() {
-    return Object.keys(properties).map(specLabel =>
+    return properties.getCategories().map(specLabel =>
       <div className='flex-row justify-between' key={specLabel}>
         <span>{mapSpecLabel(specLabel) + ': '}</span>
         <span>{item[specLabel]}</span>
@@ -43,45 +43,47 @@ export default function ItemBanner({ item }) {
     }
   }
 
-  return (
-    <div className='description-container flex-column'>
-      <div>
-        <h2>{item.name}</h2>
-      </div>
-      <div className='flex-row'>
+  if (properties.list) {
+    return (
+      <div className='description-container flex-column'>
         <div>
-          {'rating'}
+          <h2>{item.name}</h2>
+        </div>
+        <div className='flex-row'>
+          <div>
+            {'rating'}
+          </div>
+          <div>
+            {'rating'}
+          </div>
+          <div>
+            {'sold'}
+          </div>
         </div>
         <div>
-          {'rating'}
+          {'PHP ' + item.price}
         </div>
         <div>
-          {'sold'}
+          <h3>Amount:</h3>
+          <div className='amount-input flex-row'>
+            <button onClick={() => handleClickAmount(-1)}>-</button>
+            <input 
+                type='text' 
+                name='minimum' 
+                onChange={e => handlePriceFilterChange(e, itemAmount.setValue)}
+                value={itemAmount.value}
+              />
+            <button onClick={() => handleClickAmount(1)}>+</button>
+          </div>
+        </div>
+        <div>
+          <AddToCart item={item} amount={itemAmount.value}/>
+          <Link to='/checkout' state={{ from: 'itempage', item: item, amount: itemAmount.value}}><button>Buy now</button></Link>
+        </div>
+        <div className='specsContainer'>
+          {mapSpecs()}
         </div>
       </div>
-      <div>
-        {'PHP ' + item.price}
-      </div>
-      <div>
-        <h3>Amount:</h3>
-        <div className='amount-input flex-row'>
-          <button onClick={() => handleClickAmount(-1)}>-</button>
-          <input 
-              type='text' 
-              name='minimum' 
-              onChange={e => handlePriceFilterChange(e, itemAmount.setValue)}
-              value={itemAmount.value}
-            />
-          <button onClick={() => handleClickAmount(1)}>+</button>
-        </div>
-      </div>
-      <div>
-        <AddToCart item={item} amount={itemAmount.value}/>
-        <Link to='/checkout' state={{ from: 'itempage', item: item, amount: itemAmount.value}}><button>Buy now</button></Link>
-      </div>
-      <div className='specsContainer'>
-        {mapSpecs()}
-      </div>
-    </div>
-  )
+    )  
+  }
 }
