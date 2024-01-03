@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import useItemsProps from '../hooks/useItemsProps'
-import useInput from '../hooks/useInput'
+import useAmountInput from '../hooks/useAmountInput'
 import AddToCart from './AddToCart'
 
 export default function ItemBanner({ item }) {
-  const itemAmount = useInput('number', '')
+  const itemAmount = useAmountInput(0, 9999)
   const properties = useItemsProps()
 
   useEffect(() => itemAmount.setValue(1), [])
@@ -65,16 +65,7 @@ export default function ItemBanner({ item }) {
         </div>
         <div>
           <h3>Amount:</h3>
-          <div className='amount-input flex-row'>
-            <button onClick={() => handleClickAmount(-1)}>-</button>
-            <input 
-                type='text' 
-                name='minimum' 
-                onChange={e => handlePriceFilterChange(e, itemAmount.setValue)}
-                value={itemAmount.value}
-              />
-            <button onClick={() => handleClickAmount(1)}>+</button>
-          </div>
+          {itemAmount.input()}
         </div>
         <div>
           <AddToCart item={item} amount={itemAmount.value}/>

@@ -88,3 +88,36 @@
     background-color: var(--background);
   }
 }
+
+.amount-input {
+  height: 30px;
+  border: 2px solid var(--primary);
+}
+
+.amount-input button {
+  height: 100%;
+  aspect-ratio : 1 / 1;
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+}
+
+.amount-input button:hover {
+  opacity: 80%;
+}
+
+.amount-input input {
+  flex: 1;
+  height: 100%;
+  text-align: center;
+  font-size: medium;
+  padding: 0;
+  border: none;
+}
+
+.amount-input input:focus {
+  outline: 1px solid rgba(0, 0, 0, 0.3);
+}
