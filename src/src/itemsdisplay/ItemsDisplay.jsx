@@ -29,7 +29,7 @@ export default function ItemsDisplay() {
           <div>
             <img src={item.image_links[0]} alt="placeholder" />
             <div className='item-padding'>
-              <h4>{item.name}</h4>
+              <p>{item.name}</p>
               <span>{item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
             </div>
           </div>
