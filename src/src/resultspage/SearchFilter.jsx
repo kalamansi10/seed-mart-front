@@ -20,7 +20,7 @@ export default function SearchFilter() {
   function mapFilters() {
     return properties.getCategories().map(filter =>
       <section key={filter}>
-        <h4>{mapFilterLabel(filter)}</h4>
+        <p className="filter-label">{mapFilterLabel(filter)}</p>
         <div className='filter-group flex-column flex-wrap'>
           {mapOptions(filter)}
         </div>

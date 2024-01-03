@@ -10,8 +10,12 @@
   padding: 15px;
   background-color: white;
 }
+.filter-label {
+  font-weight: bold;
+}
 
 .filter-group {
+  margin-bottom: 30px;
   gap: 10px;
 }
 
