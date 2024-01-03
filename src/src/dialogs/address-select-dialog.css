@@ -8,8 +8,8 @@
   width: 100%;
   height: 275px;
   padding: 0 10px;
-  overflow-y: scroll; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-y: scroll;
+  overflow-x: hidden;
   gap: 20px;
 }
 

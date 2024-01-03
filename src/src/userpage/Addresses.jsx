@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import AddressDialog from '../dialogs/AddressDialog';
-import useDialog from '../hooks/useDialog';
+import { useEffect, useState } from 'react'
+import AddAddressDialog from '../dialogs/AddAddressDialog'
+import useDialog from '../hooks/useDialog'
 
 export default function Addresses({ currentUser }) {
-  const [renderAddresses, setRenderAddresses] = useState();
-  const addressDialog = useDialog();
+  const [renderAddresses, setRenderAddresses] = useState()
+  const addAddressDialog = useDialog()
 
   useEffect(() => {
-    fetchShippingAddresses();
-  }, []);
+    fetchShippingAddresses()
+  }, [])
 
   async function fetchShippingAddresses() {
     try {
       const response = await fetch('/api/v1/get-shipping-addresses', {
         credentials: 'include',
       })
-      const shippingAddresses = await response.json();
-      const mappedAddresses = mapShippingAddresses(shippingAddresses);
-      setRenderAddresses(mappedAddresses);
+      const shippingAddresses = await response.json()
+      const mappedAddresses = mapShippingAddresses(shippingAddresses)
+      setRenderAddresses(mappedAddresses)
     } catch (error) {
-      console.error('Error fetching shipping addresses:', error);
+      console.error('Error fetching shipping addresses:', error)
     }
   }
 
@@ -41,14 +41,14 @@ export default function Addresses({ currentUser }) {
         {`${shippingAddress.street_address}, ${shippingAddress.barangay}, ${shippingAddress.city}, ${shippingAddress.province}, ${shippingAddress.region}, ${shippingAddress.is_main}`}
         <button onClick={() => handleClickDeleteAddress(shippingAddress)}>Delete</button>
       </div>
-    ));
+    ))
   }
 
   return (
     <div>
       {renderAddresses}
-      <button onClick={addressDialog.show}>New Address</button>
-      <AddressDialog addressDialog={addressDialog} fetchShippingAddresses={fetchShippingAddresses}/>
+      <button onClick={addAddressDialog.show}>New Address</button>
+      <AddAddressDialog addAddressDialog={addAddressDialog} fetchShippingAddresses={fetchShippingAddresses}/>
     </div>
-  );
+  )
 }

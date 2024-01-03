@@ -1,15 +1,21 @@
 .check-out-page {
   margin-top: 20px;
+  margin-bottom: 100px;
   width: 1220px;
 }
 
-.check-out-address {
+.check-out-address,
+.check-out-payment,
+.selected-payment-options,
+.check-out-section {
   background-color: white;
 }
 
-.selected-address-container {
+.selected-address-container,
+.selected-payment-options,
+.check-out-section {
   padding: 20px 40px;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 1px solid var(--primary);
 }
 
 .address-selection-container {
@@ -38,9 +44,123 @@
   text-overflow: ellipsis;
 }
 
-.cart-items-container {
-  margin-top: 20px;
+.cart-items-section {
   padding: 20px;
   background-color: white;
 }
 
+.cart-items-labels,
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  justify-items: start;
+  align-items: center;
+}
+
+.cart-item img {
+  height: 60px;
+  width: 60px;
+  justify-self: center;
+}
+
+.cart-items-labels {
+  padding: 0 20px;
+  color: gray;
+  align-items: end;
+}
+
+.cart-items-labels p{
+  justify-self: start;
+  font-size: x-large;
+  grid-column: span 2;
+  color: black;
+}
+
+
+.cart-item {
+  padding: 20px;
+}
+
+.cart-item span {
+  color: var(--primary);
+}
+
+.check-out-payment {
+  gap: 30px;
+  margin-top: 20px;
+  padding: 40px;
+  border-bottom: 1px solid var(--primary);
+}
+
+.check-out-buttons {
+  gap: 10px;
+}
+
+.payment-type-button {
+  padding: 15px 20px;
+  color: gray;
+  font-weight: bold;
+  position: relative;
+  background-color: white;
+  border-radius: 4px;
+  border: 2px solid gray;
+
+  &:hover {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+}
+
+.selected-payment {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+
+  &::after {
+    content: "✓";
+    font-size: x-small;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 4px 1px 0 6px;
+    border-top-left-radius: 100%;
+    background-color: var(--primary);
+  }
+}
+
+.selected-payment-options {
+  padding: 20px 40px;
+}
+
+.cart-breakdown {
+  padding: 0 50px 50px 0;
+  background-color: white;
+}
+
+.breakdown-container {
+  padding: 30px 0;
+  width: 250px;
+  line-height: 0;
+}
+
+.total-payment {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.check-out-button {
+  height: 45px;
+  padding: 0 50px;
+  border: 2px solid var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    color: var(--primary);
+    background: white;
+  }
+}
