@@ -16,7 +16,7 @@ export default function Navigation({ currentUser }) {
   // Hook for accessing the current location
   const location = useLocation()
   // State for the search keyword
-  const [searchKeyword, setSearchKeyword] = useState(searchParams.get('keyword'))
+  const [searchKeyword, setSearchKeyword] = useState(getKeywordOnParams())
   // Custom hooks for login and sign-up dialogs
   const logInDialog = useDialog()
   const signUpDialog = useDialog()
@@ -27,6 +27,16 @@ export default function Navigation({ currentUser }) {
       setSearchKeyword('')
     }
   }, [location])
+
+  // Returns keyword if available in query string
+  function getKeywordOnParams() {
+    let keyword = searchParams.get('keyword')
+    if (keyword) {
+      return keyword
+    } else {
+      return ''
+    }
+  }
 
   // Handle pressing Enter key to trigger search
   function handleKeyPressEnter(e) {
@@ -77,16 +87,18 @@ export default function Navigation({ currentUser }) {
 
   // Main navigation component
   return (
-    <nav className='navigation justify-center flex-row align-center'>
-      <h1 className='nav-icon'><Link to='/'>Seed Mart</Link></h1>
-      <div className='search-container flex-row'>
-        <input
-          type="text"
-          onKeyDown={handleKeyPressEnter}
-          onChange={e => setSearchKeyword(e.target.value)}
-          value={searchKeyword}
-        />
-        <button onClick={() => navigate('/results?keyword=' + searchKeyword)}>Search</button>
+    <nav className='navigation flex-row justify-center align-center'>
+      <div className='rignt-nav flex-row align-center'>
+        <h1 className='nav-icon'><Link to='/'>Seed Mart</Link></h1>
+        <div className='search-wrapper flex-row align-center'>
+          <input
+            type="text"
+            onKeyDown={handleKeyPressEnter}
+            onChange={e => setSearchKeyword(e.target.value)}
+            value={searchKeyword}
+          />
+          <button onClick={() => navigate('/results?keyword=' + searchKeyword)}>Search</button>
+        </div>
       </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}
