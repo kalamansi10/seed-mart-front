@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import useInput from '../hooks/useInput'
 import useSignUp from '../hooks/useSignUp'
+import './session-dialogs.css'
 
 export default function SignUpDialog({ logInDialog, signUpDialog }) {
   // State for input values and errors
@@ -39,7 +40,7 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
     <>
       <dialog className='session-dialog' ref={signUpDialog.ref}>
         <div className='signup-dialog box-shadow'>
-          <h1>Seedmart Sign Up</h1>
+          <h2>Seedmart Sign Up</h2>
           <div className="error-message">{error}</div>
           {userEmail.input}
           {userName.input}

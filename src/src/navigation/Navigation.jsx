@@ -60,14 +60,12 @@ export default function Navigation({ currentUser }) {
       return (
         <>
           <div className='nav-item' onClick={toggleOptionsVisibility}>
-            <a>
-              <img src={profileIcon} alt="profile-icon" />
-              <section className='options-wrapper flex-column box-shadow hidden' ref={optionsContainer} onMouseLeave={toggleOptionsVisibility}>
-                <Link to='/user/profile'>My Account</Link>
-                <a>My purchases</a>
-                <a onClick={useLogOut}>Logout</a>
-              </section>
-            </a>
+            <a><img src={profileIcon} alt="profile-icon" /></a>
+            <section className='options-wrapper flex-column box-shadow hidden' ref={optionsContainer} onMouseLeave={toggleOptionsVisibility}>
+              <Link to='/user/profile'>My Account</Link>
+              <a>My purchases</a>
+              <a onClick={useLogOut}>Logout</a>
+            </section>
           </div>
           <div className='nav-item'>
             <a><img src={notificationIcon} alt="notification-icon" /></a>
