@@ -1,5 +1,6 @@
 import {useNavigate } from 'react-router-dom'
 import useItemsProps from '../hooks/useItemsProps'
+import categoriesPlaceholderImage from '../../assets/categories-placeholder.svg'
 
 export default function Categories({  }) {
   const properties = useItemsProps()
@@ -18,7 +19,7 @@ export default function Categories({  }) {
       return (
         <div className='category' key={category}>
           <a className='flex-column align-center' onClick={() => handleClickCategory(category)}>
-            <img src="https://placehold.co/200x200" alt="placeholder" />
+            <img src={categoriesPlaceholderImage} alt="placeholder" />
             <h5>{category}</h5>
           </a>
         </div>

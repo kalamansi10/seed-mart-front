@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import bannerLeftIcon from '../../assets/banner-left.png'
+import bannerRightIcon from '../../assets/banner-right.png'
 
 export default function PromoBanners() {
   const [banners, setBanners] = useState()
@@ -73,11 +75,11 @@ export default function PromoBanners() {
           {banners}
         </div>
         <img className="banner-btns prev"
-          src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-left-round-filled-icon.png'
+          src={bannerLeftIcon}
           onClick={() => move(-1)}
         />
         <img className="banner-btns next"
-          src='https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/chevron-direction-right-round-filled-icon.png'
+          src={bannerRightIcon}
           onClick={() => move(1)}
         />
         <div className="pages flex-row justify-center">{pages}</div>
