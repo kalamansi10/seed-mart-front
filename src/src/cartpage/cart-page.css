@@ -2,11 +2,12 @@
   margin-top: 20px;
   margin-bottom: 100px;
   width: 1220px;
+  
 }
 
 .cart-items-section,
 .cart-options-section {
-  padding: 20px;
+  padding: 50px 40px;
   background-color: white;
 }
 
@@ -25,9 +26,8 @@
 }
 
 .cart-items-labels {
-  padding: 0 20px;
   color: gray;
-  align-items: end;
+  border-bottom: 1px solid var(--background);
 }
 
 .cart-items-labels p{
@@ -38,7 +38,7 @@
 }
 
 .cart-item {
-  padding: 20px;
+  padding: 20px 0;
 }
 
 .amount-input input {
@@ -56,4 +56,26 @@
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.cart-options-section {
+  border-top: 2px solid var(--primary);
+}
+
+
+.right-cart-options,
+.left-cart-options {
+  gap: 20px;
+}
+
+.cart-total-label {
+  margin: 0;
+  font-size: large;
+}
+
+.cart-total-amount {
+  margin: 0;
+  font-weight: bold;
+  font-size: x-large;
+  color: var(--accent);
 }

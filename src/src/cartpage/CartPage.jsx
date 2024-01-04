@@ -88,18 +88,36 @@ export default function CartPage() {
           <span>{carted.item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
           {amountInput(carted)}
           <span>{(carted.amount * carted.item.price).toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
-          <button className='remove-item-button' onClick={() => removeItem(carted.id)}>Delete</button>
+          <button className='remove-item-button' onClick={() => removeItem(carted.id)}>Remove</button>
         </div>
       )
     })
+  }
+
+  function toLocalCurrency(price) {
+    return price.toLocaleString("en-US", { style: "currency", currency: "PHP" })
+  }
+
+  function renderCartTotal() {
+    const total = cartItems.list.reduce((currentTotal, cartItem) => {
+      return currentTotal + (cartItem.amount * cartItem.item.price)
+    }, 0)
+
+    return toLocalCurrency(total)
+  }
+
+  function renderCartQuantity() {
+    return cartItems.list.reduce((currentTotal, cartItem) => {
+      return currentTotal + cartItem.amount
+    }, 0)
   }
 
   if (cartItems.list) {
     return (
       <>
         <div className='full-height flex-column align-center'>
-          <div className='cart-page'>
-            <section className='cart-items-section box-shadow'>
+          <div className='cart-page box-shadow'>
+            <section className='cart-items-section'>
               <div className='cart-items-labels'>
                 <p>Products Ordered</p>
                 <span>Price</span>
@@ -108,8 +126,16 @@ export default function CartPage() {
               </div>
               {renderCartItems()}
             </section>
-            <section className='cart-options-section box-shadow'>
-            <Link to='/checkout' state={{ from: 'cartpage' }}><button className='check-out-button'>Checkout</button></Link>
+            <section className='cart-options-section flex-row justify-between'>
+              <div className='right-cart-options flex-row align-center'>
+                <label><input type="checkbox" />&nbsp;&nbsp;Select all</label>
+                <button className='remove-item-button'>Remove selected</button>
+              </div>
+              <div className='left-cart-options flex-row align-center'>
+                <p className='cart-total-label'>{`Total (${renderCartQuantity()} item):`}</p>
+                <p className='cart-total-amount'>{renderCartTotal()}</p>
+                <Link to='/checkout' state={{ from: 'cartpage' }}><button className='check-out-button'>Checkout</button></Link>
+              </div>
             </section>
           </div>
         </div>
