@@ -37,7 +37,7 @@ export default function CheckOutPage({ currentUser }) {
   function renderCheckOutItems(checkOutItems) {
     return checkOutItems.map(checkOutItem => {
       return (
-        <div className='cart-item' id={checkOutItem.id} key={checkOutItem.id}>
+        <div className='check-out-item' id={checkOutItem.id} key={checkOutItem.id}>
           <img src={checkOutItem.item.image_links[0]} alt="" />
           <p>{checkOutItem.item.name}</p>
           <p>{toLocalCurrency(checkOutItem.item.price)}</p>
@@ -62,8 +62,8 @@ export default function CheckOutPage({ currentUser }) {
         <div className='flex-column align-center'>
           <div className='check-out-page '>
             <CheckOutAddress selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} />
-            <section className='cart-items-section box-shadow'>
-              <div className='cart-items-labels'>
+            <section className='check-out-items-section box-shadow'>
+              <div className='check-out-items-labels'>
                 <p>Products Ordered</p>
                 <span>Price</span>
                 <span>Quantity</span>
@@ -73,7 +73,7 @@ export default function CheckOutPage({ currentUser }) {
             </section>
             <div className='box-shadow'>
               <CheckOutPayment />
-              <section className='cart-breakdown section flex-column align-end'>
+              <section className='check-out-breakdown section flex-column align-end'>
                 <div className='breakdown-container' flex-column>
                   <div className='breakdown-wrapper flex-row justify-between align-center'>
                     <p>Merchandise Subtotal:</p>
