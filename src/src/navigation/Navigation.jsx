@@ -4,6 +4,9 @@ import useLogOut from '../hooks/useLogOut'
 import useDialog from '../hooks/useDialog'
 import LogInDialog from '../dialogs/LogInDialog'
 import SignUpDialog from '../dialogs/SignUpDialog'
+import profileIcon from '../../assets/profile-icon.svg'
+import notificationIcon from '../../assets/notification-icon.svg'
+import cartIcon from '../../assets/cart-icon.svg'
 import './navigation.css'
 
 export default function Navigation({ currentUser }) {
@@ -47,7 +50,7 @@ export default function Navigation({ currentUser }) {
   }
 
   // Toggle visibility of account options
-  function toggleOptionsVisibility() {
+  function toggleOptionsVisibility(e) {
     optionsContainer.current.classList.toggle('hidden')
   }
 
@@ -57,15 +60,20 @@ export default function Navigation({ currentUser }) {
       return (
         <>
           <div className='nav-item' onClick={toggleOptionsVisibility}>
-            <a>{currentUser.name}</a>
-            <section className='options-wrapper hidden' ref={optionsContainer} onMouseLeave={toggleOptionsVisibility}>
-              <li><Link to='/user/profile'>My Account</Link></li>
-              <li><a>My purchases</a></li>
-              <li><a onClick={useLogOut}>Logout</a></li>
-            </section>
+            <a>
+              <img src={profileIcon} alt="profile-icon" />
+              <section className='options-wrapper flex-column box-shadow hidden' ref={optionsContainer} onMouseLeave={toggleOptionsVisibility}>
+                <Link to='/user/profile'>My Account</Link>
+                <a>My purchases</a>
+                <a onClick={useLogOut}>Logout</a>
+              </section>
+            </a>
           </div>
           <div className='nav-item'>
-            <a>Notifications</a>
+            <a><img src={notificationIcon} alt="notification-icon" /></a>
+          </div>
+          <div className='nav-item cart'>
+            <Link to='/cart'><img src={cartIcon} alt="cart-icon" /></Link>
           </div>
         </>
       )
@@ -73,11 +81,12 @@ export default function Navigation({ currentUser }) {
       return (
         <>
           <div className='nav-item'>
-            <a onClick={logInDialog.show}>Log in</a>
+            <a onClick={logInDialog.show}>Log In</a>
             <LogInDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
+          <a>|</a>
           <div className='nav-item'>
-            <a onClick={signUpDialog.show}>Sign up</a>
+            <a onClick={signUpDialog.show}>Sign Up</a>
             <SignUpDialog logInDialog={logInDialog} signUpDialog={signUpDialog} />
           </div>
         </>
@@ -88,23 +97,18 @@ export default function Navigation({ currentUser }) {
   // Main navigation component
   return (
     <nav className='navigation flex-row justify-center align-center'>
-      <div className='rignt-nav flex-row align-center'>
-        <h1 className='nav-icon'><Link to='/'>Seed Mart</Link></h1>
-        <div className='search-wrapper flex-row align-center'>
-          <input
-            type="text"
-            onKeyDown={handleKeyPressEnter}
-            onChange={e => setSearchKeyword(e.target.value)}
-            value={searchKeyword}
-          />
-          <button onClick={() => navigate('/results?keyword=' + searchKeyword)}>Search</button>
-        </div>
+      <Link to='/'><h1 className='nav-icon'>Seed Mart</h1></Link>
+      <div className='search-wrapper flex-row align-center'>
+        <input
+          type="text"
+          onKeyDown={handleKeyPressEnter}
+          onChange={e => setSearchKeyword(e.target.value)}
+          value={searchKeyword}
+        />
+        <button onClick={() => navigate('/results?keyword=' + searchKeyword)}>Search</button>
       </div>
       <div className="nav-options flex-row">
         {renderAccountOptions()}
-        <div className='nav-item cart'>
-          <Link to='/cart'>Cart</Link>
-        </div>
       </div>
     </nav>
   )

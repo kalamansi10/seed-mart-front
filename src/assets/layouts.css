@@ -38,7 +38,7 @@ h5 {font-size: 1.250rem; /* 20px */}
 small {font-size: 0.800rem; /* 12.8px */}
 
 .full-height {
-  min-height: calc(100vh - 300px);
+  min-height: calc(100vh - 280px);
 }
 
 .flex-column {

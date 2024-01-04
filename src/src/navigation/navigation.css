@@ -1,25 +1,21 @@
 .navigation {
   background-color: var(--primary);
   column-gap: 40px;
-  height: 100px;
+  height: 80px;
 }
 
 .navigation a {
   color: var(--background);
   text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.navigation h1 {
-  color: var(--primary);
-  flex-shrink: 0;
-}
-
-.nav-options {
-  gap: 5px;
-}
-
-.options-wrapper {
-  position: absolute;
+.nav-icon {
+  margin: 0;
+  color: white;
 }
 
 .login-dialog,
@@ -39,11 +35,10 @@
   }
 }
 
-
 .session-dialog a {
   color: var(--primary);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: bold;
 
   &:hover {
     text-decoration: underline;
@@ -66,93 +61,129 @@
     background: white;
   }
 }
-  .error-message {
-    grid-column: span 2;
-    margin: 0;
-    font-weight: bold;
-    color: rgba(255, 0, 25, 0.608);
+
+.error-message {
+  grid-column: span 2;
+  margin: 0;
+  font-weight: bold;
+  color: rgba(255, 0, 25, 0.608);
+}
+
+.signup-dialog {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  max-width: 600px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+  row-gap: 20px;
+}
+
+.session-dialog h1 {
+  color: var(--primary);
+  grid-column: span 2;
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.captcha {
+  grid-column: 2 / 3;
+  grid-row: 3 / 5;
+}
+
+.signup-dialog p {
+  grid-column: 2 / 3;
+  grid-row: 5 / 6;
+  font-size: small;
+  margin: 0;
+  margin-top: 15px;
+}
+
+.signup-dialog button {
+  grid-column: 2 / 3;
+  grid-row: 6 / 7;
+}
+
+.login-link {
+  grid-column: 2 / 3;
+}
+
+.login-dialog {
+  row-gap: 20px;
+}
+
+.rememberable {
+  width: 100%;
+  column-gap: 40px;
+}
+
+.search-wrapper {
+  height: 40px;
+  width: 750px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.search-wrapper input {
+  width: 100%;
+  height: 100%;
+  font-size: medium;
+  text-indent: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 20px 0 0 20px;
+
+  &:focus {
+    outline: none;
   }
+}
 
-  .signup-dialog {
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    max-width: 600px;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 30px;
-    row-gap: 20px;
+.search-wrapper button {
+  width: 100;
+  height: 100%;
+  padding: 0 20px;
+  border: 3px solid white;
+  border-radius: 20px 20px 20px 20px;
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+
+  &:hover {
+    opacity: 80%;
   }
+}
 
-  .signup-dialog h1 {
-    grid-column: span 2;
-    margin: 0;
-    margin-bottom: 15px;
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item a {
+  padding: 0 10px;
+  position: relative;
+}
+
+.nav-item img {
+  height: 25px;
+  aspect-ratio: 1/1;
+}
+
+.options-wrapper {
+  width: 200px;
+  position: absolute;
+  top: 150%;
+  background-color: white;
+}
+
+.options-wrapper a {
+  margin: 0;
+  padding: 20px;
+  line-height: 0;
+  color: var(--primary);
+
+  &:hover {
+    background-color: var(--background);
   }
-
-  .captcha {
-    grid-column: 2 / 3;
-    grid-row: 3 / 5;
-  }
-
-  .signup-dialog p {
-    grid-column: 2 / 3;
-    grid-row: 5 / 6;
-    font-size: small;
-    margin: 0;
-    margin-top: 15px;
-  }
-
-  .signup-dialog button {
-    grid-column: 2 / 3;
-    grid-row: 6 / 7;
-  }
-
-  .login-link {
-    grid-column: 2 / 3;
-  }
-
-  .login-dialog {
-    row-gap: 20px;
-  }
-
-  .rememberable {
-    width: 100%;
-    column-gap: 40px;
-  }
-
-  .rignt-nav {
-    gap: 60px;
-  }
-
-  .search-wrapper {
-    height: 40px;
-    width: 750px;
-  }
-
-  .search-wrapper input {
-    width: 100%;
-    height: 100%;
-    font-size: medium;
-    text-indent: 15px;
-    padding: 0;
-    border: none;
-
-    &:focus {
-      outline: 1px solid rgba(0, 0, 0, 0.3);
-    }
-  }
-
-  .search-wrapper button {
-    width: 100;
-    height: 100%;
-    border: 2px solid white;
-    background: var(--primary);
-    box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
-    cursor: pointer;
-    color: #ffffff;
-    font-weight: bold;
-
-    &:hover {
-      opacity: 80%;
-    }
-  }
+}
