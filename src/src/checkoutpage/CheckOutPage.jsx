@@ -59,7 +59,7 @@ export default function CheckOutPage({ currentUser }) {
             <div className='box-shadow'>
               <CheckOutPayment />
               <section className='check-out-breakdown section flex-column align-end'>
-                <div className='breakdown-container' flex-column>
+                <div className='breakdown-container'>
                   <div className='breakdown-wrapper flex-row justify-between align-center'>
                     <p>Merchandise Subtotal:</p>
                     <span>{renderCartTotal()}</span>
