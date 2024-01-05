@@ -8,18 +8,18 @@ export default function useListState() {
   }
 
   function update(id, newValue, key) {
-    const updatedItem = get(id)
-    if (list) {
-      updatedItem[key] = newValue
-      setList(prev => prev.map(item => {
-        if (item.id == id) {
-          return updatedItem
-        } else {
-          return item
-        }
-      }))
-    }
+    setList(prev => {
+      return prev.map(item => (item.id === id ? { ...item, [key]: newValue } : item))
+    })
+  }
+  
+  function remove(id) {
+    setList(prev => prev.filter(item => item.id != id))
   }
 
-  return { list, setList, get, update }
+  function removeMany(idList) {
+    setList(prev => prev.filter(item => !idList.includes(item.id)))
+  }
+
+  return { list, setList, get, update, remove, removeMany }
 }
