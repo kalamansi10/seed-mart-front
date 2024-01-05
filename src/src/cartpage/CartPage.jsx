@@ -25,14 +25,16 @@ export default function CartPage() {
   }
 
   function handleAmountInputChange(e, carted_id) {
-    let value = Number(e.target.value)
-    if (value >= 0 && value < 1000) cartItems.update(carted_id, value, 'amount')
+    let amount = Number(e.target.value)
+    if (amount > 0 && amount < 1000) {
+      updateCartedAmount(amount, carted_id)
+    } else if ( amount < 1) {
+      cartItems.update(carted_id, null, 'amount')
+    }
   }
 
-  function handleAmountInputBlur(carted_id) {
-    let updatedAmount = cartItems.get(carted_id).amount
-    if (updatedAmount < 1) updateCartedAmount(1, carted_id)
-    updateCartedAmount(updatedAmount, carted_id)
+  function handleAmountInputBlur(e, carted_id) {
+    if (e.target.value < 1) updateCartedAmount(1, carted_id)
   }
 
   function amountInput(carted) {
@@ -42,7 +44,7 @@ export default function CartPage() {
         <input
           type='text'
           onChange={e => handleAmountInputChange(e, carted.id)}
-          onBlur={() => handleAmountInputBlur(carted.id)}
+          onBlur={e => handleAmountInputBlur(e, carted.id)}
           value={cartItems.get(carted.id).amount}
         />
         <button onClick={() => handleAmountAdjustClick(carted.id, 1)}>+</button>
@@ -87,7 +89,7 @@ export default function CartPage() {
             <section className='cart-options-section flex-row justify-between'>
               <div className='right-cart-options flex-row align-center'>
                 <label><input type="checkbox"
-                  onClick={e => toggleSelectAllForCheckout(e.target.checked)}
+                  onChange={e => toggleSelectAllForCheckout(e.target.checked)}
                   checked={cartItems.list.every(item => item.is_for_checkout)}
                 />&nbsp;&nbsp;&nbsp;Select all</label>
                 <button className='remove-item-button' onClick={removeForCheckout}>Remove selected</button>
