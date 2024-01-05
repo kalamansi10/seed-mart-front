@@ -4,59 +4,44 @@ import CheckoutDialog from '../dialogs/CheckoutDialog'
 import useDialog from '../hooks/useDialog'
 import CheckOutAddress from './CheckOutAddress'
 import CheckOutPayment from './CheckOutPayment'
+import useCartAPI from '../api/useCartAPI'
 import './check-out-page.css'
 
 export default function CheckOutPage({ currentUser }) {
   const [selectedAddress, setSelectedAddress] = useState()
-  const [checkOutItems, setCheckOutItems] = useState()
   const checkoutDialog = useDialog()
   const locationState = useLocation()
   const { from, item, amount } = locationState.state
+  const {
+    initialize,
+    cartItems,
+    toLocalCurrency,
+    renderCartTotal,
+  } = useCartAPI()
 
   useEffect(() => {
     if (from == 'itempage') {
-      setCheckOutItems([{ id: 1, item_id: item.id, amount: amount, item: item }])
+      cartItems.setList([{ id: 1, item_id: item.id, amount: amount, item: item }])
     } else if (from == 'cartpage') {
-      getCart()
+      initialize('checkoutpage')
     }
   }, [])
 
-  function getCart() {
-    fetch('api/v1/get-cart', {
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => data.filter(item => item.is_for_checkout == true))
-      .then(filteredData => setCheckOutItems(filteredData))
-  }
-
-  function toLocalCurrency(price) {
-    return price.toLocaleString("en-US", { style: "currency", currency: "PHP" })
-  }
-
-  function renderCheckOutItems(checkOutItems) {
-    return checkOutItems.map(checkOutItem => {
+  function rendercheckoutItems() {
+    return cartItems.list.map(checkoutItem => {
       return (
-        <div className='check-out-item' id={checkOutItem.id} key={checkOutItem.id}>
-          <img src={checkOutItem.item.image_links[0]} alt="" />
-          <p>{checkOutItem.item.name}</p>
-          <p>{toLocalCurrency(checkOutItem.item.price)}</p>
-          <p>{checkOutItem.amount}</p>
-          <p>{toLocalCurrency(checkOutItem.amount * checkOutItem.item.price)}</p>
+        <div className='check-out-item' id={checkoutItem.id} key={checkoutItem.id}>
+          <img src={checkoutItem.item.image_links[0]} alt="" />
+          <p>{checkoutItem.item.name}</p>
+          <p>{toLocalCurrency(checkoutItem.item.price)}</p>
+          <p>{checkoutItem.amount}</p>
+          <p>{toLocalCurrency(checkoutItem.amount * checkoutItem.item.price)}</p>
         </div>
       )
     })
   }
 
-  function totalBreakdown() {
-    const total = checkOutItems.reduce((currentTotal, checkOutItem) => {
-      return currentTotal + (checkOutItem.amount * checkOutItem.item.price)
-    }, 0)
-
-    return toLocalCurrency(total)
-  }
-
-  if (checkOutItems) {
+  if (cartItems.list) {
     return (
       <>
         <div className='flex-column align-center'>
@@ -69,7 +54,7 @@ export default function CheckOutPage({ currentUser }) {
                 <span>Quantity</span>
                 <span>Total</span>
               </div>
-              {renderCheckOutItems(checkOutItems)}
+              {rendercheckoutItems()}
             </section>
             <div className='box-shadow'>
               <CheckOutPayment />
@@ -77,7 +62,7 @@ export default function CheckOutPage({ currentUser }) {
                 <div className='breakdown-container' flex-column>
                   <div className='breakdown-wrapper flex-row justify-between align-center'>
                     <p>Merchandise Subtotal:</p>
-                    <span>{totalBreakdown()}</span>
+                    <span>{renderCartTotal()}</span>
                   </div>
                   <div className='breakdown-wrapper flex-row justify-between align-center'>
                     <p>Shipping Fee:</p>
@@ -85,7 +70,7 @@ export default function CheckOutPage({ currentUser }) {
                   </div>
                   <div className='breakdown-wrapper flex-row justify-between align-center'>
                     <p>Total Payment:</p>
-                    <span className='total-payment'>{totalBreakdown()}</span>
+                    <span className='total-payment'>{renderCartTotal()}</span>
                   </div>
                 </div>
                 <button className='check-out-button' onClick={checkoutDialog.show}>Place order</button>
