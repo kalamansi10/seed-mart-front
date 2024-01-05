@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import useCartAPI from '../api/useCartAPI'
 import './cart-page.css'
 
 export default function CartPage() {
   const {
+    initialize,
     cartItems,
     updateCheckoutStatus,
     updateCartedAmount,
@@ -14,6 +16,10 @@ export default function CartPage() {
     renderCartTotal,
     renderCartQuantity
   } = useCartAPI()
+
+  useEffect(() => {
+    initialize()
+  }, [])
 
   function handleAmountAdjustClick(carted_id, adjustment) {
     let result = adjustment + cartItems.get(carted_id).amount

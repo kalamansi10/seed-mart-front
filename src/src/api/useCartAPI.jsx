@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import useListState from '../hooks/useListState'
 
 export default function useCartAPI() {
@@ -11,13 +10,13 @@ export default function useCartAPI() {
     }
   }
 
-  useEffect(() => {
+  function initialize() {
     fetch('api/v1/get-cart', {
       credentials: 'include',
     })
       .then(response => response.json())
       .then(data => cartItems.setList(data))
-  }, [])
+  }
 
   function updateCheckoutStatus(isForCheckOut, id) {
     fetch(`/api/v1/update-checkout-status/${id}/${isForCheckOut}`, updateHeader)
@@ -72,6 +71,7 @@ export default function useCartAPI() {
   }
 
   return ({
+    initialize,
     cartItems,
     updateCheckoutStatus,
     updateCartedAmount,
