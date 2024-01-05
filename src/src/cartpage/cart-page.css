@@ -2,13 +2,11 @@
   margin-top: 20px;
   margin-bottom: 100px;
   width: 1220px;
-  
+  background-color: white;
 }
 
-.cart-items-section,
-.cart-options-section {
-  padding: 50px 40px;
-  background-color: white;
+.cart-items-section {
+  padding: 50px 40px 20px;
 }
 
 .cart-items-labels,
@@ -60,12 +58,16 @@
 
 .cart-options-section {
   border-top: 2px solid var(--primary);
+  padding: 50px 40px 80px;
 }
-
 
 .right-cart-options,
 .left-cart-options {
   gap: 20px;
+}
+
+.right-cart-options {
+  padding-left: 30px;
 }
 
 .cart-total-label {
