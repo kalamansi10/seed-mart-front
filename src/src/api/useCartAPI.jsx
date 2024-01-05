@@ -10,12 +10,20 @@ export default function useCartAPI() {
     }
   }
 
-  function initialize() {
+  function initialize(from) {
     fetch('api/v1/get-cart', {
       credentials: 'include',
     })
       .then(response => response.json())
-      .then(data => cartItems.setList(data))
+      .then(data => {
+        if (from == 'cartpage') {
+          cartItems.setList(data)
+        } else if (from == 'checkoutpage') {
+          cartItems.setList(data.map(item => {
+            if (item.is_for_checkout == true) return item
+          }))
+        }
+      })
   }
 
   function updateCheckoutStatus(isForCheckOut, id) {
