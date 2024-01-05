@@ -1,54 +1,26 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import useListState from '../hooks/useListState'
+import useCartAPI from '../api/useCartAPI'
 import './cart-page.css'
 
 export default function CartPage() {
-  const cartItems = useListState()
-  const headers = { 'X-CSRF-Token': document.cookie.split('=')[1] }
-
-  useEffect(() => {
-    fetch('api/v1/get-cart', {
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => cartItems.setList(data))
-  }, [])
-
-  function updateForCheckOut(e, carted_id) {
-    fetch('/api/v1/update-cart?carted_id=' + carted_id + '&is_for_checkout=' + e.target.checked, {
-      method: 'post',
-      credentials: 'include',
-      headers: headers
-    })
-  }
-
-  function updateAmount(updatedAmount, carted_id) {
-    if (updatedAmount < 1) return
-    fetch('/api/v1/update-cart?carted_id=' + carted_id + '&amount=' + updatedAmount, {
-      method: 'post',
-      credentials: 'include',
-      headers: headers
-    })
-  }
-
-  function removeItem(carted_id) {
-    cartItems.update(carted_id, 0, 'amount')
-    document.querySelector(`.cart-item[id="${carted_id}"]`).classList.add('hidden')
-    fetch('/api/v1/remove-from-cart/' + carted_id, {
-      method: 'delete',
-      credentials: 'include',
-      headers: headers
-    })
-  }
+  const {
+    cartItems,
+    updateCheckoutStatus,
+    updateCartedAmount,
+    toggleSelectAllForCheckout,
+    removeCartedItem,
+    removeForCheckout,
+    toLocalCurrency,
+    renderCartTotal,
+    renderCartQuantity
+  } = useCartAPI()
 
   function handleAmountAdjustClick(carted_id, adjustment) {
     let result = adjustment + cartItems.get(carted_id).amount
     if (result > 0 && result < 1000) {
-      updateAmount(result, carted_id)
-      cartItems.update(carted_id, result, 'amount')
+      updateCartedAmount(result, carted_id)
     } else if (result < 1) {
-      removeItem(carted_id)
+      removeCartedItem(carted_id)
     }
   }
 
@@ -59,8 +31,8 @@ export default function CartPage() {
 
   function handleAmountInputBlur(carted_id) {
     let updatedAmount = cartItems.get(carted_id).amount
-    if (updatedAmount < 1) cartItems.update(carted_id, 1, 'amount')
-    updateAmount(updatedAmount, carted_id)
+    if (updatedAmount < 1) updateCartedAmount(1, carted_id)
+    updateCartedAmount(updatedAmount, carted_id)
   }
 
   function amountInput(carted) {
@@ -82,34 +54,20 @@ export default function CartPage() {
     return cartItems.list.map((carted) => {
       return (
         <div className='cart-item' id={carted.id} key={carted.id}>
-          <input type="checkbox" onClick={(e) => updateForCheckOut(e, carted.id)} defaultChecked={carted.is_for_checkout} />
+          <input type="checkbox"
+            onClick={e => updateCheckoutStatus(e.target.checked, carted.id)}
+            onChange={e => cartItems.update(carted.id, e.target.checked, 'is_for_checkout')}
+            checked={carted.is_for_checkout}
+          />
           <img src={carted.item.image_links[0]} alt="" />
           <p>{carted.item.name}</p>
-          <span>{carted.item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
+          <span>{toLocalCurrency(carted.item.price)}</span>
           {amountInput(carted)}
-          <span>{(carted.amount * carted.item.price).toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
+          <span>{toLocalCurrency(carted.amount * carted.item.price)}</span>
           <button className='remove-item-button' onClick={() => removeItem(carted.id)}>Remove</button>
         </div>
       )
     })
-  }
-
-  function toLocalCurrency(price) {
-    return price.toLocaleString("en-US", { style: "currency", currency: "PHP" })
-  }
-
-  function renderCartTotal() {
-    const total = cartItems.list.reduce((currentTotal, cartItem) => {
-      return currentTotal + (cartItem.amount * cartItem.item.price)
-    }, 0)
-
-    return toLocalCurrency(total)
-  }
-
-  function renderCartQuantity() {
-    return cartItems.list.reduce((currentTotal, cartItem) => {
-      return currentTotal + cartItem.amount
-    }, 0)
   }
 
   if (cartItems.list) {
@@ -128,8 +86,11 @@ export default function CartPage() {
             </section>
             <section className='cart-options-section flex-row justify-between'>
               <div className='right-cart-options flex-row align-center'>
-                <label><input type="checkbox" />&nbsp;&nbsp;Select all</label>
-                <button className='remove-item-button'>Remove selected</button>
+                <label><input type="checkbox"
+                  onClick={e => toggleSelectAllForCheckout(e.target.checked)}
+                  checked={cartItems.list.every(item => item.is_for_checkout)}
+                />&nbsp;&nbsp;&nbsp;Select all</label>
+                <button className='remove-item-button' onClick={removeForCheckout}>Remove selected</button>
               </div>
               <div className='left-cart-options flex-row align-center'>
                 <p className='cart-total-label'>{`Total (${renderCartQuantity()} item):`}</p>
