@@ -18,7 +18,7 @@ export default function CartPage() {
   } = useCartAPI()
 
   useEffect(() => {
-    initialize()
+    initialize('cartpage')
   }, [])
 
   function handleAmountAdjustClick(carted_id, adjustment) {
