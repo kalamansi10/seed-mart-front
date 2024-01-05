@@ -42,7 +42,7 @@ export default function CheckOutPage({ currentUser }) {
           <p>{checkOutItem.item.name}</p>
           <p>{toLocalCurrency(checkOutItem.item.price)}</p>
           <p>{checkOutItem.amount}</p>
-          <span>{toLocalCurrency(checkOutItem.amount * checkOutItem.item.price)}</span>
+          <p>{toLocalCurrency(checkOutItem.amount * checkOutItem.item.price)}</p>
         </div>
       )
     })
