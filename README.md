@@ -1,22 +1,27 @@
-##### I'm currently developing an e-commerce React web app using Vite that connects to a Rails API backend. It's a work in progress, and I wanted to share the current status of features:
+# E-Commerce React Web App: Vite + Rails API
 
-##### Implemented Features:
-    - Modal log in w/ rememberable session + CSRF authentication
-    - Promo banner slider
-    - Items list fetcher and mapper
-    - Item search + category filter
-    - Items cartpage
-    - Item page
-##### Features Currently Being Implemented:
-    - Checkout page
-    - Profile and profile settings page
-    - Interactive Nav bar(Profile and cart dropdown)
-##### Planned Features:
-    - Far better CSS
-    - Payment API integration
-    - Buyer review
-    - Footer
+I'm actively developing an e-commerce React web app using Vite, connecting to a Rails API backend. This project is a continuous work in progress.
 
-##### After cloning the repository, to run the app make sure that the Rails API backend is already running. Then run the following command:
-    npm install
-    npm run dev
+## Key Features
+- **Modal Login:** Implemented with rememberable session + CSRF authentication.
+- **Promo Banner Slider:** Engage users with promotional content.
+- **Item Search and Filter:** Enhance user experience with efficient search and category filtering.
+- **Shopping Cart:** A convenient cart page for managing selected items.
+- **Item Page:** Detailed view of individual items.
+
+## Features in Progress
+- **Checkout Page:** Streamlining the purchase process.
+- **Profile Pages:** Building user profiles and settings.
+
+## Planned Enhancements
+- **CSS Styling:** Elevate the visual appeal with improved styling.
+- **Payment API Integration:** Facilitate seamless transactions.
+- **Buyer Reviews:** Allow users to share their experiences.
+- **Footer:** Add a comprehensive footer section.
+
+## Getting Started
+After cloning the repository, ensure the Rails API backend is running. Then, run the following commands:
+
+```bash
+npm install
+npm run dev
