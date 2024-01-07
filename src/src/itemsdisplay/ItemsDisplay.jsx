@@ -12,6 +12,7 @@ export default function ItemsDisplay() {
 
   const itemCount = useRef()
   const page = useRef(1)
+
   useEffect(() => {
     setItems(null)
     fetch('/api/v1/search?' + searchParams.toString())
@@ -25,12 +26,13 @@ export default function ItemsDisplay() {
   function mapItems(item_list) {
     return item_list.map((item) =>
       <Link to={'/show/' + item.id} key={item.id}>
-        <div className="item-card flex-column justify-between box-shadow">
-          <div>
-            <img src={item.image_links[0]} alt="placeholder" />
-            <div className='item-padding'>
-              <p>{item.name}</p>
-              <span>{item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
+        <div className="item-card flex-column box-shadow">
+          <img src={item.preview_image} alt="placeholder" />
+          <div className='item-information flex-column justify-between'>
+            <p className='item-name'>{item.name}</p>
+            <div className='flex-row justify-between'>
+              <span className='price'>{item.price.toLocaleString("en-US", { style: "currency", currency: "PHP" })}</span>
+              <span className='item-sold'>{`${item.items_sold} sold`}</span>
             </div>
           </div>
         </div>
