@@ -9,6 +9,10 @@
   background-color: white;
   width: 200px;
   height: 275px;
+
+  &:hover {
+    outline: 3px solid var(--secondary);
+  }
 }
 
 .item-name {
