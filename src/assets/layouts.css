@@ -32,7 +32,7 @@ h5 { font-size: 1.250rem; } /* 20px */
 small { font-size: 0.800rem; } /* 12.8px */
 
 /* Layout and Flexbox */
-.full-height { min-height: calc(100vh - 280px); }
+.full-height { min-height: calc(100vh - 340px); }
 .flex-column { display: flex; flex-direction: column; }
 .flex-row { display: flex; flex-direction: row; }
 .justify-center { justify-content: center; }
