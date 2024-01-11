@@ -4,7 +4,7 @@
   --text: #0f0f0f;
   --background: #d7e4dc;
   --primary: #155831;
-  --secondary: #95fe79;
+  --secondary: #a6b9c4;
   --accent: #c20002;
 }
 
@@ -151,6 +151,7 @@ input[type='radio']:checked:after {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 9px;
+  height: 9px;
 }
 
 *::-webkit-scrollbar-track {
