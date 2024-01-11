@@ -11,6 +11,6 @@ export default function AddToCart({ item, amount }) {
   }
 
   return (
-    <button onClick={updateCart}>Add to cart</button>
+    <button className='add-to-cart-button' onClick={updateCart}>Add to cart</button>
   )
 }
