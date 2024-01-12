@@ -13,19 +13,19 @@ export default function Footer() {
 
   return (
     <footer className='flex-column align-center box-shadow'>
-      <div class='footer-content flex-row'>
-        <div class='footer-section about'>
+      <div className='footer-content flex-row'>
+        <div className='footer-section about'>
           <h2>About Us</h2>
           <p>E-commerce website template.</p>
         </div>
-        <div class='footer-section contact'>
+        <div className='footer-section contact'>
           <h2>Contact Us</h2>
           <ul>
             <li><a href='https://github.com/kalamansi10' target='_blank'>GitHub</a></li>
             <li><a href='https://www.linkedin.com/in/jjumadiao/' target='_blank'>LinkedIn</a></li>
           </ul>
         </div>
-        <div class='footer-section links'>
+        <div className='footer-section links'>
           <h2>Quick Links</h2>
           <ul>
             <li onClick={scrollUp}><Link to='/'>Home</Link></li>
@@ -35,7 +35,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div class='footer-bottom'>
+      <div className='footer-bottom'>
         <p>&copy; 2024 SeedMart. All Rights Reserved.</p>
       </div>
     </footer>
