@@ -17,7 +17,7 @@ export default function ItemPage() {
   if (item) {
     return (
       <>
-        <div className='flex-row justify-center'>
+        <div className='flex-row justify-center full-height'>
           <div className='item-page box-shadow'>
             <div>
               <PreviewSlider item={item} />
