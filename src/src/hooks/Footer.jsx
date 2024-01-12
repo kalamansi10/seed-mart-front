@@ -8,11 +8,11 @@ export default function Footer() {
     window.scroll({
       top: 0,
       behavior: "smooth",
-    });    
+    });
   }
 
   return (
-    <footer>
+    <footer className='flex-column align-center box-shadow'>
       <div class='footer-content flex-row'>
         <div class='footer-section about'>
           <h2>About Us</h2>
@@ -20,8 +20,10 @@ export default function Footer() {
         </div>
         <div class='footer-section contact'>
           <h2>Contact Us</h2>
-          <p><a href='https://github.com/kalamansi10' target='_blank'>GitHub</a></p>
-          <p><a href='https://www.linkedin.com/in/jjumadiao/' target='_blank'>LinkedIn</a></p>
+          <ul>
+            <li><a href='https://github.com/kalamansi10' target='_blank'>GitHub</a></li>
+            <li><a href='https://www.linkedin.com/in/jjumadiao/' target='_blank'>LinkedIn</a></li>
+          </ul>
         </div>
         <div class='footer-section links'>
           <h2>Quick Links</h2>

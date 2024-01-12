@@ -1,9 +1,11 @@
 footer {
-  background-color: var(--primary);
+  margin-top: 100px;
   padding-top: 20px;
+  background-color: white;
 }
 
 .footer-content {
+  width: 1220px;
   height: 180px;
 }
 
@@ -13,12 +15,13 @@ footer {
 }
 
 .footer-section h2 {
-  color: white;
+  color: var(--primary);
   font-size: x-large;
 }
 
 .footer-section p {
-  color: white;
+  color: gray;
+  font-size: large;
 }
 
 .footer-section ul {
@@ -32,24 +35,28 @@ footer {
 
 .footer-section a {
   text-decoration: none;
-  color: var(--background);
-  transition: color 0.3s ease-in-out;
+  text-indent: 10px;
+  color: gray;
+  font-size: large;
 }
 
 .footer-section a:hover {
-  color: white;
+  color: var(--primary);
+  text-decoration: underline;
 }
 
 .footer-bottom {
-  margin-top: 20px;
-  padding: 10px 0;
+  width: 100%;
   height: 20px;
+  margin-top: 70px;
+  padding: 10px 0;
   text-align: center;
-  background-color: white;
+  background-color: var(--primary);
+  border-top: 2px solid var(--secondary);
 }
 
 .footer-bottom p {
   margin: 0;
-  color: var(--primary);
+  color: white;
   font-weight: bold;
 }
