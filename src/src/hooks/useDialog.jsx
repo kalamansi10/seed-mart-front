@@ -12,7 +12,7 @@ export default function useDialog() {
       // Close the dialog
       ref.current.close()
       // Remove the event listener for outside clicks
-      ref.current.removeEventListener('click', handleOutsideClick)
+      removeListener()
     }
   }
 
@@ -40,6 +40,10 @@ export default function useDialog() {
     }
   }
 
+  const removeListener = () => {
+    ref.current.removeEventListener('click', handleOutsideClick)
+  }
+
   // Return the dialog reference and functions for showing and closing the dialog
-  return { ref, show, close }
+  return { ref, show, close, removeListener }
 }
