@@ -11,7 +11,6 @@ import './check-out-page.css'
 export default function CheckOutPage({ currentUser }) {
   const [selectedAddress, setSelectedAddress] = useState()
   const checkoutDialog = useDialog()
-  // Hook for programmatic navigation
   const locationState = useLocation()
   const { from, item, amount } = locationState.state
   const order = useOrderAPI()
