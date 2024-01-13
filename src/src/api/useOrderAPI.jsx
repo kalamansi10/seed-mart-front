@@ -1,9 +1,10 @@
-import React from 'react'
+import { useState } from 'react'
 
 export default function useOrderAPI() {
+  const [referenceNumber, setReferenceNumber] = useState()
 
-  function processOrder(orderList) {
-    fetch('api/v1/order', {
+  async function process(orderList) {
+    return fetch('api/v1/order', {
       method: 'post',
       credentials: 'include',
       headers: {
@@ -14,7 +15,8 @@ export default function useOrderAPI() {
         order_list: orderList
       })
     })
-  }
+    .then(response => response.json())
+  }  
 
-  return { processOrder }
+  return { process, referenceNumber, setReferenceNumber}
 }
