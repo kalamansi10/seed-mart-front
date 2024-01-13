@@ -5,23 +5,27 @@ import useDialog from '../hooks/useDialog'
 import CheckOutAddress from './CheckOutAddress'
 import CheckOutPayment from './CheckOutPayment'
 import useCartAPI from '../api/useCartAPI'
+import useOrderAPI from '../api/useOrderAPI'
 import './check-out-page.css'
 
 export default function CheckOutPage({ currentUser }) {
   const [selectedAddress, setSelectedAddress] = useState()
   const checkoutDialog = useDialog()
+  // Hook for programmatic navigation
   const locationState = useLocation()
   const { from, item, amount } = locationState.state
+  const order = useOrderAPI()
   const {
     initialize,
     cartItems,
     toLocalCurrency,
     renderCartTotal,
   } = useCartAPI()
+  const orderList = validateCheckOutInfo()
 
   useEffect(() => {
     if (from == 'itempage') {
-      cartItems.setList([{ id: 1, item_id: item.id, amount: amount, item: item }])
+      cartItems.setList([{item_id: item.id, amount: amount, item: item }])
     } else if (from == 'cartpage') {
       initialize('checkoutpage')
     }
@@ -39,6 +43,37 @@ export default function CheckOutPage({ currentUser }) {
         </div>
       )
     })
+  }
+
+  function handleProcessOrderClick() {
+    if (!orderList) return
+    checkoutDialog.show()
+    checkoutDialog.removeListener()
+    order.process(orderList)
+      .then(data => {
+        order.setReferenceNumber(data.reference_number)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  function validateCheckOutInfo() {
+    if (selectedAddress) {
+      return cartItems.list.map(checkoutItem => {
+        return {
+          carted_id: from == 'cartpage' ? checkoutItem.id : null,
+          item_id: checkoutItem.item_id,
+          shipping_address_id: selectedAddress.id,
+          payment_method_id: 0,
+          amount: checkoutItem.amount,
+          adjustments: "{}",
+          total: (checkoutItem.amount * checkoutItem.item.price)
+        }
+      })
+    } else {
+      return null
+    }
   }
 
   if (cartItems.list) {
@@ -73,7 +108,8 @@ export default function CheckOutPage({ currentUser }) {
                     <span className='total-payment'>{renderCartTotal()}</span>
                   </div>
                 </div>
-                <button className='check-out-button' onClick={checkoutDialog.show}>Place order</button>
+                <button className='check-out-button' onClick={handleProcessOrderClick}>Place order</button>
+                <CheckoutDialog checkoutDialog={checkoutDialog} referenceNumber={order.referenceNumber} />
               </section>
               <section className='check-out section flex-column align-end'>
               </section>
