@@ -3,14 +3,15 @@ import { useState, useEffect } from "react"
 function useItemsProps() {
   const [list, setList] = useState()
 
-  useEffect(() => {
-    if (localStorage.getItem('itemsProps')) {
-      setList(JSON.parse(localStorage.getItem('itemsProps')))
-    } else {
+  useEffect(() => { 
+    let itemProps = localStorage.getItem('itemsProps')
+    if ( itemProps == 'undefined' || itemProps == null) {
       fetch('/api/v1/items-properties')
         .then(response => response.json())
         .then(data => setList(data))
         .then(storeLocalItemsProps)
+    } else {
+      setList(JSON.parse(itemProps))
     } 
   }, [])
 
