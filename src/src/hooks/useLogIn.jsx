@@ -1,10 +1,12 @@
+import useGetCookie from './useGetCookie'
+
 export default function useLogIn(email, password, setError) {
   fetch('/users/sign_in', {
     method: 'post',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-Token': document.cookie.split('=')[1]
+      'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
     },
     body: JSON.stringify({
       user: {
@@ -28,4 +30,5 @@ export default function useLogIn(email, password, setError) {
       setError('Login failed. Please check your credentials and try again.')
     })
 }
+
 

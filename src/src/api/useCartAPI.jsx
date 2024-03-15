@@ -1,4 +1,5 @@
 import useListState from '../hooks/useListState'
+import useGetCookie from './useGetCookie'
 
 export default function useCartAPI() {
   const cartItems = useListState()
@@ -6,7 +7,7 @@ export default function useCartAPI() {
     method: 'put',
     credentials: 'include',
     headers: {
-      'X-CSRF-Token': document.cookie.split('=')[1]
+      'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
     }
   }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import useInput from '../hooks/useInput'
 import useSelectOptions from '../hooks/useSelectOptions'
+import useGetCookie from './useGetCookie'
 import './address-dialog.css'
 
 export default function AddAddressDialog({ addAddressDialog, fetchShippingAddresses }) {
@@ -65,7 +66,7 @@ export default function AddAddressDialog({ addAddressDialog, fetchShippingAddres
       'credentials': 'include',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.cookie.split('=')[1]
+        'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
       },
       body: JSON.stringify({
         'shipping_address': {

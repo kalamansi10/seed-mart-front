@@ -1,10 +1,12 @@
+import useGetCookie from './useGetCookie'
+
 export default function useSignUp(email, password, name, birthday, gender, setError) {
   fetch('/users', {
     method: 'post',
     'credentials': 'include',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-Token': document.cookie.split('=')[1]
+      'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
     },
     body: JSON.stringify({
       "user": {

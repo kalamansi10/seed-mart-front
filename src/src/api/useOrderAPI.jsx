@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import useGetCookie from './useGetCookie'
 
 export default function useOrderAPI() {
   const [referenceNumber, setReferenceNumber] = useState()
@@ -9,7 +10,7 @@ export default function useOrderAPI() {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.cookie.split('=')[1]
+        'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
       },
       body: JSON.stringify({
         order_list: orderList

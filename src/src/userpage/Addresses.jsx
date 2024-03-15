@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddAddressDialog from '../dialogs/AddAddressDialog'
 import useDialog from '../hooks/useDialog'
+import useGetCookie from './useGetCookie'
 
 export default function Addresses({ currentUser }) {
   const [renderAddresses, setRenderAddresses] = useState()
@@ -29,7 +30,7 @@ export default function Addresses({ currentUser }) {
       'credentials': 'include',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.cookie.split('=')[1]
+        'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
       }
     })
     .then(fetchShippingAddresses)
