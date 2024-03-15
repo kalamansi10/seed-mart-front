@@ -1,5 +1,5 @@
 import useListState from '../hooks/useListState'
-import useGetCookie from './useGetCookie'
+import useGetCookie from '../hooks/useGetCookie'
 
 export default function useCartAPI() {
   const cartItems = useListState()

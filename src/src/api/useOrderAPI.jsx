@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useGetCookie from './useGetCookie'
+import useGetCookie from '../hooks/useGetCookie'
 
 export default function useOrderAPI() {
   const [referenceNumber, setReferenceNumber] = useState()

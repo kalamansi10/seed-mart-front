@@ -1,4 +1,4 @@
-import useGetCookie from './useGetCookie'
+import useGetCookie from '../hooks/useGetCookie'
 
 export default function AddToCart({ item, amount }) {
   function updateCart() {

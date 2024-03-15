@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import useInput from '../hooks/useInput'
 import useSelectOptions from '../hooks/useSelectOptions'
-import useGetCookie from './useGetCookie'
+import useGetCookie from '../hooks/useGetCookie'
 import './address-dialog.css'
 
 export default function AddAddressDialog({ addAddressDialog, fetchShippingAddresses }) {

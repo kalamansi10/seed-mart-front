@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddAddressDialog from '../dialogs/AddAddressDialog'
 import useDialog from '../hooks/useDialog'
-import useGetCookie from './useGetCookie'
+import useGetCookie from '../hooks/useGetCookie'
 
 export default function Addresses({ currentUser }) {
   const [renderAddresses, setRenderAddresses] = useState()
