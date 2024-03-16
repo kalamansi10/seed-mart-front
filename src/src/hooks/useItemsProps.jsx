@@ -8,15 +8,15 @@ function useItemsProps() {
     if ( itemProps == 'undefined' || itemProps == null) {
       fetch('/api/v1/items-properties')
         .then(response => response.json())
-        .then(data => setList(data))
-        .then(storeLocalItemsProps)
+        .then(data => storeLocalItemsProps(data))
     } else {
-      setList(JSON.parse(itemProps))
+      setList(JSON.parse(localStorage.getItem('itemsProps')))
     } 
   }, [])
 
-  function storeLocalItemsProps() {
-    localStorage.setItem('itemsProps', JSON.stringify(list))
+  function storeLocalItemsProps(data) {
+    localStorage.setItem('itemsProps', JSON.stringify(data))
+    setList(localStorage.getItem('itemsProps'))
   }
 
   function getCategories() {
