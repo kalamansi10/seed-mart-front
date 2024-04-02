@@ -16,14 +16,10 @@ function useItemsProps() {
 
   function storeLocalItemsProps(data) {
     localStorage.setItem('itemsProps', JSON.stringify(data))
-    setList(localStorage.getItem('itemsProps'))
+    setList(data)
   }
 
-  function getCategories() {
-    return Object.keys(list)
-  }
-
-  return { list, getCategories }
+  return list
 }
 
 export default useItemsProps

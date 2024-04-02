@@ -3,7 +3,7 @@ import useItemsProps from '../hooks/useItemsProps'
 import categoriesPlaceholderImage from '../../assets/categories-placeholder.svg'
 
 export default function Categories({  }) {
-  const properties = useItemsProps()
+  const list = useItemsProps()
   const navigate = useNavigate()
 
   function handleClickCategory(category) {
@@ -15,7 +15,8 @@ export default function Categories({  }) {
   }
 
   function renderCategories() {
-    return properties.list[properties.getCategories()[0]].map((category) => {
+    console.log(list)
+    return list[Object.keys(list)[0]].map((category) => {
       return (
         <div className='category' key={category}>
           <a className='flex-column align-center' onClick={() => handleClickCategory(category)}>
@@ -29,7 +30,7 @@ export default function Categories({  }) {
 
   return (
     <div className='categories-container flex-row justify-center'>
-      {properties.list && renderCategories()}
+      {list && renderCategories()}
     </div>
   )
 }
