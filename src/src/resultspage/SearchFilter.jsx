@@ -38,6 +38,10 @@ export default function SearchFilter() {
 
   function mapOptions(filter) {
     let name = `filter[${filter}]`
+    
+    // Sort the options alphabetically
+    const sortedOptions = list[filter].sort();
+
     return list[filter].map(option =>
       <span key={option}>
         <input type='checkbox'
