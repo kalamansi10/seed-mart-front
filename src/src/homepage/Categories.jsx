@@ -15,7 +15,6 @@ export default function Categories({  }) {
   }
 
   function renderCategories() {
-    console.log(list)
     return list[listFields()[0]].map((category) => {
       return (
         <div className='category' key={category}>
