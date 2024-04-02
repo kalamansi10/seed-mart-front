@@ -23,7 +23,7 @@ The application includes the CSRF token in the HTTP header when making fetch req
 
 ### Product Item Filter
 
-The app dynamically generates interactable filters for product item categories and options from the item fields of the model, ensuring flexibility. The filters, along with other search options, are included in the query string during fetch requests, with the query string reflecting on the page URL.
+The app dynamically generates interactable filters for product item categories and options from the item fields of the model allowing flexibility. The filters, along with other search options, are included in the query string during fetch requests, with the query string reflecting on the page URL.
 
 ### Item Page
 
@@ -31,7 +31,7 @@ The item page showcases an image slider for the fetched item, providing a visual
 
 ### Promo Banner
 
-The home page is features a clickable image carousel that dynamically showcases current promotions fetched from the database.
+The home page features a clickable image carousel that dynamically showcases current promotions fetched from the database.
 
 ### Session and Registration Dialog
 
