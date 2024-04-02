@@ -3,7 +3,7 @@ import useItemsProps from '../hooks/useItemsProps'
 import categoriesPlaceholderImage from '../../assets/categories-placeholder.svg'
 
 export default function Categories({  }) {
-  const list = useItemsProps()
+  const [ list, listFields ] = useItemsProps()
   const navigate = useNavigate()
 
   function handleClickCategory(category) {
@@ -16,7 +16,7 @@ export default function Categories({  }) {
 
   function renderCategories() {
     console.log(list)
-    return list[Object.keys(list)[0]].map((category) => {
+    return list[listFields()[0]].map((category) => {
       return (
         <div className='category' key={category}>
           <a className='flex-column align-center' onClick={() => handleClickCategory(category)}>

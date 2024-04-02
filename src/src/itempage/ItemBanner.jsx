@@ -8,12 +8,12 @@ import filledStar from '../../assets/filled-star.svg'
 
 export default function ItemBanner({ item }) {
   const itemAmount = useAmountInput(0, 9999)
-  const properties = useItemsProps()
+  const [ list, listFields ] = useItemsProps()
 
   useEffect(() => itemAmount.setValue(1), [])
 
   function renderSpecs() {
-    return properties.getCategories().map(specLabel =>
+    return listFields().map(specLabel =>
       <div className='spec-wrapper' key={specLabel}>
         <span className='spec-label'>{mapSpecLabel(specLabel)}</span>
         <span className='spec-value'>{item[specLabel]}</span>
@@ -51,7 +51,7 @@ export default function ItemBanner({ item }) {
     )
   }
 
-  if (properties.list) {
+  if (list) {
     return (
       <div className='description-container flex-column'>
         <p className='item-name-banner'>{item.name}</p>

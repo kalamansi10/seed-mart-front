@@ -1,3 +1,5 @@
+// Used in Categories, SearchFilter, ItemBanner
+
 import { useState, useEffect } from "react"
 
 function useItemsProps() {
@@ -19,7 +21,11 @@ function useItemsProps() {
     setList(data)
   }
 
-  return list
+  function getListFields() {
+    return Object.keys(list)
+  }
+
+  return [ list, getListFields ]
 }
 
 export default useItemsProps

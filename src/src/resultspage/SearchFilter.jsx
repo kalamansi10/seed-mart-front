@@ -7,7 +7,7 @@ import './resultspage.css'
 export default function SearchFilter() {
   const minPrice = useInput()
   const maxPrice = useInput()
-  const properties = useItemsProps()
+  const [ list, listFields ] = useItemsProps()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const location = useLocation()
@@ -18,7 +18,7 @@ export default function SearchFilter() {
   }, [location])
 
   function mapFilters() {
-    return properties.getCategories().map(filter =>
+    return listFields().map(filter =>
       <section key={filter}>
         <p className="filter-label">{mapFilterLabel(filter)}</p>
         <div className='filter-group flex-column flex-wrap'>
@@ -38,7 +38,7 @@ export default function SearchFilter() {
 
   function mapOptions(filter) {
     let name = `filter[${filter}]`
-    return properties.list[filter].map(option =>
+    return list[filter].map(option =>
       <span key={option}>
         <input type='checkbox'
           name={name}
@@ -99,7 +99,7 @@ export default function SearchFilter() {
     navigate('/results?' + searchParams.toString())
   }
 
-  if (properties.list) {
+  if (list) {
     return (
       <div className='filters-section box-shadow'>
         {mapFilters()}
