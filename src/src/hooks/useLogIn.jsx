@@ -12,7 +12,7 @@ export default function useLogIn(email, password, setError) {
         remember_me:
           document.getElementById("remember-me").checked === true ? "1" : "0",
       },
-    })
+    }),
   )
     .then((response) => {
       if (!response.ok) {

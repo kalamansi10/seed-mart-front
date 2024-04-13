@@ -69,13 +69,12 @@
   align-items: end;
 }
 
-.check-out-items-labels p{
+.check-out-items-labels p {
   justify-self: start;
   font-size: x-large;
   grid-column: span 2;
   color: black;
 }
-
 
 .check-out-item {
   padding: 20px;

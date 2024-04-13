@@ -7,7 +7,7 @@ function useCookiesAndHeaders() {
     if (parts.length === 2) return parts.pop().split(";").shift();
   };
 
-  const getHeader = (method, body={}) => {
+  const getHeader = (method, body = {}) => {
     return {
       method: method,
       credentials: "include",

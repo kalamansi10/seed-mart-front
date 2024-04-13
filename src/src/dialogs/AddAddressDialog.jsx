@@ -20,19 +20,19 @@ export default function AddAddressDialog({
   const streetAddress = useInput("text", "Street address");
   const regionSelect = useSelectOptions(
     regions.map((region) => region.name),
-    "Region"
+    "Region",
   );
   const provinceSelect = useSelectOptions(
     provinces.map((province) => province.name),
-    "Municipality"
+    "Municipality",
   );
   const citySelect = useSelectOptions(
     cities.map((city) => city.name),
-    "City"
+    "City",
   );
   const barangaySelect = useSelectOptions(
     barangays.map((barangay) => barangay.name),
-    "Barangay"
+    "Barangay",
   );
 
   const [isMainAddress, setIsMainAddress] = useState(true);
@@ -43,7 +43,7 @@ export default function AddAddressDialog({
 
   useEffect(() => {
     let selectedRegion = regions.find(
-      (region) => region.name == regionSelect.value
+      (region) => region.name == regionSelect.value,
     );
     if (!selectedRegion) {
       return;
@@ -56,7 +56,7 @@ export default function AddAddressDialog({
 
   useEffect(() => {
     let selectedProvince = provinces.find(
-      (province) => province.name == provinceSelect.value
+      (province) => province.name == provinceSelect.value,
     );
     if (!selectedProvince) {
       return;
@@ -94,7 +94,7 @@ export default function AddAddressDialog({
           region: regionSelect.value,
           is_main: isMainAddress,
         },
-      })
+      }),
     ).then(() => {
       fetchShippingAddresses();
       addAddressDialog.close();

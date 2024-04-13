@@ -10,7 +10,7 @@ export default function useOrderAPI() {
       "api/v1/order",
       getHeader("POST", {
         order_list: orderList,
-      })
+      }),
     ).then((response) => response.json());
   }
 

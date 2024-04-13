@@ -6,7 +6,7 @@
   border: 2px solid var(--primary);
 }
 
-.session-dialog [type=checkbox] {
+.session-dialog [type="checkbox"] {
   &::before {
     border: 1px solid var(--primary);
   }

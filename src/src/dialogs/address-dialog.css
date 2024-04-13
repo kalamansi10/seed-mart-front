@@ -15,7 +15,7 @@
 }
 
 .address-form .name,
-.address-form .number{
+.address-form .number {
   grid-column: span 3;
 }
 
@@ -55,7 +55,7 @@
   }
 }
 
-.default-address-checkbox input{
+.default-address-checkbox input {
   &::before {
     border: 1px solid var(--primary);
   }

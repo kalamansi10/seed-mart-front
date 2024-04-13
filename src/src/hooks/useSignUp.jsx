@@ -11,7 +11,7 @@ export default function useSignUp(email, password, name, handleSignUpSuccess) {
         password: password,
         name: name,
       },
-    })
+    }),
   )
     .then((response) => {
       if (!response.ok) {

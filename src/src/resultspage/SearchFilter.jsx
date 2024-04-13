@@ -1,50 +1,51 @@
-import { useEffect } from "react"
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
-import useItemsProps from '../hooks/useItemsProps'
-import useInput from "../hooks/useInput"
-import './resultspage.css'
+import { useEffect } from "react";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+import useItemsProps from "../hooks/useItemsProps";
+import useInput from "../hooks/useInput";
+import "./resultspage.css";
 
 export default function SearchFilter() {
-  const minPrice = useInput()
-  const maxPrice = useInput()
-  const [ list, listFields ] = useItemsProps()
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const minPrice = useInput();
+  const maxPrice = useInput();
+  const [list, listFields] = useItemsProps();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname !== '/results') {
+    if (location.pathname !== "/results") {
     }
-  }, [location])
+  }, [location]);
 
   function mapFilters() {
-    return listFields().map(filter =>
+    return listFields().map((filter) => (
       <section key={filter}>
         <p className="filter-label">{mapFilterLabel(filter)}</p>
-        <div className='filter-group flex-column flex-wrap'>
+        <div className="filter-group flex-column flex-wrap">
           {mapOptions(filter)}
         </div>
       </section>
-    )
+    ));
   }
 
   function mapFilterLabel(filter) {
-    let result = ''
-    filter.split('_').forEach(word => {
-      result = result + word.charAt(0).toUpperCase() + word.slice(1) + ' '
-    })
-    return result.slice(0, -1)
+    let result = "";
+    filter.split("_").forEach((word) => {
+      result = result + word.charAt(0).toUpperCase() + word.slice(1) + " ";
+    });
+    return result.slice(0, -1);
   }
 
   function mapOptions(filter) {
-    let name = `filter[${filter}]`
-    
+    let name = `filter[${filter}]`;
+
     // Sort the options alphabetically
     const sortedOptions = list[filter].sort();
 
-    return list[filter].map(option =>
+    return list[filter].map((option) => (
       <span key={option}>
-        <input type='checkbox'
+        <input
+          type="checkbox"
           name={name}
           id={option}
           onChange={applyFilter}
@@ -53,84 +54,89 @@ export default function SearchFilter() {
         />
         <label htmlFor={option}>&nbsp;&nbsp;{option}</label>
       </span>
-    )
+    ));
   }
 
   function applyFilter(e) {
-    searchParams.delete(e.target.name)
+    searchParams.delete(e.target.name);
     if (e.target.checked == true) {
-      clearGroup(e.target.name)
-      searchParams.append(e.target.name, e.target.value)
+      clearGroup(e.target.name);
+      searchParams.append(e.target.name, e.target.value);
     }
-    updateParams()
+    updateParams();
   }
 
   function clearGroup(name) {
-    document.getElementsByName(`${name}`).forEach(option => {
-      option.checked = false
-    })
+    document.getElementsByName(`${name}`).forEach((option) => {
+      option.checked = false;
+    });
   }
 
   function validatePriceFilter(e, setValue) {
-    let value = e.target.value
-    if (value == '' || Number(value) && value.length < 6) {
-      setValue(value)
+    let value = e.target.value;
+    if (value == "" || (Number(value) && value.length < 6)) {
+      setValue(value);
     }
   }
 
   function applyPriceFilter(e) {
-    e.preventDefault()
-    document.querySelectorAll('.price-input').forEach(filter => {
-      searchParams.delete(filter.name)
-      if (filter.value != '') { searchParams.append(filter.name, filter.value) }
-    })
-    updateParams()
+    e.preventDefault();
+    document.querySelectorAll(".price-input").forEach((filter) => {
+      searchParams.delete(filter.name);
+      if (filter.value != "") {
+        searchParams.append(filter.name, filter.value);
+      }
+    });
+    updateParams();
   }
 
   function resetFilters() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
-    })
-    navigate('/results?keyword=' + searchParams.get('keyword'))
+      behavior: "smooth",
+    });
+    navigate("/results?keyword=" + searchParams.get("keyword"));
   }
 
   function updateParams() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
-    })
-    navigate('/results?' + searchParams.toString())
+      behavior: "smooth",
+    });
+    navigate("/results?" + searchParams.toString());
   }
 
   if (list) {
     return (
-      <div className='filters-section box-shadow'>
+      <div className="filters-section box-shadow">
         {mapFilters()}
-        <form className='price-filter'>
-          <div className='flex-row justify-center align-center'>
+        <form className="price-filter">
+          <div className="flex-row justify-center align-center">
             <input
-              className='price-input'
-              type='text'
-              name='minimum'
-              placeholder='min'
-              onChange={e => validatePriceFilter(e, minPrice.setValue)}
+              className="price-input"
+              type="text"
+              name="minimum"
+              placeholder="min"
+              onChange={(e) => validatePriceFilter(e, minPrice.setValue)}
               value={minPrice.value}
             />
             &nbsp;-&nbsp;
             <input
-              className='price-input'
-              type='text'
-              name='maximum'
-              placeholder='max'
-              onChange={e => validatePriceFilter(e, maxPrice.setValue)}
+              className="price-input"
+              type="text"
+              name="maximum"
+              placeholder="max"
+              onChange={(e) => validatePriceFilter(e, maxPrice.setValue)}
               value={maxPrice.value}
             />
           </div>
           <br />
           <button onClick={applyPriceFilter}>Apply</button>
         </form>
-        <button className='reset-filters' onClick={resetFilters}>Reset Filters</button>
-      </div>)
+        <button className="reset-filters" onClick={resetFilters}>
+          Reset Filters
+        </button>
+      </div>
+    );
   }
 }

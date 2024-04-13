@@ -5,10 +5,10 @@
 
 .user-options {
   width: 200px;
-  line-height: 20px
+  line-height: 20px;
 }
 
-.user-options a{
+.user-options a {
   color: black;
   text-decoration: none;
   font-weight: bold;

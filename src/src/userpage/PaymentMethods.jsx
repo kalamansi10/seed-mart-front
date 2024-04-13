@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function PaymentMethods() {
-  return (
-    <div>PaymentMethods</div>
-  )
+  return <div>PaymentMethods</div>;
 }

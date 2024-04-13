@@ -1,79 +1,91 @@
-import useListState from '../hooks/useListState'
-import useCookiesAndHeaders from '../hooks/useCookiesAndHeaders'
+import useListState from "../hooks/useListState";
+import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
 export default function useCartAPI() {
-  const cartItems = useListState()
-  const { getHeader } = useCookiesAndHeaders()
+  const cartItems = useListState();
+  const { getHeader } = useCookiesAndHeaders();
 
   function initialize(from) {
-    fetch('api/v1/get-cart', {
-      credentials: 'include',
+    fetch("api/v1/get-cart", {
+      credentials: "include",
     })
-      .then(response => response.json())
-      .then(data => {
-        if (from == 'cartpage') {
-          cartItems.setList(data)
-        } else if (from == 'checkoutpage') {
-          cartItems.setList(data.map(item => {
-            if (item.is_for_checkout == true) return item
-          }))
+      .then((response) => response.json())
+      .then((data) => {
+        if (from == "cartpage") {
+          cartItems.setList(data);
+        } else if (from == "checkoutpage") {
+          cartItems.setList(
+            data.map((item) => {
+              if (item.is_for_checkout == true) return item;
+            }),
+          );
         }
-      })
+      });
   }
 
   function updateCheckoutStatus(isForCheckOut, id) {
-    fetch(`/api/v1/update-checkout-status/${id}/${isForCheckOut}`, getHeader("PUT"))
-    cartItems.update(id, isForCheckOut, 'is_for_checkout')
+    fetch(
+      `/api/v1/update-checkout-status/${id}/${isForCheckOut}`,
+      getHeader("PUT"),
+    );
+    cartItems.update(id, isForCheckOut, "is_for_checkout");
   }
 
   function updateCartedAmount(updatedAmount, id) {
-    fetch(`/api/v1/update-carted-amount/${id}/${updatedAmount}`, getHeader("PUT"))
-    cartItems.update(id, updatedAmount, 'amount')
+    fetch(
+      `/api/v1/update-carted-amount/${id}/${updatedAmount}`,
+      getHeader("PUT"),
+    );
+    cartItems.update(id, updatedAmount, "amount");
   }
 
   function toggleSelectAllForCheckout(isChecked) {
-    cartItems.list.forEach(item => {
-      if (item.is_for_checkout == !isChecked) updateCheckoutStatus(isChecked ? true : false, item.id)
-    })
+    cartItems.list.forEach((item) => {
+      if (item.is_for_checkout == !isChecked)
+        updateCheckoutStatus(isChecked ? true : false, item.id);
+    });
   }
 
   function removeCartedItem(id) {
     fetch(`/api/v1/remove-from-cart/${id}`, {
-      method: 'delete',
-      credentials: 'include',
+      method: "delete",
+      credentials: "include",
       headers: {
-        'X-CSRF-Token': document.cookie.split('=')[1]
-      }
-    })
-    cartItems.remove(id)
+        "X-CSRF-Token": document.cookie.split("=")[1],
+      },
+    });
+    cartItems.remove(id);
   }
 
   function removeForCheckout() {
-    let idList = cartItems.list.map(item => {
-      if (item.is_for_checkout == true) return item.id
-    })
-    idList.forEach(id => removeCartedItem(id))
+    let idList = cartItems.list.map((item) => {
+      if (item.is_for_checkout == true) return item.id;
+    });
+    idList.forEach((id) => removeCartedItem(id));
   }
 
   function renderCartTotal() {
     const total = cartItems.list.reduce((currentTotal, cartItem) => {
-      return currentTotal + (cartItem.amount * cartItem.item.price)
-    }, 0)
+      return currentTotal + cartItem.amount * cartItem.item.price;
+    }, 0);
 
-    return toLocalCurrency(total)
+    return toLocalCurrency(total);
   }
 
   function renderCartQuantity() {
     return cartItems.list.reduce((currentTotal, cartItem) => {
-      return currentTotal + cartItem.amount
-    }, 0)
+      return currentTotal + cartItem.amount;
+    }, 0);
   }
 
   function toLocalCurrency(price) {
-    return price.toLocaleString("en-US", { style: "currency", currency: "PHP" })
+    return price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "PHP",
+    });
   }
 
-  return ({
+  return {
     initialize,
     cartItems,
     updateCheckoutStatus,
@@ -83,6 +95,6 @@ export default function useCartAPI() {
     removeForCheckout,
     toLocalCurrency,
     renderCartTotal,
-    renderCartQuantity
-  })
+    renderCartQuantity,
+  };
 }

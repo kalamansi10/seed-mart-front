@@ -111,7 +111,7 @@ export default function CartPage() {
                       toggleSelectAllForCheckout(e.target.checked)
                     }
                     checked={cartItems.list.every(
-                      (item) => item.is_for_checkout
+                      (item) => item.is_for_checkout,
                     )}
                   />
                   &nbsp;&nbsp;&nbsp;Select all

@@ -28,7 +28,7 @@
   border-bottom: 1px solid var(--background);
 }
 
-.cart-items-labels p{
+.cart-items-labels p {
   justify-self: start;
   font-size: x-large;
   grid-column: span 3;
