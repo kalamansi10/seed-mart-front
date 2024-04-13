@@ -1,27 +1,54 @@
-# E-Commerce React Web App: Vite + Rails API
+# Seed-Mart - React.js Frontend
 
-I'm actively developing an e-commerce React web app using Vite, connecting to a Rails API backend. This project is a continuous work in progress.
-
-## Key Features
-- **Modal Login:** Implemented with rememberable session + CSRF authentication.
-- **Promo Banner Slider:** Engage users with promotional content.
-- **Item Search and Filter:** Enhance user experience with efficient search and category filtering.
-- **Shopping Cart:** A convenient cart page for managing selected items.
-- **Item Page:** Detailed view of individual items.
-
-## Features in Progress
-- **Checkout Page:** Streamlining the purchase process.
-- **Profile Pages:** Building user profiles and settings.
-
-## Planned Enhancements
-- **CSS Styling:** Elevate the visual appeal with improved styling.
-- **Payment API Integration:** Facilitate seamless transactions.
-- **Buyer Reviews:** Allow users to share their experiences.
-- **Footer:** Add a comprehensive footer section.
+This repository contains the React.js frontend for Seed-Mart.
 
 ## Getting Started
-After cloning the repository, ensure the Rails API backend is running. Then, run the following commands:
+
+After cloning the repository, ensure the backend API is running. Then, run the following commands:
 
 ```bash
 npm install
 npm run dev
+```
+
+##  React.js Frontend Features
+
+### Single Page Application
+
+The React.js frontend is a single-page application (SPA) ensuring responsive interaction. It utilizes the react-router library to combine the benefits of multi-page and single-page applications, allowing dynamic routing without full-page reloads.
+
+### Non-GET Requests
+
+The application includes the CSRF token in the HTTP header when making fetch requests that perform CRUD operations or any non-GET requests.
+
+### Product Item Filter
+
+The app dynamically generates interactable filters for product item categories and options from the item fields of the model allowing flexibility. The filters, along with other search options, are included in the query string during fetch requests, with the query string reflecting on the page URL.
+
+### Item Page
+
+The item page showcases an image slider for the fetched item, providing a visual representation. Also, it displays the item's rating, number of ratings, and units sold, along with comprehensive item details. Users can seamlessly purchase the item or add it to their cart directly from the page.
+
+### Promo Banner
+
+The home page features a clickable image carousel that dynamically showcases current promotions fetched from the database.
+
+### Session and Registration Dialog
+
+The application has sign-in and sign-up buttons accessible on all pages. Clicking these buttons opens a dialog box that allows users to conveniently sign in or create an account from anywhere within the app.
+
+# About Seed-Mart
+
+Seed-Mart is a personal project of mine designed to showcase my current proficiency in web development. It is an e-commerce website that focuses on modularity and scalability. Every component of the application was made with flexibility in mind.
+
+My vision for the project was to create different versions of the frontend app using various frameworks, along with multiple versions of the backend server, each deployed separately. The aim was to seamlessly integrate them, allowing any frontend version to function with any backend version.
+
+But as I continue my web development journey, I've come to realize that separating the frontend and backend isn't always practical, especially for websites handling forms, user sessions, and authentication. Opting for a framework that integrates both, following the MVC pattern, would save considerable time compared to building them separately, thanks to the well-supported libraries in this kind of implementation.
+
+I'm determined to achieve my goal, even though this project will primarily serve as practice. Being bilingual (English and Tagalog), I often hear a phrase: "If you can translate a foreign language to your native language, you're proficient in that language." I believe the same applies to coding. If I can translate an app I've built into a different framework or language, it indicates a solid understanding of the new framework or language I'm learning.
+
+## Seed-Mart Versions
+
+- [seed-mart-front-reactjs](https://github.com/kalamansi10/seed-mart-front-reactjs)
+- [seed-mart-api-rails](https://github.com/kalamansi10/seed-mart-api-rails)
+- [seed-mart-api-nodejs](https://github.com/kalamansi10/seed-mart-api-nodejs)
