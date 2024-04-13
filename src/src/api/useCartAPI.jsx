@@ -1,15 +1,9 @@
 import useListState from '../hooks/useListState'
-import useGetCookie from '../hooks/useGetCookie'
+import useCookiesAndHeaders from '../hooks/useCookiesAndHeaders'
 
 export default function useCartAPI() {
   const cartItems = useListState()
-  const updateHeader = {
-    method: 'put',
-    credentials: 'include',
-    headers: {
-      'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
-    }
-  }
+  const { getHeader } = useCookiesAndHeaders()
 
   function initialize(from) {
     fetch('api/v1/get-cart', {
@@ -28,12 +22,12 @@ export default function useCartAPI() {
   }
 
   function updateCheckoutStatus(isForCheckOut, id) {
-    fetch(`/api/v1/update-checkout-status/${id}/${isForCheckOut}`, updateHeader)
+    fetch(`/api/v1/update-checkout-status/${id}/${isForCheckOut}`, getHeader("PUT"))
     cartItems.update(id, isForCheckOut, 'is_for_checkout')
   }
 
   function updateCartedAmount(updatedAmount, id) {
-    fetch(`/api/v1/update-carted-amount/${id}/${updatedAmount}`, updateHeader)
+    fetch(`/api/v1/update-carted-amount/${id}/${updatedAmount}`, getHeader("PUT"))
     cartItems.update(id, updatedAmount, 'amount')
   }
 

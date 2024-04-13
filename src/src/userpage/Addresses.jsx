@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import AddAddressDialog from '../dialogs/AddAddressDialog'
 import useDialog from '../hooks/useDialog'
-import useGetCookie from '../hooks/useGetCookie'
+import useCookiesAndHeaders from '../hooks/useCookiesAndHeaders'
 
 export default function Addresses({ currentUser }) {
   const [renderAddresses, setRenderAddresses] = useState()
   const addAddressDialog = useDialog()
+  const { getHeader } = useCookiesAndHeaders()
 
   useEffect(() => {
     fetchShippingAddresses()
@@ -25,14 +26,7 @@ export default function Addresses({ currentUser }) {
   }
 
   function handleClickDeleteAddress(shippingAddress) {
-    fetch('/api/v1/remove-shipping-address/' + shippingAddress.id, {
-      method: 'delete',
-      'credentials': 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
-      }
-    })
+    fetch('/api/v1/remove-shipping-address/' + shippingAddress.id, getHeader("DELETE"))
     .then(fetchShippingAddresses)
   }
 

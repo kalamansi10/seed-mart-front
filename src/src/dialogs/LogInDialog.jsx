@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
 import useLogIn from "../hooks/useLogIn";
-import useGetCookie from "../hooks/useGetCookie";
+import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 import "./session-dialogs.css";
 
 function LogInDialog({ logInDialog, signUpDialog }) {
@@ -9,6 +9,7 @@ function LogInDialog({ logInDialog, signUpDialog }) {
   const userEmail = useInput("email", "email");
   const userPass = useInput("password", "password");
   const [error, setError] = useState(null);
+  const { getHeader } = useCookiesAndHeaders();
 
   // Handle login validation
   function handleLoginValidation() {
@@ -28,28 +29,21 @@ function LogInDialog({ logInDialog, signUpDialog }) {
     signUpDialog.show();
   }
 
-  const handleSignInWithGoogle = () => {
-    fetch("/users/auth/google_oauth2", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "X-CSRF-Token": useGetCookie("CSRF-TOKEN"),
-        "Authorization": `Bearer ${accessToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  // const handleSignInWithGoogle = () => {
+  //   fetch("/users/auth/google_oauth2", getHeader("POST"))
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // };
 
   return (
     <>

@@ -1,23 +1,18 @@
-import { useState } from 'react'
-import useGetCookie from '../hooks/useGetCookie'
+import { useState } from "react";
+import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
 export default function useOrderAPI() {
-  const [referenceNumber, setReferenceNumber] = useState()
+  const [referenceNumber, setReferenceNumber] = useState();
+  const { getHeader } = useCookiesAndHeaders();
 
   async function process(orderList) {
-    return fetch('api/v1/order', {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
-      },
-      body: JSON.stringify({
-        order_list: orderList
+    return fetch(
+      "api/v1/order",
+      getHeader("POST", {
+        order_list: orderList,
       })
-    })
-    .then(response => response.json())
-  }  
+    ).then((response) => response.json());
+  }
 
-  return { process, referenceNumber, setReferenceNumber}
+  return { process, referenceNumber, setReferenceNumber };
 }

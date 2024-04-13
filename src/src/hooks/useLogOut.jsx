@@ -1,12 +1,8 @@
-import useGetCookie from './useGetCookie'
+import useCookiesAndHeaders from './useCookiesAndHeaders'
 
 export default function useLogOut() {
-  fetch('http://localhost:3000/users/sign_out', {
-    method: 'delete',
-    'credentials': 'include',
-    headers: {
-      'X-CSRF-Token': useGetCookie('CSRF-TOKEN')
-    }
-  })
+  const { getHeader } = useCookiesAndHeaders()
+
+  fetch('http://localhost:3000/users/sign_out', getHeader("DELETE"))
     .then(() => window.location.reload())
 }
