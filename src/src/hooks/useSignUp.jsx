@@ -1,6 +1,6 @@
 import useGetCookie from './useGetCookie'
 
-export default function useSignUp(email, password, name, birthday, gender, setError) {
+export default function useSignUp(email, password, name, handleSignUpSuccess) {
   fetch('/users', {
     method: 'post',
     'credentials': 'include',
@@ -22,7 +22,7 @@ export default function useSignUp(email, password, name, birthday, gender, setEr
       }
     })
     .then(() => {
-      setError(null)
+      handleSignUpSuccess()
     })
     .catch(error => {
       console.error('Error during login:', error)

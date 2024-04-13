@@ -19,7 +19,7 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
       setError("Password inputs don't match.")
     } else {
       setError(null)
-      useSignUp(userEmail.value, userName.value, userPass.value, setError, handleSignUpSuccess)
+      useSignUp(userEmail.value, userPass.value, userName.value, handleSignUpSuccess)
     }
   }
 
@@ -27,7 +27,6 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
   function handleSignUpSuccess() {
     signUpDialog.close()
     logInDialog.show()
-    setError('Sign up successful')
   }
 
   // Navigate back to login
