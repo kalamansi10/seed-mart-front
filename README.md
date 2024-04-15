@@ -37,6 +37,12 @@ The home page features a clickable image carousel that dynamically showcases cur
 
 The application has sign-in and sign-up buttons accessible on all pages. Clicking these buttons opens a dialog box that allows users to conveniently sign in or create an account from anywhere within the app.
 
+## Issues
+
+### React strict mode and passport-remember-me
+
+The remember-me strategy for Passport in Node.js encounters issues when React strict mode is enabled. In React, strict mode executes code within useEffect twice to check for errors, which poses a problem for the implementation of remember-me sessions.
+
 # About Seed-Mart
 
 Seed-Mart is a personal project of mine designed to showcase my current proficiency in web development. It is an e-commerce website that focuses on modularity and scalability. Every component of the application was made with flexibility in mind.
