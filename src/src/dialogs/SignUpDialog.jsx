@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
-import useSignUp from "../hooks/useSignUp";
+import useUserAccount from "../hooks/useUserAccount";
 import "./session-dialogs.css";
 
 export default function SignUpDialog({ logInDialog, signUpDialog }) {
+  const { signUp } = useUserAccount()
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userName = useInput("text", "full name");
@@ -24,7 +25,7 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
       setError("Password inputs don't match.");
     } else {
       setError(null);
-      useSignUp(
+      signUp(
         userEmail.value,
         userPass.value,
         userName.value,
