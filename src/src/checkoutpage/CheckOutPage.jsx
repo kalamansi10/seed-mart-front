@@ -65,7 +65,7 @@ export default function CheckOutPage({ currentUser }) {
       return cartItems.list.map((checkoutItem) => {
         return {
           carted_id: from == "cartpage" ? checkoutItem.id : null,
-          item_id: checkoutItem.item_id,
+          item_id: checkoutItem.item_id || checkoutItem.item.id,
           shipping_address_id: selectedAddress.id,
           payment_method_id: 0,
           amount: checkoutItem.amount,

@@ -5,6 +5,7 @@ export default function useCartAPI() {
   const cartItems = useListState();
   const { getHeader } = useCookiesAndHeaders();
 
+  // Set items list depending on where it was accessed
   function initialize(from) {
     fetch("api/v1/get-cart", {
       credentials: "include",
@@ -12,12 +13,12 @@ export default function useCartAPI() {
       .then((response) => response.json())
       .then((data) => {
         if (from == "cartpage") {
+          // if from cartpage - will set items as retrieved from get-cart endpoint
           cartItems.setList(data);
         } else if (from == "checkoutpage") {
+          // if from checkoutpage - will remove items not tagged for checkout
           cartItems.setList(
-            data.map((item) => {
-              if (item.is_for_checkout == true) return item;
-            }),
+            data.filter((item) => item.is_for_checkout == true)
           );
         }
       });
@@ -26,7 +27,7 @@ export default function useCartAPI() {
   function updateCheckoutStatus(isForCheckOut, id) {
     fetch(
       `/api/v1/update-checkout-status/${id}/${isForCheckOut}`,
-      getHeader("PUT"),
+      getHeader("PUT")
     );
     cartItems.update(id, isForCheckOut, "is_for_checkout");
   }
@@ -34,7 +35,7 @@ export default function useCartAPI() {
   function updateCartedAmount(updatedAmount, id) {
     fetch(
       `/api/v1/update-carted-amount/${id}/${updatedAmount}`,
-      getHeader("PUT"),
+      getHeader("PUT")
     );
     cartItems.update(id, updatedAmount, "amount");
   }
