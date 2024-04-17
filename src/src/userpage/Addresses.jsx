@@ -6,6 +6,7 @@ import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 export default function Addresses({ currentUser }) {
   const [renderAddresses, setRenderAddresses] = useState();
   const addAddressDialog = useDialog();
+  const [updatedAddress, setUpdatedAddress] = useState({});
   const { getHeader } = useCookiesAndHeaders();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Addresses({ currentUser }) {
   function handleClickDeleteAddress(shippingAddress) {
     fetch(
       "/api/v1/remove-shipping-address/" + shippingAddress.id,
-      getHeader("DELETE"),
+      getHeader("DELETE")
     ).then(fetchShippingAddresses);
   }
 
@@ -36,6 +37,14 @@ export default function Addresses({ currentUser }) {
     return shippingAddresses.map((shippingAddress) => (
       <div key={shippingAddress.id}>
         {`${shippingAddress.street_address}, ${shippingAddress.barangay}, ${shippingAddress.city}, ${shippingAddress.province}, ${shippingAddress.region}, ${shippingAddress.is_main}`}
+        <button
+          onClick={() => {
+            setUpdatedAddress(shippingAddress);
+            addAddressDialog.show();
+          }}
+        >
+          Edit
+        </button>
         <button onClick={() => handleClickDeleteAddress(shippingAddress)}>
           Delete
         </button>
@@ -46,10 +55,18 @@ export default function Addresses({ currentUser }) {
   return (
     <div>
       {renderAddresses}
-      <button onClick={addAddressDialog.show}>New Address</button>
+      <button
+        onClick={() => {
+          setUpdatedAddress({});
+          addAddressDialog.show();
+        }}
+      >
+        New Address
+      </button>
       <AddAddressDialog
         addAddressDialog={addAddressDialog}
         fetchShippingAddresses={fetchShippingAddresses}
+        updatedAddress={updatedAddress}
       />
     </div>
   );

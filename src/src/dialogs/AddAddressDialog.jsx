@@ -7,6 +7,7 @@ import "./address-dialog.css";
 export default function AddAddressDialog({
   addAddressDialog,
   fetchShippingAddresses,
+  updatedAddress,
 }) {
   const { getHeader } = useCookiesAndHeaders();
 
@@ -20,19 +21,19 @@ export default function AddAddressDialog({
   const streetAddress = useInput("text", "Street address");
   const regionSelect = useSelectOptions(
     regions.map((region) => region.name),
-    "Region",
+    "Region"
   );
   const provinceSelect = useSelectOptions(
     provinces.map((province) => province.name),
-    "Municipality",
+    "Municipality"
   );
   const citySelect = useSelectOptions(
     cities.map((city) => city.name),
-    "City",
+    "City"
   );
   const barangaySelect = useSelectOptions(
     barangays.map((barangay) => barangay.name),
-    "Barangay",
+    "Barangay"
   );
 
   const [isMainAddress, setIsMainAddress] = useState(true);
@@ -43,7 +44,7 @@ export default function AddAddressDialog({
 
   useEffect(() => {
     let selectedRegion = regions.find(
-      (region) => region.name == regionSelect.value,
+      (region) => region.name == regionSelect.value
     );
     if (!selectedRegion) {
       return;
@@ -56,7 +57,7 @@ export default function AddAddressDialog({
 
   useEffect(() => {
     let selectedProvince = provinces.find(
-      (province) => province.name == provinceSelect.value,
+      (province) => province.name == provinceSelect.value
     );
     if (!selectedProvince) {
       return;
@@ -73,6 +74,17 @@ export default function AddAddressDialog({
     fetchPSGC(setBarangays, "/cities/" + selectedCity.code + "/barangays");
   }, [citySelect.value]);
 
+  useEffect(() => {
+    contactName.setValue(updatedAddress.contact_name || "");
+    contactNumber.setValue(updatedAddress.contact_number || "");
+    streetAddress.setValue(updatedAddress.street_address || "");
+    barangaySelect.setValue(updatedAddress.barangay || "");
+    citySelect.setValue(updatedAddress.city || "");
+    provinceSelect.setValue(updatedAddress.province || "");
+    regionSelect.setValue(updatedAddress.region || "");
+    setIsMainAddress(updatedAddress.is_main || true);
+  }, [updatedAddress]);
+
   function fetchPSGC(setState, endpoint) {
     fetch(`https://psgc.gitlab.io/api/${endpoint}`)
       .then((response) => response.json())
@@ -80,10 +92,14 @@ export default function AddAddressDialog({
   }
 
   function handleAddressForm(e) {
+    let httpMethod = updatedAddress.id ? "PUT" : "POST";
+    let endPoint = updatedAddress.id ? "update-shipping-address" : "add-shipping-address";
+
     e.preventDefault();
+
     fetch(
-      "/api/v1/add-shipping-address",
-      getHeader("POST", {
+      `/api/v1/${endPoint}`,
+      getHeader(httpMethod, {
         shipping_address: {
           contact_name: contactName.value,
           contact_number: contactNumber.value,
@@ -94,7 +110,7 @@ export default function AddAddressDialog({
           region: regionSelect.value,
           is_main: isMainAddress,
         },
-      }),
+      })
     ).then(() => {
       fetchShippingAddresses();
       addAddressDialog.close();
@@ -131,7 +147,7 @@ export default function AddAddressDialog({
               className="submit-button"
               type="submit"
               onClick={handleAddressForm}
-              value="Add"
+              value={updatedAddress.id ? "Update" : "Add"}
             />
           </form>
         </div>
