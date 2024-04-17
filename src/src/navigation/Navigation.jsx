@@ -5,7 +5,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import useLogOut from "../hooks/useLogOut";
+import useSession from "../hooks/useSession";
 import useDialog from "../hooks/useDialog";
 import LogInDialog from "../dialogs/LogInDialog";
 import SignUpDialog from "../dialogs/SignUpDialog";
@@ -28,6 +28,7 @@ export default function Navigation({ currentUser }) {
   // Custom hooks for login and sign-up dialogs
   const logInDialog = useDialog();
   const signUpDialog = useDialog();
+  const { logOut } = useSession();
 
   // Clear the keyword when navigating away from the results page
   useEffect(() => {
@@ -75,7 +76,7 @@ export default function Navigation({ currentUser }) {
             >
               <Link to="/user/profile">My Account</Link>
               <a>My purchases</a>
-              <a onClick={useLogOut}>Logout</a>
+              <a onClick={logOut}>Logout</a>
             </section>
           </div>
           <div className="nav-item">

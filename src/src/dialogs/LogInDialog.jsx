@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
-import useLogIn from "../hooks/useLogIn";
+import useSession from "../hooks/useSession";
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 import "./session-dialogs.css";
 
@@ -9,6 +9,7 @@ function LogInDialog({ logInDialog, signUpDialog }) {
   const userEmail = useInput("email", "email");
   const userPass = useInput("password", "password");
   const [error, setError] = useState(null);
+  const { logIn } = useSession()
   const { getHeader } = useCookiesAndHeaders();
 
   // Handle login validation
@@ -19,7 +20,7 @@ function LogInDialog({ logInDialog, signUpDialog }) {
       setError("Password can't be blank.");
     } else {
       setError(null);
-      useLogIn(userEmail.value, userPass.value, setError);
+      logIn(userEmail.value, userPass.value, setError);
     }
   }
 
