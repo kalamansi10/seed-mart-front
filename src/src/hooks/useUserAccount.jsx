@@ -1,6 +1,6 @@
 import useCookiesAndHeaders from "./useCookiesAndHeaders";
 
-export default function UserAccount() {
+export default function useUserAccount() {
   const { getHeader } = useCookiesAndHeaders();
 
   function signUp(email, password, name, handleSignUpSuccess) {
@@ -12,7 +12,7 @@ export default function UserAccount() {
           password: password,
           name: name,
         },
-      }),
+      })
     )
       .then((response) => {
         if (!response.ok) {
@@ -23,10 +23,28 @@ export default function UserAccount() {
         handleSignUpSuccess();
       })
       .catch((error) => {
-        console.error("Error during login:", error);
-        setError("Sign up failed. Please check your credentials and try again.");
-      });  
+        console.error("Error during signup:", error);
+        setError(
+          "Sign up failed. Please check your credentials and try again."
+        );
+      });
   }
 
-  return { signUp }
+  function update(updatedInfo) {
+    fetch(
+      "/users",
+      getHeader("PUT", {
+        user: updatedInfo,
+      })
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    })
+    .catch((error) => {
+      console.error("Error during update:", error);
+    });
+  }
+
+  return { signUp, update };
 }
