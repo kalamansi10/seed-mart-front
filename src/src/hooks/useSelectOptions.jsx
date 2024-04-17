@@ -36,6 +36,7 @@ export default function useSelectOptions(options = [], placeholder = "") {
     return filteredOptions.sort().map((option) => {
       return (
         <button
+          key={option}
           className="option-wrapper flex-row align-center"
           onMouseDown={() => setValue(option)}
         >
