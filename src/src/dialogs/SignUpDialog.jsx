@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
 import useRegistrationsAPI from "../api/useRegistrationsAPI";
-import useUserAccount from "../hooks/useUserAccount";
 import "./session-dialogs.css";
 
 export default function SignUpDialog({ logInDialog, signUpDialog }) {
