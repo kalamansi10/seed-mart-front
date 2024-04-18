@@ -1,26 +1,30 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
-import useSession from "../hooks/useSession";
-import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
+import useSessionsAPI from "../api/useSessionsAPI";
 import "./session-dialogs.css";
 
 function LogInDialog({ logInDialog, signUpDialog }) {
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userPass = useInput("password", "password");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState(null);
-  const { logIn } = useSession()
-  const { getHeader } = useCookiesAndHeaders();
+  const { createSession } = useSessionsAPI();
 
   // Handle login validation
-  function handleLoginValidation() {
+  async function handleLoginValidation() {
     if (!userEmail.value) {
       setError("Email can't be blank.");
     } else if (!userPass.value) {
       setError("Password can't be blank.");
     } else {
+      const userInfo = {
+        email: userEmail.value,
+        password: userPass.value,
+        remember_me: rememberMe,
+      };
       setError(null);
-      logIn(userEmail.value, userPass.value, setError);
+      await createSession(userInfo);
     }
   }
 
@@ -56,7 +60,12 @@ function LogInDialog({ logInDialog, signUpDialog }) {
           {userPass.input}
           <div className="rememberable flex-row justify-between">
             <label>
-              <input type="checkbox" id="remember-me" /> Remember me
+              <input
+                type="checkbox"
+                onChange={(e) => setRememberMe(e.target.checked)}
+                checked={rememberMe}
+              />{" "}
+              Remember me
             </label>
             <a>Forgot password?</a>
           </div>
