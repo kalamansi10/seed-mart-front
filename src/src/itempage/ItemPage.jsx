@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useItemAPI from "../api/useItemAPI";
 import PreviewSlider from "./PreviewSlider";
 import ItemBanner from "./ItemBanner";
 import "./itempage.css";
@@ -7,11 +8,16 @@ import "./itempage.css";
 export default function ItemPage() {
   const [item, setItem] = useState();
   const { id } = useParams();
+  const { getItem } = useItemAPI();
 
   useEffect(() => {
-    fetch("/api/v1/get-item/" + id)
-      .then((response) => response.json())
-      .then((data) => setItem(data));
+    async function fetchItem() {
+      const item = await getItem(id);
+      if (item) {
+        setItem(item);
+      }
+    }
+    fetchItem();
   }, []);
 
   if (item) {

@@ -5,27 +5,29 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+import useItemAPI from "../api/useItemAPI";
 import "./items-display.css";
 
 export default function ItemsDisplay() {
-  const [items, setItems] = useState();
-
+  const { searchItems } = useItemAPI();
   const [searchParams] = useSearchParams("keyword=");
   const location = useLocation();
-
   const navigate = useNavigate();
 
+  const [items, setItems] = useState(null);
   const itemCount = useRef();
   const page = useRef(1);
 
   useEffect(() => {
     setItems(null);
-    fetch("/api/v1/search?" + searchParams.toString())
-      .then((response) => response.json())
-      .then((items) => {
+    async function fetchItems() {
+      const items = await searchItems(searchParams.toString());
+      if (items) {
         itemCount.current = items.item_count;
         setItems(mapItems(items.item_list));
-      });
+      }
+    }
+    fetchItems();
   }, [searchParams]);
 
   function mapItems(item_list) {
