@@ -1,32 +1,46 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useListState from "../hooks/useListState";
 import useCartAPI from "../api/useCartAPI";
 import "./cart-page.css";
 
 export default function CartPage() {
+  const cartItems = useListState();
   const {
-    initialize,
-    cartItems,
+    getCart,
     updateCheckoutStatus,
     updateCartedAmount,
-    toggleSelectAllForCheckout,
-    removeCartedItem,
-    removeForCheckout,
+    removeFromCart,
+    removeSelected,
     toLocalCurrency,
     renderCartTotal,
     renderCartQuantity,
-  } = useCartAPI();
+  } = useCartAPI(fetchCart);
 
   useEffect(() => {
-    initialize("cartpage");
+    fetchCart();
   }, []);
+
+  async function fetchCart() {
+    const itemList = await getCart();
+    if (itemList) {
+      cartItems.setList(itemList);
+    }
+  }
+
+  function toggleSelectAllForCheckout(isChecked) {
+    cartItems.list.forEach((item) => {
+      if (item.is_for_checkout == !isChecked)
+        updateCheckoutStatus(isChecked ? true : false, item.id);
+    });
+  }
 
   function handleAmountAdjustClick(carted_id, adjustment) {
     let result = adjustment + cartItems.get(carted_id).amount;
     if (result > 0 && result < 1000) {
       updateCartedAmount(result, carted_id);
     } else if (result < 1) {
-      removeCartedItem(carted_id);
+      removeFromCart(carted_id);
     }
   }
 
@@ -79,7 +93,7 @@ export default function CartPage() {
           <span>{toLocalCurrency(carted.amount * carted.item.price)}</span>
           <button
             className="remove-item-button"
-            onClick={() => removeCartedItem(carted.id)}
+            onClick={() => removeFromCart(carted.id)}
           >
             Remove
           </button>
@@ -111,21 +125,25 @@ export default function CartPage() {
                       toggleSelectAllForCheckout(e.target.checked)
                     }
                     checked={cartItems.list.every(
-                      (item) => item.is_for_checkout,
+                      (item) => item.is_for_checkout
                     )}
                   />
                   &nbsp;&nbsp;&nbsp;Select all
                 </label>
                 <button
                   className="remove-item-button"
-                  onClick={removeForCheckout}
+                  onClick={() => removeSelected(cartItems)}
                 >
                   Remove selected
                 </button>
               </div>
               <div className="left-cart-options flex-row align-center">
-                <p className="cart-total-label">{`Total (${renderCartQuantity()} item):`}</p>
-                <p className="cart-total-amount">{renderCartTotal()}</p>
+                <p className="cart-total-label">{`Total (${renderCartQuantity(
+                  cartItems
+                )} item):`}</p>
+                <p className="cart-total-amount">
+                  {renderCartTotal(cartItems)}
+                </p>
                 <Link to="/checkout" state={{ from: "cartpage" }}>
                   <button className="check-out-button">Checkout</button>
                 </Link>

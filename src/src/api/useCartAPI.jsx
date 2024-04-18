@@ -1,71 +1,90 @@
-import useListState from "../hooks/useListState";
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
-export default function useCartAPI() {
-  const cartItems = useListState();
+export default function useCartAPI(fetchCart) {
   const { getHeader } = useCookiesAndHeaders();
 
-  // Set items list depending on where it was accessed
-  function initialize(from) {
-    fetch("api/v1/get-cart", {
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (from == "cartpage") {
-          // if from cartpage - will set items as retrieved from get-cart endpoint
-          cartItems.setList(data);
-        } else if (from == "checkoutpage") {
-          // if from checkoutpage - will remove items not tagged for checkout
-          cartItems.setList(
-            data.filter((item) => item.is_for_checkout == true)
+  async function getCart() {
+    const response = await fetch("/api/cart");
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function getForCheckout() {
+    const response = await fetch("/api/cart");
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function updateCartedAmount(updatedAmount, id) {
+    const response = await fetch(
+      `/api/cart/update-amount/${id}/${updatedAmount}`,
+      getHeader("PUT")
+    );
+
+    if (response.ok) {
+      await fetchCart();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function updateCheckoutStatus(isForCheckOut, id) {
+    const response = await fetch(
+      `/api/cart/update-status/${id}/${isForCheckOut}`,
+      getHeader("PUT")
+    );
+
+    if (response.ok) {
+      await fetchCart();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function removeFromCart(id) {
+    const response = await fetch(`/api/cart/${id}`, getHeader("DELETE"));
+
+    if (response.ok) {
+      await fetchCart();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function removeSelected(cartItems = {}) {
+    const itemsToRemove = cartItems.list.filter(
+      (cartedItem) => cartedItem.is_for_checkout
+    );
+    try {
+      await Promise.all(
+        itemsToRemove.map(async (cartedItem) => {
+          const response = await fetch(
+            `/api/cart/${cartedItem.id}`,
+            getHeader("DELETE")
           );
-        }
-      });
+
+          if (!response.ok) {
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.message || "Failed to delete item");
+          }
+        })
+      );
+
+      await fetchCart();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  function updateCheckoutStatus(isForCheckOut, id) {
-    fetch(
-      `/api/v1/update-checkout-status/${id}/${isForCheckOut}`,
-      getHeader("PUT")
-    );
-    cartItems.update(id, isForCheckOut, "is_for_checkout");
-  }
-
-  function updateCartedAmount(updatedAmount, id) {
-    fetch(
-      `/api/v1/update-carted-amount/${id}/${updatedAmount}`,
-      getHeader("PUT")
-    );
-    cartItems.update(id, updatedAmount, "amount");
-  }
-
-  function toggleSelectAllForCheckout(isChecked) {
-    cartItems.list.forEach((item) => {
-      if (item.is_for_checkout == !isChecked)
-        updateCheckoutStatus(isChecked ? true : false, item.id);
-    });
-  }
-
-  function removeCartedItem(id) {
-    fetch(`/api/v1/remove-from-cart/${id}`, {
-      method: "delete",
-      credentials: "include",
-      headers: {
-        "X-CSRF-Token": document.cookie.split("=")[1],
-      },
-    });
-    cartItems.remove(id);
-  }
-
-  function removeForCheckout() {
-    let idList = cartItems.list.map((item) => {
-      if (item.is_for_checkout == true) return item.id;
-    });
-    idList.forEach((id) => removeCartedItem(id));
-  }
-
-  function renderCartTotal() {
+  function renderCartTotal(cartItems = {}) {
     const total = cartItems.list.reduce((currentTotal, cartItem) => {
       return currentTotal + cartItem.amount * cartItem.item.price;
     }, 0);
@@ -73,7 +92,7 @@ export default function useCartAPI() {
     return toLocalCurrency(total);
   }
 
-  function renderCartQuantity() {
+  function renderCartQuantity(cartItems = {}) {
     return cartItems.list.reduce((currentTotal, cartItem) => {
       return currentTotal + cartItem.amount;
     }, 0);
@@ -87,13 +106,12 @@ export default function useCartAPI() {
   }
 
   return {
-    initialize,
-    cartItems,
+    getCart,
+    getForCheckout,
     updateCheckoutStatus,
     updateCartedAmount,
-    toggleSelectAllForCheckout,
-    removeCartedItem,
-    removeForCheckout,
+    removeFromCart,
+    removeSelected,
     toLocalCurrency,
     renderCartTotal,
     renderCartQuantity,

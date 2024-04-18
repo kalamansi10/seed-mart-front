@@ -1,38 +1,48 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import CheckoutDialog from "../dialogs/CheckoutDialog";
-import useDialog from "../hooks/useDialog";
-import CheckOutAddress from "./CheckOutAddress";
-import CheckOutPayment from "./CheckOutPayment";
+import useListState from "../hooks/useListState";
 import useCartAPI from "../api/useCartAPI";
 import useOrderAPI from "../api/useOrderAPI";
+import useDialog from "../hooks/useDialog";
+import CheckoutDialog from "../dialogs/CheckoutDialog";
+import CheckOutAddress from "./CheckOutAddress";
+import CheckOutPayment from "./CheckOutPayment";
 import "./check-out-page.css";
 
 export default function CheckOutPage({ currentUser }) {
   const [selectedAddress, setSelectedAddress] = useState();
+  const [orderReference, setOrderReference] = useState();
+
   const checkoutDialog = useDialog();
   const locationState = useLocation();
   const { from, item, amount } = locationState.state;
-  const order = useOrderAPI();
-  const { initialize, cartItems, toLocalCurrency, renderCartTotal } =
-    useCartAPI();
-  const orderList = validateCheckOutInfo();
+  const cartItems = useListState();
+  const { getForCheckout, toLocalCurrency, renderCartTotal } =
+    useCartAPI(fetchCart);
+  const { processOrder } = useOrderAPI();
 
   useEffect(() => {
     if (from == "itempage") {
       cartItems.setList([{ item_id: item.id, amount: amount, item: item }]);
     } else if (from == "cartpage") {
-      initialize("checkoutpage");
+      fetchCart();
     }
   }, []);
+
+  async function fetchCart() {
+    const itemList = await getForCheckout();
+    if (itemList) {
+      cartItems.setList(itemList);
+    }
+  }
 
   function rendercheckoutItems() {
     return cartItems.list.map((checkoutItem) => {
       return (
         <div
           className="check-out-item"
-          id={checkoutItem.id}
-          key={checkoutItem.id}
+          id={checkoutItem.item.id}
+          key={checkoutItem.item.id}
         >
           <img src={checkoutItem.item.image_links[0]} alt="" />
           <p>{checkoutItem.item.name}</p>
@@ -46,18 +56,14 @@ export default function CheckOutPage({ currentUser }) {
     });
   }
 
-  function handleProcessOrderClick() {
+  async function handleProcessOrderClick() {
+    const orderList = validateCheckOutInfo();
     if (!orderList) return;
     checkoutDialog.show();
     checkoutDialog.removeListener();
-    order
-      .process(orderList)
-      .then((data) => {
-        order.setReferenceNumber(data.reference_number);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    processOrder(orderList);
+    const response = await processOrder(orderList);
+    setOrderReference(response.reference_number);
   }
 
   function validateCheckOutInfo() {
@@ -102,7 +108,7 @@ export default function CheckOutPage({ currentUser }) {
                 <div className="breakdown-container">
                   <div className="breakdown-wrapper flex-row justify-between align-center">
                     <p>Merchandise Subtotal:</p>
-                    <span>{renderCartTotal()}</span>
+                    <span>{renderCartTotal(cartItems)}</span>
                   </div>
                   <div className="breakdown-wrapper flex-row justify-between align-center">
                     <p>Shipping Fee:</p>
@@ -110,7 +116,9 @@ export default function CheckOutPage({ currentUser }) {
                   </div>
                   <div className="breakdown-wrapper flex-row justify-between align-center">
                     <p>Total Payment:</p>
-                    <span className="total-payment">{renderCartTotal()}</span>
+                    <span className="total-payment">
+                      {renderCartTotal(cartItems)}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -121,7 +129,7 @@ export default function CheckOutPage({ currentUser }) {
                 </button>
                 <CheckoutDialog
                   checkoutDialog={checkoutDialog}
-                  referenceNumber={order.referenceNumber}
+                  referenceNumber={orderReference}
                 />
               </section>
               <section className="check-out section flex-column align-end"></section>
