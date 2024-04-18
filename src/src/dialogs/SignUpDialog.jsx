@@ -1,10 +1,11 @@
 import { useState } from "react";
 import useInput from "../hooks/useInput";
+import useRegistrationsAPI from "../api/useRegistrationsAPI";
 import useUserAccount from "../hooks/useUserAccount";
 import "./session-dialogs.css";
 
 export default function SignUpDialog({ logInDialog, signUpDialog }) {
-  const { signUp } = useUserAccount()
+  const { createUser } = useRegistrationsAPI();
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userName = useInput("text", "full name");
@@ -13,7 +14,7 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
   const [error, setError] = useState(null);
 
   // Handle sign-up validation
-  function handleSignUpValidation() {
+  async function handleSignUpValidation() {
     if (
       !userEmail.value ||
       !userName.value ||
@@ -24,20 +25,15 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
     } else if (userPass.value !== confirmPass.value) {
       setError("Password inputs don't match.");
     } else {
+      const userInfo = {
+        email: userEmail.value,
+        name: userName.value,
+        password: userPass.value,
+      };
       setError(null);
-      signUp(
-        userEmail.value,
-        userPass.value,
-        userName.value,
-        handleSignUpSuccess,
-      );
+      await createUser(userInfo);
+      backToLogIn();
     }
-  }
-
-  // Handle sign-up success
-  function handleSignUpSuccess() {
-    signUpDialog.close();
-    logInDialog.show();
   }
 
   // Navigate back to login

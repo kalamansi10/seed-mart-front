@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useInput from "../hooks/useInput";
-import useUserAccount from "../hooks/useUserAccount";
+import useRegistrationAPI from "../api/useRegistrationsAPI";
 
 export default function Profile({ currentUser }) {
   const [editMode, setEditMode] = useState(0);
@@ -8,7 +8,7 @@ export default function Profile({ currentUser }) {
   const emailInput = useInput("email", "Email");
   const birthdayInput = useInput("date", "Birthday");
   const [gender, setGender] = useState(null);
-  const { update } = useUserAccount();
+  const { updateUser } = useRegistrationAPI();
 
   useEffect(() => {
     if (currentUser) {
@@ -33,7 +33,7 @@ export default function Profile({ currentUser }) {
     if (gender) {
       updatedInfo.gender = gender;
     }
-    update(updatedInfo);
+    updateUser(updatedInfo);
     toggleEdit();
   }
 
