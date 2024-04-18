@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
+import useMiscAPI from "../api/useMiscAPI";
 import bannerLeftIcon from "../../assets/banner-left.png";
 import bannerRightIcon from "../../assets/banner-right.png";
 
 export default function PromoBanners() {
   const [banners, setBanners] = useState();
+  const { getActiveBanners } = useMiscAPI();
 
   let currentBanner = 0;
   let bannerCount;
   let pages;
 
   useEffect(() => {
-    fetch("/api/v1/active-banners")
-      .then((response) => response.json())
-      .then((activeBanners) => mapActiveBanners(activeBanners))
-      .then((mappedBanners) => setBanners(mappedBanners));
+    async function fetchActiveBanners() {
+      const activeBanners = await getActiveBanners();
+      if (activeBanners) {
+        setBanners(mapActiveBanners(activeBanners));
+      }
+    }
+    fetchActiveBanners();
   }, []);
 
   useEffect(() => {
@@ -54,8 +59,9 @@ export default function PromoBanners() {
 
   function updateSlider() {
     let translation = currentBanner * -900;
-    document.querySelector(".active-banners").style.translate =
-      `${translation}px`;
+    document.querySelector(
+      ".active-banners"
+    ).style.translate = `${translation}px`;
   }
 
   function generatePages() {
