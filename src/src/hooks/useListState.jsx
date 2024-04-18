@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function useListState() {
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
 
   function get(id) {
     return list ? list.find((item) => item.id == id) : null;
