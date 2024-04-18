@@ -1,18 +1,46 @@
-import { useState } from "react";
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
 export default function useOrderAPI() {
-  const [referenceNumber, setReferenceNumber] = useState();
   const { getHeader } = useCookiesAndHeaders();
 
-  async function process(orderList) {
-    return fetch(
-      "api/v1/order",
-      getHeader("POST", {
-        order_list: orderList,
-      }),
-    ).then((response) => response.json());
+  async function getOrder(orderReference) {
+    const response = await fetch(`/api/order/${orderReference}`);
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
   }
 
-  return { process, referenceNumber, setReferenceNumber };
+  async function processOrder(orderList) {
+    const response = await fetch(
+      "/api/order",
+      getHeader("POST", {
+        order_list: orderList,
+      })
+    );
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function getOrderList() {
+    const response = await fetch("/api/order/list");
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  return {
+    getOrder,
+    processOrder,
+    getOrderList,
+  };
 }

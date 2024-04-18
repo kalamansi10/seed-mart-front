@@ -2,12 +2,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./check-out-dialog.css";
 
 export default function CheckoutDialog({ checkoutDialog, referenceNumber }) {
-  // Hook for programmatic navigation
   const navigate = useNavigate();
 
   function handleButtonClick() {
     window.scrollTo({ top: 100, left: 100, behavior: "smooth" });
-    navigate("/");
+    navigate("/user/orders");
   }
 
   function renderStatus() {
