@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
+import useAccountAPI from "../api/useAccountAPI";
 import AddAddressDialog from "../dialogs/AddAddressDialog";
 import useDialog from "../hooks/useDialog";
-import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
 export default function Addresses({ currentUser }) {
   const [renderAddresses, setRenderAddresses] = useState();
-  const addAddressDialog = useDialog();
   const [updatedAddress, setUpdatedAddress] = useState({});
-  const { getHeader } = useCookiesAndHeaders();
+  const { getShippingAddressList, removeShippingAddress } = useAccountAPI();
+  const addAddressDialog = useDialog();
 
   useEffect(() => {
-    fetchShippingAddresses();
+    fetchShippingAddressList();
   }, []);
 
-  async function fetchShippingAddresses() {
-    try {
-      const response = await fetch("/api/v1/get-shipping-addresses", {
-        credentials: "include",
-      });
-      const shippingAddresses = await response.json();
-      const mappedAddresses = mapShippingAddresses(shippingAddresses);
-      setRenderAddresses(mappedAddresses);
-    } catch (error) {
-      console.error("Error fetching shipping addresses:", error);
+  async function fetchShippingAddressList() {
+    const shippingAddressList = await getShippingAddressList();
+    if (shippingAddressList) {
+      setRenderAddresses(mapShippingAddresses(shippingAddressList));
     }
-  }
-
-  function handleClickDeleteAddress(shippingAddress) {
-    fetch(
-      "/api/v1/remove-shipping-address/" + shippingAddress.id,
-      getHeader("DELETE")
-    ).then(fetchShippingAddresses);
   }
 
   function mapShippingAddresses(shippingAddresses) {
@@ -45,7 +32,12 @@ export default function Addresses({ currentUser }) {
         >
           Edit
         </button>
-        <button onClick={() => handleClickDeleteAddress(shippingAddress)}>
+        <button
+          onClick={async () => {
+            removeShippingAddress(shippingAddress.id);
+            await fetchShippingAddressList();
+          }}
+        >
           Delete
         </button>
       </div>
@@ -65,8 +57,8 @@ export default function Addresses({ currentUser }) {
       </button>
       <AddAddressDialog
         addAddressDialog={addAddressDialog}
-        fetchShippingAddresses={fetchShippingAddresses}
         updatedAddress={updatedAddress}
+        fetchShippingAddressList={fetchShippingAddressList}
       />
     </div>
   );

@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import useAccountAPI from "../api/useAccountAPI";
 import useInput from "../hooks/useInput";
 import useSelectOptions from "../hooks/useSelectOptions";
-import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 import "./address-dialog.css";
 
 export default function AddAddressDialog({
   addAddressDialog,
-  fetchShippingAddresses,
   updatedAddress,
+  fetchShippingAddressList,
 }) {
-  const { getHeader } = useCookiesAndHeaders();
+  const { addShippingAddressList, updateShippingAddressList } = useAccountAPI();
 
-  // Input states for submission
+  // Fetched items states
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [barangays, setBarangays] = useState([]);
   const [isMainAddress, setIsMainAddress] = useState(true);
+
+  const [addressID, setAddressID] = useState([]);
 
   // Custom input input hook
   const contactName = useInput("text", "Contact name");
@@ -24,22 +26,16 @@ export default function AddAddressDialog({
   const streetAddress = useInput("text", "Street address");
 
   // Custom select input hook
-  const regionSelect = useSelectOptions(
-    regions.map((region) => region.name),
-    "Region"
-  );
-  const provinceSelect = useSelectOptions(
-    provinces.map((province) => province.name),
-    "Municipality"
-  );
-  const citySelect = useSelectOptions(
-    cities.map((city) => city.name),
-    "City"
-  );
-  const barangaySelect = useSelectOptions(
-    barangays.map((barangay) => barangay.name),
-    "Barangay"
-  );
+  const createSelectOptions = (items, placeholder) => {
+    return useSelectOptions(
+      items.map((item) => item.name),
+      placeholder
+    );
+  };
+  const regionSelect = createSelectOptions(regions, "Region");
+  const provinceSelect = createSelectOptions(provinces, "Municipality");
+  const citySelect = createSelectOptions(cities, "City");
+  const barangaySelect = createSelectOptions(barangays, "Barangay");
 
   // List regions
   useEffect(() => {
@@ -84,6 +80,7 @@ export default function AddAddressDialog({
   // Form fill for updating existing address
   useEffect(() => {
     const {
+      id,
       contact_name,
       contact_number,
       street_address,
@@ -102,6 +99,7 @@ export default function AddAddressDialog({
     provinceSelect.setValue(province || "");
     regionSelect.setValue(region || "");
     setIsMainAddress(is_main || true);
+    setAddressID(id || null);
   }, [updatedAddress]);
 
   // PSGC API
@@ -124,11 +122,6 @@ export default function AddAddressDialog({
   async function handleAddressForm(e) {
     e.preventDefault();
 
-    const httpMethod = updatedAddress.id ? "PUT" : "POST";
-    const endPoint = updatedAddress.id
-      ? "update-shipping-address"
-      : "add-shipping-address";
-
     const addressBody = {
       contact_name: contactName.value,
       contact_number: contactNumber.value,
@@ -138,20 +131,16 @@ export default function AddAddressDialog({
       province: provinceSelect.value,
       region: regionSelect.value,
       is_main: isMainAddress,
-      ...(updatedAddress.id && { id: updatedAddress.id }), // Add id if exists
+      ...(addressID && { id: addressID }), // Add id if exists
     };
 
-    const response = await fetch(
-      `/api/v1/${endPoint}`,
-      getHeader(httpMethod, { shipping_address: addressBody })
-    );
-
-    if (response.ok) {
-      await fetchShippingAddresses();
-      addAddressDialog.close();
+    if (addressID) {
+      await updateShippingAddressList(addressBody);
     } else {
-      console.error("Failed to fetch data");
+      await addShippingAddressList(addressBody);
     }
+    fetchShippingAddressList();
+    addAddressDialog.close();
   }
 
   return (
