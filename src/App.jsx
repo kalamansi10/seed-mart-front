@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import useSessionsAPI from "./src/api/useSessionsAPI";
 import Navigation from "./src/navigation/Navigation";
 import HomePage from "./src/homepage/HomePage";
 import ResultsPage from "./src/resultspage/ResultsPage";
@@ -17,22 +18,17 @@ import Reviews from "./src/userpage/Reviews";
 function App() {
   // State for the current user and search API
   const [currentUser, setCurrentUser] = useState(null);
+  const { getUser } = useSessionsAPI();
 
   // Fetch user data on component mount
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/users/sign_in", {
-          credentials: "include",
-        });
-        const data = await response.json();
-        setCurrentUser(data);
-      } catch (error) {
-        console.error("Error fetching user data", error);
+    async function fetchUser() {
+      const user = await getUser();
+      if (user) {
+        setCurrentUser(user);
       }
-    };
-
-    fetchUserData();
+    }
+    fetchUser();
   }, []);
 
   return (
