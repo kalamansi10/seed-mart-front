@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
-import useItemsProps from "../hooks/useItemsProps";
+import useItemProps from "../hooks/useItemProps";
 import useInput from "../hooks/useInput";
 import "./resultspage.css";
 
 export default function SearchFilter() {
   const minPrice = useInput();
   const maxPrice = useInput();
-  const [list, listFields] = useItemsProps();
+  const [list, listFields] = useItemProps();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();

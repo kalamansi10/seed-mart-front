@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useItemsProps from "../hooks/useItemsProps";
+import useItemProps from "../hooks/useItemProps";
 import categoriesPlaceholderImage from "../../assets/categories-placeholder.svg";
 
 export default function Categories({}) {
-  const [list, listFields] = useItemsProps();
+  const [list, listFields] = useItemProps();
   const navigate = useNavigate();
 
   function handleClickCategory(category) {

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddToCart from "./AddToCart";
-import useItemsProps from "../hooks/useItemsProps";
+import useItemProps from "../hooks/useItemProps";
 import useAmountInput from "../hooks/useAmountInput";
 import emptyStar from "../../assets/empty-star.svg";
 import filledStar from "../../assets/filled-star.svg";
 
 export default function ItemBanner({ item }) {
   const itemAmount = useAmountInput(0, 9999);
-  const [list, listFields] = useItemsProps();
+  const [list, listFields] = useItemProps();
 
   useEffect(() => itemAmount.setValue(1), []);
 
