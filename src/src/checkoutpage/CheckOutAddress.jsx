@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import useAccountAPI from "../api/useAccountAPI";
 import useDialog from "../hooks/useDialog";
 import AddressSelectDialog from "../dialogs/AddressSelectDialog";
 
@@ -10,17 +11,24 @@ export default function CheckOutAddress({
   const [addressesRender, setAddressesRender] = useState();
   const addressList = useRef();
   const addressSelectDialog = useDialog();
+  const { getShippingAddressList } = useAccountAPI();
 
   useEffect(() => {
-    fetch("/api/v1/get-shipping-addresses")
-      .then((response) => response.json())
-      .then((shippingAddresses) => {
-        setShippingAddresses(shippingAddresses);
-        setSelectedAddress(
-          shippingAddresses.find((address) => address.is_main == true),
+    async function fetchOrders() {
+      const shippingAddressList = await getShippingAddressList();
+
+      if (shippingAddressList) {
+        setShippingAddresses(shippingAddressList);
+
+        const mainAddress = shippingAddressList.find(
+          (address) => address.is_main === true
         );
-        setAddressesRender(mapShippingAddresses(shippingAddresses));
-      });
+        setSelectedAddress(mainAddress);
+        setAddressesRender(mapShippingAddresses(shippingAddressList));
+      }
+    }
+
+    fetchOrders();
   }, []);
 
   function formatAdrress(shippingAddress) {
@@ -54,7 +62,7 @@ export default function CheckOutAddress({
 
   function handleSaveAddressClick(e) {
     const selectedAddress = document.querySelector(
-      "input[type='radio'][name=shipping-address]:checked",
+      "input[type='radio'][name=shipping-address]:checked"
     ).value;
   }
 
