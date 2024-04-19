@@ -61,7 +61,6 @@ export default function CheckOutPage({ currentUser }) {
     if (!orderList) return;
     checkoutDialog.show();
     checkoutDialog.removeListener();
-    processOrder(orderList);
     const response = await processOrder(orderList);
     setOrderReference(response.reference_number);
   }
