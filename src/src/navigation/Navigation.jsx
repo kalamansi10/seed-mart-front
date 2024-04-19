@@ -75,7 +75,7 @@ export default function Navigation({ currentUser }) {
               onMouseLeave={toggleOptionsVisibility}
             >
               <Link to="/user/profile">My Account</Link>
-              <a>My purchases</a>
+              <Link to="/user/orders">My Purchases</Link>
               <a onClick={deleteSession}>Logout</a>
             </section>
           </div>
