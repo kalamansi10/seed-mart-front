@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import useDialog from "../hooks/useDialog";
 import useListState from "../hooks/useListState";
 import useOrderAPI from "../api/useOrderAPI";
+import useReviewAPI from "../api/useReviewAPI";
 import AddReviewDialog from "../dialogs/AddReviewDialog";
 
 export default function Orders() {
   const [orderType, setOrderType] = useState("All");
+  const [forReview, setForReview] = useState({});
   const orders = useListState();
   const reviewDialog = useDialog();
   const { getOrderList } = useOrderAPI();
+  const { getReview, addReview, editReview, deleteReview } = useReviewAPI();
 
   useEffect(() => {
     async function fetchOrders() {
@@ -21,6 +24,25 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
+  function renderReview(order) {    
+    function handleAddReview() {
+      setForReview(order)
+      reviewDialog.show()
+    }
+
+    if (order.review) {
+      return (
+        <div>
+          {order.review.rating}
+          {order.review.comment}
+          <button onClick={handleAddReview}>Edit</button>;
+        </div>
+      );
+    } else {
+      return <button onClick={handleAddReview}>Add Review</button>;
+    }
+  }
+
   function renderOrders() {
     return orders.list.map((order) => {
       return (
@@ -30,9 +52,8 @@ export default function Orders() {
           <p>x{order.amount}</p>
           <p>{order.item.price}</p>
           <p>{order.total}</p>
-          <button onClick={reviewDialog.show}>Review</button>
           <button>Buy Again</button>
-          <AddReviewDialog reviewDialog={reviewDialog} />
+          {renderReview(order)}
         </div>
       );
     });
@@ -79,6 +100,7 @@ export default function Orders() {
       </div>
       <div>{orderType}</div>
       <div>{renderOrders()}</div>
+      <AddReviewDialog reviewDialog={reviewDialog} order={forReview} />
     </div>
   );
 }
