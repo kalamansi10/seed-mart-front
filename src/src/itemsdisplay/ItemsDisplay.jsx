@@ -44,7 +44,7 @@ export default function ItemsDisplay() {
                   currency: "PHP",
                 })}
               </span>
-              <span className="item-sold">{`${item.items_sold} sold`}</span>
+              <span className="item-sold">{`${item.item_sold || 0} sold`}</span>
             </div>
           </div>
         </div>
