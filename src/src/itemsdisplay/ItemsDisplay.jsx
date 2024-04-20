@@ -129,9 +129,11 @@ export default function ItemsDisplay() {
           <div className="loading-indicator"></div>
         </div>
       );
+    } else if (items.length == 0) {
+      return <div className="items-container flex-row justify-center">No results.</div>;
     } else {
       return <div className="items-container">{items}</div>;
-    }
+    } 
   }
 
   function renderPages() {
