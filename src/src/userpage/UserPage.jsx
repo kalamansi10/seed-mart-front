@@ -19,9 +19,6 @@ export default function UserPage({ currentUser }) {
             <Link to="/user/orders">
               <p>Orders</p>
             </Link>
-            <Link to="/user/reviews">
-              <p>Reviews</p>
-            </Link>
           </section>
           <section className="options-section box-shadow">
             <Outlet />

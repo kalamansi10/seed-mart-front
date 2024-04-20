@@ -84,11 +84,6 @@ function App() {
               path="/user/orders"
               element={<Orders currentUser={currentUser} />}
             />
-            <Route
-              path="/user/reviews"
-              element={<Reviews currentUser={currentUser} />}
-            />
-
             {/* Redirect to the user profile by default */}
             <Route
               path="/user"
