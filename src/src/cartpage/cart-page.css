@@ -81,3 +81,9 @@
   font-size: x-large;
   color: var(--accent);
 }
+
+.no-item {
+ p {
+  padding: 20px;
+ }
+}

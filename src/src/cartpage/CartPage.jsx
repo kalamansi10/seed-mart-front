@@ -155,10 +155,8 @@ export default function CartPage() {
     );
   } else {
     return (
-      <div className="full-height flex-column align-center">
-        <div className="cart-page box-shadow">
-          <p>Cart is empty.</p>
-        </div>
+      <div className="full-height flex-column align-center no-item">
+        <p>Cart is empty.</p>
       </div>
     );
   }
