@@ -13,12 +13,14 @@ import Profile from "./src/userpage/Profile";
 import Addresses from "./src/userpage/Addresses";
 import PaymentMethods from "./src/userpage/PaymentMethods";
 import Orders from "./src/userpage/Orders";
-import Reviews from "./src/userpage/Reviews";
 
 function App() {
   // State for the current user and search API
   const [currentUser, setCurrentUser] = useState(null);
   const { getUser } = useSessionsAPI();
+
+  // State for pop-up notifications
+  const [popUps, setPopUps] = useState([]);
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -31,8 +33,25 @@ function App() {
     fetchUser();
   }, []);
 
+  function createPopUp(message) {
+    const newPopUp = <div className="pop-up-notification">{message}</div>;
+    setTimeout(() => {
+      setPopUps((prevPopUps) => prevPopUps.slice(1)); // Remove the first item
+    }, 3000);
+    setPopUps((prevPopUps) => [...prevPopUps, newPopUp]);
+  }
+
+  function validateUser(Component) {
+    if (!currentUser) {
+      return <Navigate to="/" />;
+    } else {
+      return <Component currentUser={currentUser} />;
+    }
+  }
+
   return (
     <>
+      <div className="pop-up-container flex-column align-center">{popUps}</div>
       {/* Set up BrowserRouter for client-side navigation */}
       <BrowserRouter>
         {/* Navigation component with props */}
@@ -47,30 +66,32 @@ function App() {
           <Route path="/results?" element={<ResultsPage />} />
 
           {/* Item page for displaying details of a specific item */}
-          <Route path="/show/:id" element={<ItemPage />} />
+          <Route
+            path="/show/:id"
+            element={<ItemPage createPopUp={createPopUp} />}
+          />
 
           {/* Cart page with current user data */}
           <Route
             path="/cart"
-            element={
-              currentUser != null ? (
-                <CartPage currentUser={currentUser} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
+            element={validateUser(CartPage)}
           />
           {/* Checkout page with current user data */}
           <Route
             path="/checkout"
-            element={<CheckOutPage currentUser={currentUser} />}
+            element={validateUser(CheckOutPage)}
           />
 
           {/* User profile page with nested routes for different sections */}
-          <Route path="/user" element={<UserPage currentUser={currentUser} />}>
+          <Route
+            path="/user"
+            element={validateUser(UserPage)}
+          >
             <Route
               path="/user/profile"
-              element={<Profile currentUser={currentUser} />}
+              element={
+                <Profile currentUser={currentUser} createPopUp={createPopUp} />
+              }
             />
             <Route
               path="/user/addresses"
