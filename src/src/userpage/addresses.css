@@ -1,0 +1,76 @@
+.addresses-section {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  min-height: 300px;
+
+  h2 {
+    color: var(--primary);
+  }
+
+  .add-address-button {
+    padding: 10px;
+    border: 2px solid var(--primary);
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+
+    &:hover {
+      opacity: 95%;
+    }
+  }
+}
+
+.address-contact-name {
+  font-weight: 600;
+  padding-right: 7px;
+  border-right: 1px solid black;
+}
+
+.address-contact-number {
+  padding-left: 7px;
+}
+
+.shipping-address {
+  padding-top: 5px;
+  color: var(--primary);
+  font-size: small;
+}
+
+.address-options {
+  gap: 10px;
+}
+
+.address-edit,
+.address-delete {
+  all: unset;
+  color: var(--accent);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+button.default-address {
+  margin-top: 5px;
+  border: 2px solid var(--primary);
+  background: white;
+  box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+  cursor: pointer;
+  color: var(--primary);
+
+  &:hover {
+    opacity: 95%;
+  }
+}
+
+button.default-address.is-default {
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}
