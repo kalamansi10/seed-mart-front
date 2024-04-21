@@ -46,7 +46,7 @@ export default function Profile({ currentUser, createPopUp }) {
   if (currentUser) {
     return (
       <div className="profile-section">
-        <h2>Profile</h2>
+        <h2>PROFILE</h2>
         <p>Manage your account information.</p>
         <br />
 
