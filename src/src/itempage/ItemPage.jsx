@@ -5,7 +5,7 @@ import PreviewSlider from "./PreviewSlider";
 import ItemBanner from "./ItemBanner";
 import "./itempage.css";
 
-export default function ItemPage() {
+export default function ItemPage({ createPopUp }) {
   const [item, setItem] = useState();
   const { id } = useParams();
   const { getItem } = useItemAPI();
@@ -29,7 +29,7 @@ export default function ItemPage() {
               <PreviewSlider item={item} />
             </div>
             <div className="flex-row align-center">
-              <ItemBanner item={item} />
+              <ItemBanner item={item} createPopUp={createPopUp} />
             </div>
           </div>
         </div>

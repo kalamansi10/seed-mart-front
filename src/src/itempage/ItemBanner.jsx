@@ -6,7 +6,7 @@ import useAmountInput from "../hooks/useAmountInput";
 import emptyStar from "../../assets/empty-star.svg";
 import filledStar from "../../assets/filled-star.svg";
 
-export default function ItemBanner({ item }) {
+export default function ItemBanner({ item, createPopUp }) {
   const itemAmount = useAmountInput(0, 9999);
   const [list, listFields] = useItemProps();
 
@@ -36,7 +36,7 @@ export default function ItemBanner({ item }) {
     let gray = 5 - rating;
     for (let i = 0; i < rating; i++) {
       result.push(
-        <img className="filled-star" src={filledStar} alt="yellow" />,
+        <img className="filled-star" src={filledStar} alt="yellow" />
       );
     }
     for (let i = 0; i < gray; i++) {
@@ -69,7 +69,11 @@ export default function ItemBanner({ item }) {
           {itemAmount.input()}
         </div>
         <div className="item-actions-container flex-column justify-center">
-          <AddToCart item={item} amount={itemAmount.value} />
+          <AddToCart
+            item={item}
+            amount={itemAmount.value}
+            createPopUp={createPopUp}
+          />
           <Link
             to="/checkout"
             state={{ from: "itempage", item: item, amount: itemAmount.value }}
