@@ -1,0 +1,17 @@
+.order-status-container {
+  input:checked + label {
+    border-bottom: 2px solid var(--accent);
+  }
+}
+
+.order-status-selection {
+  all: unset;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

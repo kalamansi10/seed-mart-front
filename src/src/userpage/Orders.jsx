@@ -4,6 +4,7 @@ import useListState from "../hooks/useListState";
 import useOrderAPI from "../api/useOrderAPI";
 import useReviewAPI from "../api/useReviewAPI";
 import AddReviewDialog from "../dialogs/AddReviewDialog";
+import "./orders.css";
 
 export default function Orders() {
   const [orderType, setOrderType] = useState("All");
@@ -24,10 +25,10 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
-  function renderReview(order) {    
+  function renderReview(order) {
     function handleAddReview() {
-      setForReview(order)
-      reviewDialog.show()
+      setForReview(order);
+      reviewDialog.show();
     }
 
     if (order.review) {
@@ -43,8 +44,18 @@ export default function Orders() {
     }
   }
 
+  function filteredOrderType() {
+    return orders.list.filter((order) => {
+      if (orderType == "All") {
+        return true
+      } else {
+        return order.status == orderType
+      }
+    })
+  }
+
   function renderOrders() {
-    return orders.list.map((order) => {
+    return filteredOrderType().map((order) => {
       return (
         <div key={order.id}>
           <img src={order.item.image_links[0]} alt="item-preview" />
@@ -59,44 +70,103 @@ export default function Orders() {
     });
   }
 
+  function selectOrderType(e) {
+    setOrderType(e.target.value);
+  };
+
   return (
-    <div>
-      <div className="">
-        <ul>
-          <button onClick={(e) => setOrderType(e.target.value)} value="All">
-            All
-          </button>
-          <button onClick={(e) => setOrderType(e.target.value)} value="To Pay">
-            To Pay
-          </button>
-          <button onClick={(e) => setOrderType(e.target.value)} value="To Ship">
-            To Ship
-          </button>
-          <button
-            onClick={(e) => setOrderType(e.target.value)}
-            value="To Receive"
-          >
-            To Receive
-          </button>
-          <button
-            onClick={(e) => setOrderType(e.target.value)}
-            value="Completed"
-          >
-            Completed
-          </button>
-          <button
-            onClick={(e) => setOrderType(e.target.value)}
-            value="Cancelled"
-          >
-            Cancelled
-          </button>
-          <button
-            onClick={(e) => setOrderType(e.target.value)}
-            value="Return/Refund"
-          >
-            Return/Refund
-          </button>
-        </ul>
+    <div className="orders-section">
+      <div className="order-status-container flex-row justify-around">
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-all"
+          value="All"
+          checked={orderType === "All"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-all"
+        >
+          All
+        </label>
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-to-pay"
+          value="To Pay"
+          checked={orderType === "To Pay"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-to-pay"
+        >
+          To Pay
+        </label>
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-to-ship"
+          value="To Ship"
+          checked={orderType === "To Ship"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-to-ship"
+        >
+          To Ship
+        </label>
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-to-receive"
+          value="To Receive"
+          checked={orderType === "To Receive"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-to-receive"
+        >
+          To Receive
+        </label>
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-completed"
+          value="Completed"
+          checked={orderType === "Completed"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-completed"
+        >
+          Completed
+        </label>
+        <input
+          className="hidden"
+          type="radio"
+          name="order-type"
+          id="ot-cancelled"
+          value="Cancelled"
+          checked={orderType === "Cancelled"}
+          onChange={selectOrderType}
+        />
+        <label
+          className="order-status-selection"
+          htmlFor="ot-cancelled"
+        >
+          Cancelled
+        </label>
       </div>
       <div>{orderType}</div>
       <div>{renderOrders()}</div>
