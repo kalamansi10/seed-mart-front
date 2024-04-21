@@ -1,8 +1,8 @@
 .item-page {
   margin-top: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   padding: 40px;
-  width: 1220px;
+  width: 900px;
   display: grid;
   grid-template-columns: 2fr 3fr;
   gap: 20px;
@@ -70,7 +70,7 @@
 .specs-container {
   justify-self: flex-end;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   row-gap: 15px;
 }
 
@@ -80,16 +80,6 @@ input[type="number"] {
 
 input[type="number"] {
   appearance: none;
-}
-
-.filled-star {
-  width: 17px;
-  height: 17px;
-}
-
-.empty-star {
-  width: 15px;
-  height: 15px;
 }
 
 .spec-wrapper {
@@ -114,6 +104,15 @@ input[type="number"] {
 .amount-label,
 .spec-label {
   color: gray;
+}
+
+.spec-label {
+  font-size: 10px;
+}
+
+.spec-value {
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .rating,
@@ -156,5 +155,32 @@ input[type="number"] {
 
   &:hover {
     opacity: 70%;
+  }
+}
+
+.item-reviews-section {
+  background-color: white;
+  width: 900px;
+  padding: 20px 40px 40px 40px;
+
+  .header {
+    font-size: large;
+    font-weight: bold;
+    color: var(--primary);
+  }
+
+  .review-container {
+    margin-top: 30px;
+    padding-left: 10px;
+
+    .reviewer {
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+    .rating,
+    .review-date {
+      font-size: 10px;
+      margin-bottom: 7px;
+    }
   }
 }
