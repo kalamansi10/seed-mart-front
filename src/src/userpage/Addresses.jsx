@@ -87,6 +87,7 @@ export default function Addresses({ currentUser }) {
         </button>
       </div>
       {renderAddresses}
+      {renderAddresses.length == 0 && (<div>No shipping address.</ div>)}
       <AddAddressDialog
         addAddressDialog={addAddressDialog}
         updatedAddress={updatedAddress}
