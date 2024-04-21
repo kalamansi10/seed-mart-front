@@ -1,0 +1,33 @@
+.profile-section {
+  padding-left: 50px;
+  padding-bottom: 50px;
+
+  .input-wrapper.text {
+    width: 500px;
+  }
+
+  .input-wrapper.radio {
+    display: flex;
+    gap: 10px;
+    input {
+      flex-basis: 0;
+    }
+  }
+
+  button {
+    width: 100px;
+    height: 45px;
+    border: 2px solid var(--primary);
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    transition: 100ms ease-in;
+
+    &:hover {
+      color: var(--primary);
+      background: white;
+    }
+  }
+}

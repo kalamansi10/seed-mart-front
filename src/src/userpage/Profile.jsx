@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import useInput from "../hooks/useInput";
 import useRegistrationAPI from "../api/useRegistrationsAPI";
+import "./profile.css";
 
-export default function Profile({ currentUser }) {
-  const [editMode, setEditMode] = useState(0);
+export default function Profile({ currentUser, createPopUp }) {
   const nameInput = useInput("text", "Name");
   const emailInput = useInput("email", "Email");
   const birthdayInput = useInput("date", "Birthday");
@@ -15,11 +15,6 @@ export default function Profile({ currentUser }) {
       setDefaults();
     }
   }, [currentUser]);
-
-  function toggleEdit() {
-    setEditMode(editMode == 0 ? 1 : 0);
-    setDefaults();
-  }
 
   function updateProfile() {
     let updatedInfo = {
@@ -34,7 +29,7 @@ export default function Profile({ currentUser }) {
       updatedInfo.gender = gender;
     }
     updateUser(updatedInfo);
-    toggleEdit();
+    createPopUp("Profile updated successfully.");
   }
 
   function setDefaults() {
@@ -48,23 +43,22 @@ export default function Profile({ currentUser }) {
     setGender(e.target.value);
   };
 
-  if (currentUser && editMode == 0) {
+  if (currentUser) {
     return (
-      <div>
-        <div>Name: {currentUser.name}</div>
-        <div>Email: {currentUser.email}</div>
-        <div>Birthday: {currentUser.birthday}</div>
-        <div>Gender: {currentUser.gender}</div>
-        <button onClick={toggleEdit}>EDIT</button>
-      </div>
-    );
-  } else if (currentUser && editMode == 1) {
-    return (
-      <div>
-        <div>{nameInput.input}</div>
-        <div>{emailInput.input}</div>
-        <div>{birthdayInput.input}</div>
-        <div>
+      <div className="profile-section">
+        <h2>Profile</h2>
+        <p>Manage your account information.</p>
+        <br />
+
+        <div className="input-wrapper text">{nameInput.input}</div>
+        <br />
+        <div className="input-wrapper text">{emailInput.input}</div>
+        <br />
+
+        <div className="input-wrapper text">{birthdayInput.input}</div>
+        <br />
+
+        <div className="input-wrapper radio">
           <input
             type="radio"
             id="male"
@@ -74,7 +68,8 @@ export default function Profile({ currentUser }) {
             onChange={selectGender}
           />
           <label htmlFor="male">Male</label>
-
+        </div>
+        <div className="input-wrapper radio">
           <input
             type="radio"
             id="female"
@@ -84,7 +79,8 @@ export default function Profile({ currentUser }) {
             onChange={selectGender}
           />
           <label htmlFor="female">Female</label>
-
+        </div>
+        <div className="input-wrapper radio">
           <input
             type="radio"
             id="other"
@@ -95,8 +91,8 @@ export default function Profile({ currentUser }) {
           />
           <label htmlFor="other">Other</label>
         </div>
+        <br />
         <button onClick={updateProfile}>Save</button>
-        <button onClick={toggleEdit}>Cancel</button>
       </div>
     );
   }
