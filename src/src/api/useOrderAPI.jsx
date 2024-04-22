@@ -1,6 +1,6 @@
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
-export default function useOrderAPI() {
+export default function useOrderAPI(fetchOrders) {
   const { getHeader } = useCookiesAndHeaders();
 
   async function getOrder(orderReference) {
@@ -38,9 +38,25 @@ export default function useOrderAPI() {
     }
   }
 
+  async function updateOrderStatus(updatedOrder) {
+    const response = await fetch(
+      "/api/order/status",
+      getHeader("POST", {
+        order: updatedOrder,
+      })
+    );
+
+    if (response.ok) {
+      fetchOrders();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
   return {
     getOrder,
     processOrder,
     getOrderList,
+    updateOrderStatus,
   };
 }
