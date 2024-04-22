@@ -14,7 +14,7 @@ export default function useCartAPI(fetchCart) {
   }
 
   async function getForCheckout() {
-    const response = await fetch("/api/cart");
+    const response = await fetch("/api/cart/for-checkout");
 
     if (response.ok) {
       return await response.json();
