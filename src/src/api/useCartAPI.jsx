@@ -1,6 +1,6 @@
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
-export default function useCartAPI(fetchCart) {
+export default function useCartAPI(fetchCart=null) {
   const { getHeader } = useCookiesAndHeaders();
 
   async function getCart() {
