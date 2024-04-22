@@ -22,6 +22,7 @@ export default function Addresses({ currentUser }) {
   }
 
   function mapShippingAddresses(shippingAddresses) {
+    if (shippingAddresses.length == 0) return <div>No shipping address.</ div>
     return shippingAddresses.map((shippingAddress) => (
       <>
         <div
@@ -87,7 +88,6 @@ export default function Addresses({ currentUser }) {
         </button>
       </div>
       {renderAddresses}
-      {renderAddresses && renderAddresses.length == 0 && (<div>No shipping address.</ div>)}
       <AddAddressDialog
         addAddressDialog={addAddressDialog}
         updatedAddress={updatedAddress}
