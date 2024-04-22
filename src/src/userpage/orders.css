@@ -15,3 +15,47 @@
     cursor: pointer;
   }
 }
+.order-list-section {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  border-top: 1px solid var(--secondary);
+
+  a {
+    all: unset;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.ordered-items {
+  padding: 0 50px 0 50px;
+  border-bottom: 1px solid var(--secondary);
+
+  img {
+    padding-right: 20px;
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.order-rating-section {
+  padding: 0 50px 0 50px;
+  border-bottom: 1px solid var(--secondary);
+
+  span {
+    color: var(--accent);
+    font-size: x-large;
+  }
+
+  button {
+    all: unset;
+    color: var(--accent);
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

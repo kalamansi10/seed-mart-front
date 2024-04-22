@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import useDialog from "../hooks/useDialog";
 import useListState from "../hooks/useListState";
 import useOrderAPI from "../api/useOrderAPI";
 import useReviewAPI from "../api/useReviewAPI";
+import useCartAPI from "../api/useCartAPI";
 import AddReviewDialog from "../dialogs/AddReviewDialog";
 import "./orders.css";
 
@@ -11,68 +13,94 @@ export default function Orders() {
   const [forReview, setForReview] = useState({});
   const orders = useListState();
   const reviewDialog = useDialog();
-  const { getOrderList } = useOrderAPI();
+  const { getOrderList, updateOrderStatus } = useOrderAPI(fetchOrders);
   const { getReview, addReview, editReview, deleteReview } = useReviewAPI();
+  const { toLocalCurrency } = useCartAPI();
 
   useEffect(() => {
-    async function fetchOrders() {
-      const orderList = await getOrderList();
-      if (orderList) {
-        orders.setList(orderList);
-      }
-    }
-
     fetchOrders();
   }, []);
 
-  function renderReview(order) {
-    function handleAddReview() {
-      setForReview(order);
-      reviewDialog.show();
+  async function fetchOrders() {
+    const orderList = await getOrderList();
+    if (orderList) {
+      orders.setList(orderList);
     }
+  }
 
-    if (order.review) {
-      return (
-        <div>
-          {order.review.rating}
-          {order.review.comment}
-          <button onClick={handleAddReview}>Edit</button>;
-        </div>
-      );
-    } else {
-      return <button onClick={handleAddReview}>Add Review</button>;
-    }
+  function hanleOpenReviewDialog(order = {}) {
+    setForReview(order);
+    reviewDialog.show();
   }
 
   function filteredOrderType() {
     return orders.list.filter((order) => {
       if (orderType == "All") {
-        return true
+        return true;
       } else {
-        return order.status == orderType
+        return order.status == orderType;
       }
-    })
+    });
+  }
+
+  function handleCompleteOrder(order) {
+    const updatedOrder = {
+      order_reference: order.order_reference,
+      status: "Completed",
+    };
+    updateOrderStatus(updatedOrder);
   }
 
   function renderOrders() {
-    return filteredOrderType().map((order) => {
+    const orderList = filteredOrderType();
+    if (orderList == 0)
+      return <div className="flex-row justify-center">No existing orders.</div>;
+    return orderList.map((order) => {
       return (
-        <div key={order.id}>
-          <img src={order.item.image_links[0]} alt="item-preview" />
-          <p>{order.item.name}</p>
-          <p>x{order.amount}</p>
-          <p>{order.item.price}</p>
-          <p>{order.total}</p>
-          <button>Buy Again</button>
-          {renderReview(order)}
-        </div>
+        <>
+          <Link to={"/show/" + order.item_id}>
+            <div
+              className="ordered-items flex-row justify-between align-center"
+              key={order.id}
+            >
+              <div className="flex-row align-center">
+                <img src={order.item.image_links[0]} alt="item-preview" />
+                <div>
+                  <p>{order.item.name}</p>
+                  <p>x{order.amount}</p>
+                </div>
+              </div>
+              <p>{toLocalCurrency(order.item.price)}</p>
+            </div>
+          </Link>
+          <div className="order-rating-section flex-row justify-between align-center">
+            <div>
+              {!order.review && order.status == "Completed" && (
+                <button onClick={() => hanleOpenReviewDialog(order)}>Add Review</button>
+              )}
+              {order.review && order.status == "Completed" && (
+                <button onClick={() => hanleOpenReviewDialog(order)}>
+                  Edit Review
+                </button>
+              )}
+              {order.status == "To Receive" && (
+                <button onClick={() => handleCompleteOrder(order)}>
+                  Complete Order
+                </button>
+              )}
+            </div>
+            <p>
+              Order Total: <span>{toLocalCurrency(order.total)}</span>
+            </p>
+          </div>
+        </>
       );
     });
   }
 
   function selectOrderType(e) {
     setOrderType(e.target.value);
-  };
+  }
 
   return (
     <div className="orders-section">
@@ -86,10 +114,7 @@ export default function Orders() {
           checked={orderType === "All"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-all"
-        >
+        <label className="order-status-selection" htmlFor="ot-all">
           All
         </label>
         <input
@@ -101,10 +126,7 @@ export default function Orders() {
           checked={orderType === "To Pay"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-to-pay"
-        >
+        <label className="order-status-selection" htmlFor="ot-to-pay">
           To Pay
         </label>
         <input
@@ -116,10 +138,7 @@ export default function Orders() {
           checked={orderType === "To Ship"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-to-ship"
-        >
+        <label className="order-status-selection" htmlFor="ot-to-ship">
           To Ship
         </label>
         <input
@@ -131,10 +150,7 @@ export default function Orders() {
           checked={orderType === "To Receive"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-to-receive"
-        >
+        <label className="order-status-selection" htmlFor="ot-to-receive">
           To Receive
         </label>
         <input
@@ -146,10 +162,7 @@ export default function Orders() {
           checked={orderType === "Completed"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-completed"
-        >
+        <label className="order-status-selection" htmlFor="ot-completed">
           Completed
         </label>
         <input
@@ -161,15 +174,11 @@ export default function Orders() {
           checked={orderType === "Cancelled"}
           onChange={selectOrderType}
         />
-        <label
-          className="order-status-selection"
-          htmlFor="ot-cancelled"
-        >
+        <label className="order-status-selection" htmlFor="ot-cancelled">
           Cancelled
         </label>
       </div>
-      <div>{orderType}</div>
-      <div>{renderOrders()}</div>
+      <div className="order-list-section">{renderOrders()}</div>
       <AddReviewDialog reviewDialog={reviewDialog} order={forReview} />
     </div>
   );
