@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import useDialog from "../hooks/useDialog";
 import useListState from "../hooks/useListState";
 import useOrderAPI from "../api/useOrderAPI";
-import useReviewAPI from "../api/useReviewAPI";
 import useCartAPI from "../api/useCartAPI";
 import AddReviewDialog from "../dialogs/AddReviewDialog";
 import "./orders.css";
 
 export default function Orders() {
   const [orderType, setOrderType] = useState("All");
-  const [forReview, setForReview] = useState({});
+  const [forReview, setForReview] = useState(null);
   const orders = useListState();
   const reviewDialog = useDialog();
   const { getOrderList, updateOrderStatus } = useOrderAPI(fetchOrders);
-  const { getReview, addReview, editReview, deleteReview } = useReviewAPI();
   const { toLocalCurrency } = useCartAPI();
 
   useEffect(() => {
@@ -57,14 +55,11 @@ export default function Orders() {
       return <div className="flex-row justify-center">No existing orders.</div>;
     return orderList.map((order) => {
       return (
-        <>
+        <div key={order.id}>
           <Link to={"/show/" + order.item_id}>
-            <div
-              className="ordered-items flex-row justify-between align-center"
-              key={order.id}
-            >
+            <div className="ordered-items flex-row justify-between align-center">
               <div className="flex-row align-center">
-                <img src={order.item.image_links[0]} alt="item-preview" />
+                <img src={order.item.image_links[0]} alt={order.item.name} />
                 <div>
                   <p>{order.item.name}</p>
                   <p>x{order.amount}</p>
@@ -76,11 +71,8 @@ export default function Orders() {
           <div className="order-rating-section flex-row justify-between align-center">
             <div>
               {!order.review && order.status == "Completed" && (
-                <button onClick={() => hanleOpenReviewDialog(order)}>Add Review</button>
-              )}
-              {order.review && order.status == "Completed" && (
                 <button onClick={() => hanleOpenReviewDialog(order)}>
-                  Edit Review
+                  Review
                 </button>
               )}
               {order.status == "To Receive" && (
@@ -93,7 +85,7 @@ export default function Orders() {
               Order Total: <span>{toLocalCurrency(order.total)}</span>
             </p>
           </div>
-        </>
+        </div>
       );
     });
   }
