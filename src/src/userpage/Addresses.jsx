@@ -24,9 +24,8 @@ export default function Addresses({ currentUser }) {
   function mapShippingAddresses(shippingAddresses) {
     if (shippingAddresses.length == 0) return <div>No shipping address.</ div>
     return shippingAddresses.map((shippingAddress) => (
-      <>
+      <div key={shippingAddress.id}>
         <div
-          key={shippingAddress.id}
           className="flex-row justify-between align-center"
         >
           <div>
@@ -69,7 +68,7 @@ export default function Addresses({ currentUser }) {
           </div>
         </div>
         <br />
-      </>
+      </div>
     ));
   }
 
