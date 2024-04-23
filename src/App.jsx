@@ -33,8 +33,20 @@ function App() {
     fetchUser();
   }, []);
 
-  function createPopUp(message) {
-    const newPopUp = <div className="pop-up-notification">{message}</div>;
+  function createPopUp(message, isWarning = false) {
+    const warningStyles = {
+      border: "2px solid var(--accent)",
+      color: "var(--accent)",
+    };
+    const newPopUp = (
+      <div
+        key={message}
+        className="pop-up-notification"
+        style={isWarning && warningStyles}
+      >
+        {message}
+      </div>
+    );
     setTimeout(() => {
       setPopUps((prevPopUps) => prevPopUps.slice(1)); // Remove the first item
     }, 3000);
@@ -72,21 +84,12 @@ function App() {
           />
 
           {/* Cart page with current user data */}
-          <Route
-            path="/cart"
-            element={validateUser(CartPage)}
-          />
+          <Route path="/cart" element={validateUser(CartPage)} />
           {/* Checkout page with current user data */}
-          <Route
-            path="/checkout"
-            element={validateUser(CheckOutPage)}
-          />
+          <Route path="/checkout" element={validateUser(CheckOutPage)} />
 
           {/* User profile page with nested routes for different sections */}
-          <Route
-            path="/user"
-            element={validateUser(UserPage)}
-          >
+          <Route path="/user" element={validateUser(UserPage)}>
             <Route
               path="/user/profile"
               element={
