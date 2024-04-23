@@ -14,8 +14,8 @@ export default function useReviewAPI() {
     }
   }
 
-  async function getReview(itemID) {
-    const response = await fetch(`/api/review/${itemID}`);
+  async function getReview(orderId) {
+    const response = await fetch(`/api/review/${orderId}`);
     if (response.ok) {
       return await response.json();
     } else {
@@ -35,10 +35,10 @@ export default function useReviewAPI() {
     }
   }
 
-  async function editReview(reviewBody) {
+  async function editReview(reviewId, reviewBody) {
     const response = await fetch(
-      "/api/review",
-      getHeader("POST", { review: reviewBody })
+      `/api/review/${reviewId}`,
+      getHeader("PUT", { review: reviewBody })
     );
     if (response.ok) {
       return;
@@ -47,8 +47,11 @@ export default function useReviewAPI() {
     }
   }
 
-  async function deleteReview(reviewID) {
-    const response = await fetch(`/api/review/${reviewID}`, getHeader("POST"));
+  async function deleteReview(reviewId) {
+    const response = await fetch(
+      `/api/review/${reviewId}`,
+      getHeader("DELETE")
+    );
     if (response.ok) {
       return;
     } else {
@@ -57,16 +60,16 @@ export default function useReviewAPI() {
   }
 
   function renderStarRatings(rating, size) {
-    let starSize = ""
-    
-    switch(size) {
+    let starSize = "";
+
+    switch (size) {
       case "small":
-        starSize = "10px"
+        starSize = "10px";
         break;
       default:
-        starSize = "17px"
+        starSize = "17px";
     }
-    
+
     if (rating == 0) return <span>No ratings yet</span>;
     let result = [];
     let gray = 5 - rating;
@@ -77,7 +80,7 @@ export default function useReviewAPI() {
           className="filled-star"
           src={filledStar}
           alt="yellow"
-          style={{width: starSize, height: starSize}}
+          style={{ width: starSize, height: starSize }}
         />
       );
     }
@@ -88,7 +91,7 @@ export default function useReviewAPI() {
           className="empty-star"
           src={emptyStar}
           alt="gray"
-          style={{width: starSize, height: starSize}}
+          style={{ width: starSize, height: starSize }}
         />
       );
     }
