@@ -50,6 +50,10 @@ small {
 } /* 12.8px */
 
 /* Layout and Flexbox */
+.block {
+  display: block;
+}
+
 .full-height {
   min-height: calc(100vh - 491px);
 }
