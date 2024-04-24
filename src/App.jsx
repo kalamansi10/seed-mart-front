@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import useDialog from "./src/hooks/useDialog";
 import useSessionsAPI from "./src/api/useSessionsAPI";
 import Navigation from "./src/navigation/Navigation";
 import HomePage from "./src/homepage/HomePage";
@@ -13,6 +14,8 @@ import Profile from "./src/userpage/Profile";
 import Addresses from "./src/userpage/Addresses";
 import PaymentMethods from "./src/userpage/PaymentMethods";
 import Orders from "./src/userpage/Orders";
+import LogInDialog from "./src/dialogs/LogInDialog";
+import SignUpDialog from "./src/dialogs/SignUpDialog";
 
 function App() {
   // State for the current user and search API
@@ -21,6 +24,10 @@ function App() {
 
   // State for pop-up notifications
   const [popUps, setPopUps] = useState([]);
+
+  const logInDialog = useDialog();
+  const signUpDialog = useDialog();
+  const [errorMessage, setErrorMessageState] = useState(null);
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -33,6 +40,10 @@ function App() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    setErrorMessageState(null)
+  }, [logInDialog.status, signUpDialog.status])
+
   function createPopUp(message, isWarning = false) {
     const warningStyles = {
       border: "2px solid var(--accent)",
@@ -42,7 +53,7 @@ function App() {
       <div
         key={message}
         className="pop-up-notification"
-        style={isWarning && warningStyles}
+        style={isWarning ? warningStyles : {}}
       >
         {message}
       </div>
@@ -61,13 +72,23 @@ function App() {
     }
   }
 
+  function setErrorMessage(message, type = "error") {
+    const color =
+      type == "error" ? "rgba(255, 0, 25, 0.608)" : "rgba(0, 158, 66, 0.856)";
+    setErrorMessageState(<div className="error-message" style={{ color: color }}>{message}</div>);
+  }
+
   return (
     <>
       <div className="pop-up-container flex-column align-center">{popUps}</div>
       {/* Set up BrowserRouter for client-side navigation */}
       <BrowserRouter>
         {/* Navigation component with props */}
-        <Navigation currentUser={currentUser} />
+        <Navigation
+          currentUser={currentUser}
+          logInDialog={logInDialog}
+          signUpDialog={signUpDialog}
+        />
 
         {/* Define routes for different pages */}
         <Routes>
@@ -84,12 +105,28 @@ function App() {
           />
 
           {/* Cart page with current user data */}
-          <Route path="/cart" element={validateUser(<CartPage currentUser={currentUser} />)} />
+          <Route
+            path="/cart"
+            element={validateUser(
+              <CartPage
+                currentUser={currentUser}
+                createPopUp={createPopUp}
+                logInDialog={logInDialog}
+                signUpDialog={signUpDialog}
+              />
+            )}
+          />
           {/* Checkout page with current user data */}
-          <Route path="/checkout" element={validateUser(<CheckOutPage currentUser={currentUser} />)} />
+          <Route
+            path="/checkout"
+            element={validateUser(<CheckOutPage currentUser={currentUser} />)}
+          />
 
           {/* User profile page with nested routes for different sections */}
-          <Route path="/user" element={validateUser(<UserPage currentUser={currentUser} />)}>
+          <Route
+            path="/user"
+            element={validateUser(<UserPage currentUser={currentUser} />)}
+          >
             <Route
               path="/user/profile"
               element={
@@ -122,6 +159,18 @@ function App() {
         {/* Footer component */}
         <Footer />
       </BrowserRouter>
+      <LogInDialog
+        logInDialog={logInDialog}
+        signUpDialog={signUpDialog}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
+      <SignUpDialog
+        logInDialog={logInDialog}
+        signUpDialog={signUpDialog}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
     </>
   );
 }
