@@ -3,33 +3,32 @@ import useInput from "../hooks/useInput";
 import useSessionsAPI from "../api/useSessionsAPI";
 import "./session-dialogs.css";
 
-function LogInDialog({ logInDialog, signUpDialog }) {
+function LogInDialog({ logInDialog, signUpDialog, errorMessage, setErrorMessage }) {
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userPass = useInput("password", "password");
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState(null);
   const { createSession } = useSessionsAPI();
 
   // Handle login validation
   async function handleLoginValidation() {
     if (!userEmail.value) {
-      setError("Email can't be blank.");
+      setErrorMessage("Email can't be blank.");
     } else if (!userPass.value) {
-      setError("Password can't be blank.");
+      setErrorMessage("Password can't be blank.");
     } else {
       const userInfo = {
         email: userEmail.value,
         password: userPass.value,
         remember_me: rememberMe,
       };
-      setError(null);
       await createSession(userInfo);
     }
   }
 
   // Initiate sign-up process
   function handleSignUpInitiation() {
+    setErrorMessage(null);
     logInDialog.close();
     signUpDialog.show();
   }
@@ -55,7 +54,7 @@ function LogInDialog({ logInDialog, signUpDialog }) {
       <dialog className="session-dialog" ref={logInDialog.ref}>
         <div className="login-dialog flex-column justify-center align-center box-shadow">
           <h2>Seedmart Log In</h2>
-          <div className="error-message">{error}</div>
+          {errorMessage}
           {userEmail.input}
           {userPass.input}
           <div className="rememberable flex-row justify-between">

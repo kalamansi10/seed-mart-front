@@ -1,16 +1,19 @@
-import { useState } from "react";
 import useInput from "../hooks/useInput";
 import useRegistrationsAPI from "../api/useRegistrationsAPI";
 import "./session-dialogs.css";
 
-export default function SignUpDialog({ logInDialog, signUpDialog }) {
+export default function SignUpDialog({
+  logInDialog,
+  signUpDialog,
+  errorMessage,
+  setErrorMessage,
+}) {
   const { createUser } = useRegistrationsAPI();
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userName = useInput("text", "full name");
   const userPass = useInput("password", "password");
   const confirmPass = useInput("password", "confirm password");
-  const [error, setError] = useState(null);
 
   // Handle sign-up validation
   async function handleSignUpValidation() {
@@ -20,18 +23,18 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
       !userPass.value ||
       !confirmPass.value
     ) {
-      setError("Please fill in all fields.");
+      setErrorMessage("Please fill in all fields.");
     } else if (userPass.value !== confirmPass.value) {
-      setError("Password inputs don't match.");
+      setErrorMessage("Password inputs don't match.");
     } else {
       const userInfo = {
         email: userEmail.value,
         name: userName.value,
         password: userPass.value,
       };
-      setError(null);
       await createUser(userInfo);
       backToLogIn();
+      setErrorMessage("Sign up successful.", "success");
     }
   }
 
@@ -46,7 +49,7 @@ export default function SignUpDialog({ logInDialog, signUpDialog }) {
       <dialog className="session-dialog" ref={signUpDialog.ref}>
         <div className="signup-dialog box-shadow">
           <h2>Seedmart Sign Up</h2>
-          <div className="error-message">{error}</div>
+          {errorMessage}
           {userEmail.input}
           {userName.input}
           {userPass.input}
