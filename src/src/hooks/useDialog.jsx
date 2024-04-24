@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 
 // Custom hook for managing dialogs
 export default function useDialog() {
+  const [status, setStatus] = useState("closed");
   // Reference to the dialog element
   const ref = useRef();
 
@@ -11,6 +12,7 @@ export default function useDialog() {
     if (ref.current && ref.current.open) {
       // Close the dialog
       ref.current.close();
+      setStatus("closed")
       // Remove the event listener for outside clicks
       removeListener();
     }
@@ -20,6 +22,7 @@ export default function useDialog() {
   const show = () => {
     // Show the dialog using the showModal method
     ref.current.showModal();
+    setStatus("open")
     // Add an event listener for outside clicks to close the dialog
     ref.current.addEventListener("click", handleOutsideClick);
   };
@@ -45,5 +48,5 @@ export default function useDialog() {
   };
 
   // Return the dialog reference and functions for showing and closing the dialog
-  return { ref, show, close, removeListener };
+  return { ref, show, close, removeListener, status };
 }
