@@ -7,14 +7,12 @@ import {
 } from "react-router-dom";
 import useSessionsAPI from "../api/useSessionsAPI";
 import useDialog from "../hooks/useDialog";
-import LogInDialog from "../dialogs/LogInDialog";
-import SignUpDialog from "../dialogs/SignUpDialog";
 import profileIcon from "../../assets/profile-icon.svg";
 import notificationIcon from "../../assets/notification-icon.svg";
 import cartIcon from "../../assets/cart-icon.svg";
 import "./navigation.css";
 
-export default function Navigation({ currentUser }) {
+export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
   // Ref for options container
   const optionsContainer = useRef();
   // Hoor for query parameters
@@ -26,8 +24,6 @@ export default function Navigation({ currentUser }) {
   // State for the search keyword
   const [searchKeyword, setSearchKeyword] = useState(getKeywordOnParams());
   // Custom hooks for login and sign-up dialogs
-  const logInDialog = useDialog();
-  const signUpDialog = useDialog();
   const { deleteSession } = useSessionsAPI();
 
   // Clear the keyword when navigating away from the results page
@@ -96,18 +92,10 @@ export default function Navigation({ currentUser }) {
         <>
           <div className="nav-item">
             <a onClick={logInDialog.show}>Log In</a>
-            <LogInDialog
-              logInDialog={logInDialog}
-              signUpDialog={signUpDialog}
-            />
           </div>
           <a>|</a>
           <div className="nav-item">
             <a onClick={signUpDialog.show}>Sign Up</a>
-            <SignUpDialog
-              logInDialog={logInDialog}
-              signUpDialog={signUpDialog}
-            />
           </div>
         </>
       );
