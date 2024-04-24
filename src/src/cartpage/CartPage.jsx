@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useListState from "../hooks/useListState";
 import useCartAPI from "../api/useCartAPI";
 import "./cart-page.css";
 
-export default function CartPage() {
+export default function CartPage({ createPopUp }) {
   const cartItems = useListState();
+  const navigate = useNavigate();
   const {
     getCart,
     updateCheckoutStatus,
@@ -55,6 +56,14 @@ export default function CartPage() {
 
   function handleAmountInputBlur(e, carted_id) {
     if (e.target.value < 1) updateCartedAmount(1, carted_id);
+  }
+
+  function handleCheckOut() {
+    if (cartItems.list.some((item) => item.is_for_checkout)) {
+      navigate("/checkout", { state: { from: "cartpage" } });
+    } else {
+      createPopUp("No item selected for checkout.", true);
+    }
   }
 
   function amountInput(carted) {
@@ -144,9 +153,9 @@ export default function CartPage() {
                 <p className="cart-total-amount">
                   {renderCartTotal(cartItems)}
                 </p>
-                <Link to="/checkout" state={{ from: "cartpage" }}>
-                  <button className="check-out-button">Checkout</button>
-                </Link>
+                <button className="check-out-button" onClick={handleCheckOut}>
+                  Checkout
+                </button>
               </div>
             </section>
           </div>
