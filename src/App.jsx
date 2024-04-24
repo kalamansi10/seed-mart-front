@@ -53,11 +53,11 @@ function App() {
     setPopUps((prevPopUps) => [...prevPopUps, newPopUp]);
   }
 
-  function validateUser(Component) {
+  function validateUser(component) {
     if (!currentUser) {
       return <Navigate to="/" />;
     } else {
-      return <Component currentUser={currentUser} />;
+      return component;
     }
   }
 
@@ -84,12 +84,12 @@ function App() {
           />
 
           {/* Cart page with current user data */}
-          <Route path="/cart" element={validateUser(CartPage)} />
+          <Route path="/cart" element={validateUser(<CartPage currentUser={currentUser} />)} />
           {/* Checkout page with current user data */}
-          <Route path="/checkout" element={validateUser(CheckOutPage)} />
+          <Route path="/checkout" element={validateUser(<CheckOutPage currentUser={currentUser} />)} />
 
           {/* User profile page with nested routes for different sections */}
-          <Route path="/user" element={validateUser(UserPage)}>
+          <Route path="/user" element={validateUser(<UserPage currentUser={currentUser} />)}>
             <Route
               path="/user/profile"
               element={
