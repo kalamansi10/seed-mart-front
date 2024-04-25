@@ -6,7 +6,12 @@ import PreviewSlider from "./PreviewSlider";
 import ItemBanner from "./ItemBanner";
 import "./itempage.css";
 
-export default function ItemPage({ createPopUp }) {
+export default function ItemPage({
+  currentUser,
+  createPopUp,
+  logInDialog,
+  setErrorMessage
+}) {
   const [item, setItem] = useState();
   const [itemReviews, setItemReviews] = useState();
   const { id } = useParams();
@@ -42,17 +47,19 @@ export default function ItemPage({ createPopUp }) {
 
         return (
           <div className="review-container" key={review.id}>
-            <div className="reviewer">{review.is_anonymous ? "Anonymous" : review.reviewer}</div>
-            <div className="rating">
-            <div className="review-date">
-              {date.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+            <div className="reviewer">
+              {review.is_anonymous ? "Anonymous" : review.reviewer}
             </div>
+            <div className="rating">
+              <div className="review-date">
+                {date.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
               {renderStarRatings(review.rating, "small")}
             </div>
             <div className="comment">{review.comment}</div>
@@ -75,7 +82,10 @@ export default function ItemPage({ createPopUp }) {
                 item={item}
                 itemReviews={itemReviews}
                 renderStarRatings={renderStarRatings}
+                currentUser={currentUser}
                 createPopUp={createPopUp}
+                logInDialog={logInDialog}
+                setErrorMessage={setErrorMessage}
               />
             </div>
           </div>
