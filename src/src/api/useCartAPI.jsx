@@ -1,6 +1,6 @@
 import useCookiesAndHeaders from "../hooks/useCookiesAndHeaders";
 
-export default function useCartAPI(fetchCart=null) {
+export default function useCartAPI(fetchCart = null) {
   const { getHeader } = useCookiesAndHeaders();
 
   async function getCart() {
@@ -18,6 +18,19 @@ export default function useCartAPI(fetchCart=null) {
 
     if (response.ok) {
       return await response.json();
+    } else {
+      throw new Error(response.message);
+    }
+  }
+
+  async function AddToCart(itemId, itemAmount) {
+    const response = await fetch(
+      "/api/cart?" + "item_id=" + itemId + "&amount=" + itemAmount,
+      getHeader("POST")
+    );
+
+    if (response.ok) {
+      await fetchCart();
     } else {
       throw new Error(response.message);
     }
@@ -108,6 +121,7 @@ export default function useCartAPI(fetchCart=null) {
   return {
     getCart,
     getForCheckout,
+    AddToCart,
     updateCheckoutStatus,
     updateCartedAmount,
     removeFromCart,
