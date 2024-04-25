@@ -40,6 +40,7 @@ export default function SignUpDialog({
 
   // Navigate back to login
   function backToLogIn() {
+    setErrorMessage(null)
     signUpDialog.close();
     logInDialog.show();
   }
