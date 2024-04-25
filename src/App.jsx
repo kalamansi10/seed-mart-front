@@ -41,8 +41,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setErrorMessageState(null)
-  }, [logInDialog.status, signUpDialog.status])
+    if (logInDialog.status == "closed" && signUpDialog.status == "closed") {
+      setErrorMessage(null);
+    }
+  }, [logInDialog.status, signUpDialog.status]);
 
   function createPopUp(message, isWarning = false) {
     const warningStyles = {
@@ -75,7 +77,11 @@ function App() {
   function setErrorMessage(message, type = "error") {
     const color =
       type == "error" ? "rgba(255, 0, 25, 0.608)" : "rgba(0, 158, 66, 0.856)";
-    setErrorMessageState(<div className="error-message" style={{ color: color }}>{message}</div>);
+    setErrorMessageState(
+      <div className="error-message" style={{ color: color }}>
+        {message}
+      </div>
+    );
   }
 
   return (
@@ -101,7 +107,14 @@ function App() {
           {/* Item page for displaying details of a specific item */}
           <Route
             path="/show/:id"
-            element={<ItemPage createPopUp={createPopUp} />}
+            element={
+              <ItemPage
+                currentUser={currentUser}
+                createPopUp={createPopUp}
+                logInDialog={logInDialog}
+                setErrorMessage={setErrorMessage}
+              />
+            }
           />
 
           {/* Cart page with current user data */}
