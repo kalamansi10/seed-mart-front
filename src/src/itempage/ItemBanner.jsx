@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import AddToCart from "./AddToCart";
+import { useNavigate } from "react-router-dom";
 import useItemProps from "../hooks/useItemProps";
 import useAmountInput from "../hooks/useAmountInput";
+import useCartAPI from "../api/useCartAPI";
 
 export default function ItemBanner({
   item,
   itemReviews,
   renderStarRatings,
+  currentUser,
   createPopUp,
+  logInDialog,
+  setErrorMessage,
 }) {
   const itemAmount = useAmountInput(0, 9999);
   const [list, listFields] = useItemProps();
+  const { AddToCart } = useCartAPI();
+  const navigate = useNavigate();
 
   useEffect(() => itemAmount.setValue(1), []);
 
@@ -32,6 +37,27 @@ export default function ItemBanner({
     return result.slice(0, -1);
   }
 
+  function handleCheckOut() {
+    if (currentUser) {
+      navigate("/checkout", {
+        state: { from: "itempage", item: item, amount: itemAmount.value },
+      });
+    } else {
+      logInDialog.show();
+    }
+    setErrorMessage("You need to log in first.");
+  }
+
+  function handleAddToCart() {
+    if (currentUser) {
+      AddToCart(item.id, itemAmount.value);
+      createPopUp("Item added to cart.");
+    } else {
+      logInDialog.show();
+      setErrorMessage("You need to log in first.");
+    }
+  }
+
   if (list) {
     return (
       <div className="description-container flex-column">
@@ -39,7 +65,10 @@ export default function ItemBanner({
         <div className="rating-sold-container flex-row align-center">
           {renderStarRatings(item.average_rating)}
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span className="ratings-count">{itemReviews && itemReviews.length}</span>&nbsp;
+          <span className="ratings-count">
+            {itemReviews && itemReviews.length}
+          </span>
+          &nbsp;
           <span>ratings</span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
           <span className="item-sold">{item.item_sold}</span>&nbsp;
@@ -51,17 +80,12 @@ export default function ItemBanner({
           {itemAmount.input()}
         </div>
         <div className="item-actions-container flex-column justify-center">
-          <AddToCart
-            item={item}
-            amount={itemAmount.value}
-            createPopUp={createPopUp}
-          />
-          <Link
-            to="/checkout"
-            state={{ from: "itempage", item: item, amount: itemAmount.value }}
-          >
-            <button className="buy-now-button">Buy now</button>
-          </Link>
+          <button className="add-to-cart-button" onClick={handleAddToCart}>
+            Add to cart
+          </button>
+          <button className="buy-now-button" onClick={handleCheckOut}>
+            Buy now
+          </button>
         </div>
         <div className="specs-container">{renderSpecs()}</div>
       </div>
