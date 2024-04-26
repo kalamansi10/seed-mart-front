@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "https://seed-mart-api-rails.onrender.com" }
+    { "source": "/api/*", "destination": "https://seed-mart-api-rails.onrender.com/api/v1/*" }
   ]
 }
