@@ -13,7 +13,7 @@ export default function UserPage({ currentUser }) {
             <Link to="/user/addresses">
               <p>Addresses</p>
             </Link>
-            <Link to="/user/payment-methods">
+            <Link to="#">
               <p>Payment Methods</p>
             </Link>
             <Link to="/user/orders">
