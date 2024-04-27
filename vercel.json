@@ -8,5 +8,12 @@
       "source": "/:endpoint*",
       "destination": "https://api.seedmart.biz/:endpoint*"
     }
+  ],
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
   ]
 }
