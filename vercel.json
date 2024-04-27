@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/(.*)"
+      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/*"
     },
     {
       "source": "/users/(.*)",
-      "destination": "https://seed-mart-api-rails.onrender.com/users/(.*)"
+      "destination": "https://seed-mart-api-rails.onrender.com/users/*"
     },
     {
       "source": "/(.*)",
-      "destination": "https://seed-mart-api-rails.onrender.com/(.*)"
+      "destination": "https://seed-mart-api-rails.onrender.com/*"
     }
   ]
 }
