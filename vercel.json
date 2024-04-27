@@ -1,15 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/*",
       "destination": "https://seed-mart-api-rails.onrender.com/api/v1/*"
     },
     {
-      "source": "/users/(.*)",
+      "source": "/users/*",
       "destination": "https://seed-mart-api-rails.onrender.com/users/*"
     },
     {
-      "source": "/(.*)",
+      "source": "/*",
       "destination": "https://seed-mart-api-rails.onrender.com/*"
     }
   ]
