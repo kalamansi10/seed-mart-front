@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:endpoint*",
-      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/:endpoint*"
+      "destination": "https://api.seedmart.biz/api/v1/:endpoint*"
     },
     {
       "source": "/:endpoint*",
-      "destination": "https://seed-mart-api-rails.onrender.com/:endpoint*"
+      "destination": "https://api.seedmart.biz/:endpoint*"
     }
   ]
 }
