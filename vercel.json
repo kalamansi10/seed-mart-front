@@ -5,8 +5,8 @@
       "destination": "https://api.seedmart.biz/api/v1/:endpoint*"
     },
     {
-      "source": "/:endpoint*",
-      "destination": "https://api.seedmart.biz/:endpoint*"
+      "source": "/users/:endpoint*",
+      "destination": "https://api.seedmart.biz/users/:endpoint*"
     }
   ],
   "routes": [
