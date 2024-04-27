@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:endpoint",
-      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/"
+      "source": "/api/:endpoint*",
+      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/:endpoint*"
     }
   ]
 }
