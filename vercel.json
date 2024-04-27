@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/*"
+      "destination": "https://seed-mart-api-rails.onrender.com/api/v1/"
     }
   ]
 }
