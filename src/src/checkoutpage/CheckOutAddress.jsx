@@ -1,35 +1,34 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import useAccountAPI from "../api/useAccountAPI";
 import useDialog from "../hooks/useDialog";
 import AddressSelectDialog from "../dialogs/AddressSelectDialog";
+import AddAddressDialog from "../dialogs/AddAddressDialog";
 
 export default function CheckOutAddress({
   selectedAddress,
   setSelectedAddress,
 }) {
-  const [shippingAddresses, setShippingAddresses] = useState();
-  const [addressesRender, setAddressesRender] = useState();
-  const addressList = useRef();
+  const [shippingAddresses, setShippingAddresses] = useState([]);
   const addressSelectDialog = useDialog();
+  const addAddressDialog = useDialog();
   const { getShippingAddressList } = useAccountAPI();
 
   useEffect(() => {
-    async function fetchOrders() {
-      const shippingAddressList = await getShippingAddressList();
+    fetchShippingAddressList();
+  }, []);
 
-      if (shippingAddressList) {
-        setShippingAddresses(shippingAddressList);
+  async function fetchShippingAddressList() {
+    const shippingAddressList = await getShippingAddressList();
 
-        const mainAddress = shippingAddressList.find(
-          (address) => address.is_main === true
+    if (shippingAddressList) {
+      setShippingAddresses(shippingAddressList);
+      if (!selectedAddress) {
+        setSelectedAddress(
+          shippingAddressList.find((address) => address.is_main === true)
         );
-        setSelectedAddress(mainAddress);
-        setAddressesRender(mapShippingAddresses(shippingAddressList));
       }
     }
-
-    fetchOrders();
-  }, []);
+  }
 
   function formatAdrress(shippingAddress) {
     return `
@@ -40,58 +39,41 @@ export default function CheckOutAddress({
       ${shippingAddress.region}`;
   }
 
-  function mapShippingAddresses(shippingAddresses) {
-    return shippingAddresses.map((shippingAddress) => (
-      <div
-        className="address-wrapper flex-row align-center"
-        key={shippingAddress.id}
-      >
-        <input
-          type="radio"
-          name="shipping-address"
-          id={shippingAddress.id}
-          defaultChecked={shippingAddress.is_main}
-          value={shippingAddress.id}
-        />
-        <label htmlFor={shippingAddress.id}>
-          &nbsp;&nbsp;{formatAdrress(shippingAddress)}
-        </label>
-      </div>
-    ));
-  }
-
-  function handleSaveAddressClick(e) {
-    const selectedAddress = document.querySelector(
-      "input[type='radio'][name=shipping-address]:checked"
-    ).value;
-  }
-
   return (
     <div className="check-out-address box-shadow">
       <div className="selected-address-container flex-row justify-between align-center">
         <h3>Shipping Address</h3>
-        <div className="flex-row">
-          <p>{selectedAddress && formatAdrress(selectedAddress)}</p>
+        <div className="flex-row align-center">
+          {selectedAddress && <p>{formatAdrress(selectedAddress)}</p>}
+          {!selectedAddress && shippingAddresses.length != 0 && (
+            <i>Please select a shipping address.</i>
+          )}
+          {shippingAddresses.length != 0 && (
+            <button
+              className="address-select-button"
+              onClick={addressSelectDialog.show}
+            >
+              Change
+            </button>
+          )}
           <button
             className="address-select-button"
-            onClick={addressSelectDialog.show}
+            onClick={addAddressDialog.show}
           >
-            Change
+            Add new address
           </button>
         </div>
-      </div>
-      <div className="address-selection-container hidden" ref={addressList}>
-        <div className="address-list">{addressesRender}</div>
-        <button
-          className="save-address-button"
-          onClick={handleSaveAddressClick}
-        >
-          Save
-        </button>
       </div>
       <AddressSelectDialog
         addressSelectDialog={addressSelectDialog}
         shippingAddresses={shippingAddresses}
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
+      />
+      <AddAddressDialog
+        addAddressDialog={addAddressDialog}
+        updatedAddress={{}}
+        fetchShippingAddressList={fetchShippingAddressList}
       />
     </div>
   );
