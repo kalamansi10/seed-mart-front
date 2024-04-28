@@ -13,6 +13,10 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, "/api/v1"),
         },
+        "/users": {
+          target: `${env.VITE_BACKEND_URL}`,
+          changeOrigin: true,
+        },
       },
     },
     plugins: [react()],
