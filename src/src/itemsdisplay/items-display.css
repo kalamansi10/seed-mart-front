@@ -1,8 +1,10 @@
+
 .items-container {
   display: grid;
   grid-template-columns: repeat(5, auto);
-  gap: 10px;
+  justify-content: center;
   margin-bottom: 30px;
+  gap: 10px;
 }
 
 .item-card {
@@ -97,5 +99,49 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1040px) {
+  .items-container {
+    grid-template-columns: repeat(4, auto);
+  }  
+}
+
+@media (max-width: 880px) {
+  .items-container {
+    width: 90vw;
+    grid-template-columns: repeat(2, auto);
+    gap: 4vw
+  }
+  
+  .item-card {
+    width: 43vw;
+    height: auto;
+  }
+
+  .item-card img {
+    width: 43vw;
+    height: auto;
+    aspect-ratio: 5/4;
+    object-fit: cover;
+  }
+
+  .item-name {
+    height: 4rem;
+  }
+}
+
+@media (max-width: 440px) {
+  .items-container {
+    grid-template-columns: 1fr;
+  }
+
+  .item-card {
+    width: 90vw;
+  }
+
+  .item-card img {
+    width: 90vw;
   }
 }

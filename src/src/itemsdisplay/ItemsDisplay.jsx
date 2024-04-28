@@ -152,5 +152,5 @@ export default function ItemsDisplay() {
     }
   }
 
-  return <div className="display-items">{renderDisplayItems()}</div>;
+  return <div className="display-items flex-column align-center">{renderDisplayItems()}</div>;
 }
