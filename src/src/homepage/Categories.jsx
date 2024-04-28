@@ -31,7 +31,7 @@ export default function Categories({}) {
   }
 
   return (
-    <div className="categories-container flex-row justify-center">
+    <div className="categories-container">
       {list && renderCategories()}
     </div>
   );
