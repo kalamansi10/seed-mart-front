@@ -9,7 +9,7 @@ import CheckOutAddress from "./CheckOutAddress";
 import CheckOutPayment from "./CheckOutPayment";
 import "./check-out-page.css";
 
-export default function CheckOutPage({ currentUser , createPopUp}) {
+export default function CheckOutPage({ currentUser, createPopUp }) {
   const [selectedAddress, setSelectedAddress] = useState();
   const [orderReference, setOrderReference] = useState();
 
@@ -79,7 +79,7 @@ export default function CheckOutPage({ currentUser , createPopUp}) {
         };
       });
     } else {
-      createPopUp("Please enter a valid shipping address.", true)
+      createPopUp("Invalid shipping address.", true);
       return null;
     }
   }
