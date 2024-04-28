@@ -35,7 +35,7 @@ export default function PromoBanners() {
     return activeBanners.map((banner) => (
       <div className="banner" key={banner.id}>
         <a href={banner.banner_link}>
-          <img src={banner.image_link} alt={banner.name} />
+          <img className="banner-img" src={banner.image_link} alt={banner.name} />
         </a>
       </div>
     ));
@@ -58,7 +58,8 @@ export default function PromoBanners() {
   }
 
   function updateSlider() {
-    let translation = currentBanner * -900;
+    const bannerImageWidth = document.querySelector(".banner-img").clientWidth
+    const translation = currentBanner * (-1 * bannerImageWidth);
     document.querySelector(
       ".active-banners"
     ).style.translate = `${translation}px`;
