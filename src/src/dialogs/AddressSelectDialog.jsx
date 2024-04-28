@@ -4,6 +4,8 @@ import "./address-select-dialog.css";
 export default function AddressSelectDialog({
   addressSelectDialog,
   shippingAddresses,
+  selectedAddress,
+  setSelectedAddress,
 }) {
   function formatAdrress(shippingAddress) {
     return `
@@ -16,16 +18,25 @@ export default function AddressSelectDialog({
 
   function mapShippingAddresses() {
     return shippingAddresses.map((shippingAddress) => (
-      <label key={shippingAddress.id} htmlFor={shippingAddress.id}>
-        <div className="shipping-address-container box-shadow">
+      <div
+        key={shippingAddress.id}
+        htmlFor={shippingAddress.id}
+        onClick={() => setSelectedAddress(shippingAddress)}
+      >
+        <div
+          className={`shipping-address-container box-shadow ${
+            selectedAddress == shippingAddress ? "checked" : ""
+          }`}
+        >
           <span className="checkmark">✓</span>
           <div>
-            <span>Name Name</span>
-            <span>Contact Info</span>
+            <span className="contact-name">{shippingAddress.contact_name}</span>
+            <span> | </span>
+            <i className="contact-number">{shippingAddress.contact_number}</i>
           </div>
           <p>{formatAdrress(shippingAddress)}</p>
         </div>
-      </label>
+      </div>
     ));
   }
 
@@ -33,11 +44,10 @@ export default function AddressSelectDialog({
     <>
       <dialog ref={addressSelectDialog.ref}>
         <div className="address-select flex-column align-center box-shadow">
-          <h1>Select Address</h1>
+          <p>Select shipping address </p>
           <div className="address-list-container flex-column">
             {shippingAddresses && mapShippingAddresses()}
           </div>
-          <button className="save-address-button">Save</button>
         </div>
       </dialog>
     </>
