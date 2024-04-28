@@ -132,7 +132,7 @@ function App() {
           {/* Checkout page with current user data */}
           <Route
             path="/checkout"
-            element={validateUser(<CheckOutPage currentUser={currentUser} />)}
+            element={validateUser(<CheckOutPage currentUser={currentUser} createPopUp={createPopUp}/>)}
           />
 
           {/* User profile page with nested routes for different sections */}
