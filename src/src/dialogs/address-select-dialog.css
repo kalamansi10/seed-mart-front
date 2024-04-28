@@ -1,26 +1,36 @@
 .address-select {
-  padding: 50px 40px;
+  padding: 50px 0;
   width: 450px;
   background-color: white;
 }
 
+.address-select > p {
+  padding-bottom: 20px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
 .address-list-container {
-  width: 100%;
-  height: 275px;
   padding: 0 10px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  padding-bottom: 200px;
   gap: 20px;
 }
 
 .shipping-address-container {
   padding: 15px;
-  width: 300px;
   position: relative;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px solid gray;
   transition: 400ms ease-in-out;
+
+  .contact-name {
+    font-weight: 600;
+  }
+
+  .contact-s {
+    font-weight: 600;
+  }
 
   &:hover {
     border: 2px solid var(--primary);
@@ -28,11 +38,19 @@
   }
 }
 
+.shipping-address-container.checked {
+  border: 2px solid var(--primary);
+
+  .checkmark {
+    color: var(--primary);
+  }
+}
+
 .checkmark {
   position: absolute;
   right: 10px;
   top: 10px;
-  color: gray;
+  color: var(--secondary);
   font-size: x-large;
 }
 
