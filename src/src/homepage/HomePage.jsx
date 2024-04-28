@@ -20,7 +20,9 @@ export default function App() {
       <div className="homepage">
         <section className="promotion-section box-shadow">
           <PromoBanners />
+          <div className="flex-column align-center">
           <Categories />
+          </div>
         </section>
         <section className="items-section flex-column align-center">
           <header className="box-shadow text-center">New Additions</header>
