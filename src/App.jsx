@@ -9,7 +9,7 @@ import ItemPage from "./src/itempage/ItemPage";
 import CartPage from "./src/cartpage/CartPage";
 import CheckOutPage from "./src/checkoutpage/CheckOutPage";
 import UserPage from "./src/userpage/UserPage";
-import Footer from "./src/hooks/Footer";
+import Footer from "./src/footer/Footer";
 import Profile from "./src/userpage/Profile";
 import Addresses from "./src/userpage/Addresses";
 import PaymentMethods from "./src/userpage/PaymentMethods";
