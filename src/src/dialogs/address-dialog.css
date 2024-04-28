@@ -6,6 +6,10 @@
   padding: 50px;
   column-gap: 10px;
   row-gap: 20px;
+
+  h4 {
+    color: var(--primary);
+  }
 }
 
 .address-form .header,
