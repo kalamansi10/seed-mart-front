@@ -149,7 +149,7 @@ export default function AddAddressDialog({
         <div className="address-dialog box-shadow">
           <form className="address-form">
             <div className="header">
-              <h2>Shipping address</h2>
+              <h4>New shipping address</h4>
               <p>Please enter your shipping details.</p>
             </div>
             <div className="name input-wrapper">{contactName.input}</div>
@@ -172,7 +172,7 @@ export default function AddAddressDialog({
             <input
               className="submit-button"
               type="submit"
-              onClick={handleAddressForm}
+              onSubmit={handleAddressForm}
               value={updatedAddress.id ? "Update" : "Add"}
             />
           </form>
