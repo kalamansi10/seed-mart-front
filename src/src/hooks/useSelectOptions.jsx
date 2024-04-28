@@ -1,7 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import "./input.css";
 
-export default function useSelectOptions(options = [], placeholder = "") {
+export default function useSelectOptions(
+  options = [],
+  placeholder = "",
+  minLength = 0
+) {
   const [value, setValue] = useState("");
   const optionsList = useRef();
 
@@ -16,6 +20,7 @@ export default function useSelectOptions(options = [], placeholder = "") {
         placeholder=""
         data-placeholder={placeholder}
         value={value}
+        minLength={minLength}
         required
       />
       <span className="placeholder">{placeholder}</span>
@@ -31,7 +36,7 @@ export default function useSelectOptions(options = [], placeholder = "") {
 
   function renderOptions() {
     let filteredOptions = options.filter((option) =>
-      option.toString().toLowerCase().includes(value.toLowerCase()),
+      option.toString().toLowerCase().includes(value.toLowerCase())
     );
     return filteredOptions.sort().map((option) => {
       return (
