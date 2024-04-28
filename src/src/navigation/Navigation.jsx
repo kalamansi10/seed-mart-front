@@ -6,10 +6,10 @@ import {
   useLocation,
 } from "react-router-dom";
 import useSessionsAPI from "../api/useSessionsAPI";
-import useDialog from "../hooks/useDialog";
-import profileIcon from "../../assets/profile-icon.svg";
-import notificationIcon from "../../assets/notification-icon.svg";
-import cartIcon from "../../assets/cart-icon.svg";
+import seedmartLogo from "../../assets/seedmart-logo.png";
+import profileIcon from "../../assets/profile-icon.png";
+import notificationIcon from "../../assets/notification-icon.png";
+import cartIcon from "../../assets/cart-icon.png";
 import "./navigation.css";
 
 export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
@@ -48,6 +48,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
     if (e.key === "Enter") {
       e.preventDefault();
       navigate("/results?keyword=" + searchKeyword);
+      closeMobileNav();
     }
   }
 
@@ -61,7 +62,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
     if (currentUser) {
       return (
         <>
-          <div className="nav-item" onClick={toggleOptionsVisibility}>
+          <li className="nav-item" onClick={toggleOptionsVisibility}>
             <a>
               <img src={profileIcon} alt="profile-icon" />
             </a>
@@ -74,41 +75,99 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
               <Link to="/user/orders">My Purchases</Link>
               <a onClick={deleteSession}>Logout</a>
             </section>
-          </div>
-          <div className="nav-item">
+          </li>
+          <li className="nav-item">
             <a>
               <img src={notificationIcon} alt="notification-icon" />
             </a>
-          </div>
-          <div className="nav-item cart">
+          </li>
+          <li className="nav-item cart">
             <Link to="/cart">
               <img src={cartIcon} alt="cart-icon" />
             </Link>
-          </div>
+          </li>
         </>
       );
     } else {
       return (
         <>
-          <div className="nav-item">
+          <li className="nav-item">
             <a onClick={logInDialog.show}>Log In</a>
-          </div>
-          <a>|</a>
-          <div className="nav-item">
+          </li>
+          <li className="nav-item">
             <a onClick={signUpDialog.show}>Sign Up</a>
-          </div>
+          </li>
         </>
       );
     }
   }
 
+  function renderMobileOptions() {
+    const searchWrapper = (
+      <div className="search-wrapper-mobile">
+        <input
+          type="text"
+          onKeyDown={handleKeyPressEnter}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          value={searchKeyword}
+        />
+        <button
+          onClick={() => {
+            navigate("/results?keyword=" + searchKeyword);
+            closeMobileNav();
+          }}
+        >
+          Search
+        </button>
+      </div>
+    );
+    if (currentUser) {
+      return (
+        <ul className="nav-item-mobile">
+          {searchWrapper}
+          <li onClick={closeMobileNav}>
+            <Link to="/user/profile">Profile</Link>
+          </li>
+          <li onClick={closeMobileNav}>
+            <Link to="/user/orders">Purchases</Link>
+          </li>
+          <li onClick={closeMobileNav}>
+            <Link to="#">Notifications</Link>
+          </li>
+          <li onClick={closeMobileNav}>
+            <Link to="/cart">Cart</Link>
+          </li>
+          <li>
+            <a onClick={deleteSession}>Logout</a>
+          </li>
+        </ul>
+      );
+    } else {
+      return (
+        <ul className="nav-item-mobile">
+          {searchWrapper}
+          <li onClick={closeMobileNav}>
+            <a onClick={logInDialog.show}>Log In</a>
+          </li>
+          <li onClick={closeMobileNav}>
+            <a onClick={signUpDialog.show}>Sign Up</a>
+          </li>
+        </ul>
+      );
+    }
+  }
+
+  function closeMobileNav() {
+    document.getElementById("nav-toggle").checked = false;
+  }
+
   // Main navigation component
   return (
-    <nav className="navigation flex-row justify-center align-center">
+    <nav className="navigation">
       <Link to="/">
-        <h1 className="nav-icon">Seed Mart</h1>
+        <img className="nav-logo" src={seedmartLogo} alt="seedmartLogo" />
       </Link>
-      <div className="search-wrapper flex-row align-center">
+      <div className="search-wrapper">
         <input
           type="text"
           onKeyDown={handleKeyPressEnter}
@@ -119,7 +178,16 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
           Search
         </button>
       </div>
-      <div className="nav-options flex-row">{renderAccountOptions()}</div>
+      <ul className="nav-options">{renderAccountOptions()}</ul>
+      <input type="checkbox" id="nav-toggle" />
+      <div className="burger-wrapper">
+        <label htmlFor="nav-toggle">
+          <div className="burger">
+            <i>Menu</i>
+          </div>
+        </label>
+      </div>
+      {renderMobileOptions()}
     </nav>
   );
 }
