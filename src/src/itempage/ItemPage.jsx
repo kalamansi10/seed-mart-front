@@ -10,7 +10,7 @@ export default function ItemPage({
   currentUser,
   createPopUp,
   logInDialog,
-  setErrorMessage
+  setErrorMessage,
 }) {
   const [item, setItem] = useState();
   const [itemReviews, setItemReviews] = useState();
@@ -40,7 +40,7 @@ export default function ItemPage({
 
   function renderReviews() {
     if (!itemReviews || itemReviews.length == 0) {
-      return <div>No reviews yet.</div>;
+      return <div className="review-container">No reviews yet.</div>;
     } else {
       return itemReviews.map((review) => {
         const date = new Date(review.created_at);
@@ -73,8 +73,8 @@ export default function ItemPage({
     return (
       <>
         <div className="flex-column align-center full-height">
-          <div className="item-page flex-row justify-between box-shadow">
-            <div>
+          <div className="item-page">
+            <div className="slider-section flex-column align-center">
               <PreviewSlider item={item} />
             </div>
             <div className="flex-row align-center">
@@ -89,9 +89,11 @@ export default function ItemPage({
               />
             </div>
           </div>
-          <div className="item-reviews-section box-shadow">
-            <p className="header">Product Reviews</p>
-            {renderReviews()}
+          <div className="item-reviews-section">
+            <div>
+              <p className="header">Product Reviews</p>
+              {renderReviews()}
+            </div>
           </div>
         </div>
       </>

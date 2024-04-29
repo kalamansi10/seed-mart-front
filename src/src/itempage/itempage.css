@@ -1,16 +1,16 @@
 .item-page {
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 1050px;
   padding: 40px;
-  width: 900px;
   display: grid;
   grid-template-columns: 2fr 3fr;
-  gap: 20px;
+  gap: 40px;
+  justify-content: center;
   background-color: white;
-}
-
-.slider-container {
-  flex-grow: 1;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+  rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .preview-container {
@@ -19,10 +19,9 @@
 }
 
 .preview-image img {
-  max-width: 400px;
-  max-height: 400px;
-  width: auto;
+  width: 400px;
   height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .sub-container {
@@ -63,14 +62,14 @@
 }
 
 .description-container {
-  flex-grow: 3;
   gap: 15px;
+  width: 100%;
 }
 
 .specs-container {
   justify-self: flex-end;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr;
   row-gap: 15px;
 }
 
@@ -108,11 +107,13 @@ input[type="number"] {
 
 .spec-label {
   font-size: 10px;
+  padding-left: 5px;
 }
 
 .spec-value {
   font-size: 10px;
   font-weight: bold;
+  padding-left: 5px;
 }
 
 .rating,
@@ -160,8 +161,10 @@ input[type="number"] {
 
 .item-reviews-section {
   background-color: white;
-  width: 900px;
+  width: 1050px;
   padding: 20px 40px 40px 40px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+  rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
   .header {
     font-size: large;
@@ -182,5 +185,67 @@ input[type="number"] {
       font-size: 10px;
       margin-bottom: 7px;
     }
+  }
+}
+
+@media (max-width: 1050px) {
+  .item-page {
+    margin: 0;
+    width: 100vw;
+    padding: 0;
+    gap: 0;
+    box-shadow: none;
+  }
+
+  .slider-section {
+    width: 40vw;
+    padding: 5vw;
+  }
+
+  .description-container {
+    padding: 2vw;
+  }
+
+  .item-reviews-section {
+    width: 100vw;
+    padding: 0;
+    box-shadow: none;
+  }
+  .item-reviews-section > div {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-bottom: 70px;
+  }
+}
+
+@media (max-width: 800px) {
+  .item-page {
+    padding-top: 5vw;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }  
+
+  .slider-section {
+    width: 100vw;
+    padding: 0;
+  }
+
+  .preview-container {
+    width: 100vw;
+    height: auto;
+  }
+
+  .preview-image img {
+    width: 90vw;
+    aspect-ratio: 1 / 1;
+  }
+
+  .sub-container {
+    width: 90vw;
+  }
+
+  .description-container {
+    padding: 5vw;
+    padding-bottom: 70px;
   }
 }
