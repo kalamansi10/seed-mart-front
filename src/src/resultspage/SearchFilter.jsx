@@ -4,7 +4,7 @@ import useItemProps from "../hooks/useItemProps";
 import useInput from "../hooks/useInput";
 import "./resultspage.css";
 
-export default function SearchFilter() {
+export default function SearchFilter({ handleToggleFiltersSection }) {
   const minPrice = useInput();
   const maxPrice = useInput();
   const [list, listFields] = useItemProps();
@@ -88,6 +88,7 @@ export default function SearchFilter() {
       }
     });
     updateParams();
+    handleToggleFiltersSection()
   }
 
   function resetFilters() {
@@ -96,6 +97,7 @@ export default function SearchFilter() {
       behavior: "smooth",
     });
     navigate("/results?keyword=" + searchParams.get("keyword"));
+    handleToggleFiltersSection()
   }
 
   function updateParams() {
@@ -109,6 +111,12 @@ export default function SearchFilter() {
   if (list) {
     return (
       <div className="filters-section box-shadow">
+        <button
+          className="close-filter-section"
+          onClick={handleToggleFiltersSection}
+        >
+          close
+        </button>
         {mapFilters()}
         <form className="price-filter">
           <div className="flex-row justify-center align-center">

@@ -8,7 +8,7 @@ import {
 import useItemAPI from "../api/useItemAPI";
 import "./items-display.css";
 
-export default function ItemsDisplay() {
+export default function ItemsDisplay({ handleToggleFiltersSection }) {
   const { searchItems } = useItemAPI();
   const [searchParams] = useSearchParams("keyword=");
   const location = useLocation();
@@ -113,6 +113,11 @@ export default function ItemsDisplay() {
               <option value="price-highest">price: highest</option>
             </select>
           </div>
+          <div className="filter-toggle">
+            <button onClick={handleToggleFiltersSection}>Search filter</button>
+            <span> ▼</span>
+          </div>
+
           {renderItemList()}
           {renderPages()}
         </>
@@ -130,10 +135,14 @@ export default function ItemsDisplay() {
         </div>
       );
     } else if (items.length == 0) {
-      return <div className="items-container flex-row justify-center">No results.</div>;
+      return (
+        <div className="items-container flex-row justify-center">
+          No results.
+        </div>
+      );
     } else {
       return <div className="items-container">{items}</div>;
-    } 
+    }
   }
 
   function renderPages() {
@@ -152,5 +161,9 @@ export default function ItemsDisplay() {
     }
   }
 
-  return <div className="display-items flex-column align-center">{renderDisplayItems()}</div>;
+  return (
+    <div className="display-items flex-column align-start">
+      {renderDisplayItems()}
+    </div>
+  );
 }
