@@ -107,11 +107,17 @@
   max-width: 100px;
   height: auto;
   border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .category a {
   color: var(--primary);
   text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 900px) {
