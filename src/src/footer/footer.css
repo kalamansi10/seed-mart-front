@@ -7,6 +7,7 @@ footer {
     margin: 0;
     padding: 0;
     color: var(--primary);
+    font-size: x-large;
   }
 
   ul {
@@ -62,5 +63,9 @@ footer {
 @media (max-width: 880px) {
   .footer {
     grid-template-columns: 1fr;
+
+    h2 {
+      font-size: large;
+    }
   }
 }
