@@ -87,24 +87,35 @@ export default function CartPage({ createPopUp }) {
     return cartItems.list.map((carted) => {
       return (
         <div className="cart-item" id={carted.id} key={carted.id}>
-          <input
-            type="checkbox"
-            onClick={(e) => updateCheckoutStatus(e.target.checked, carted.id)}
-            onChange={(e) =>
-              cartItems.update(carted.id, e.target.checked, "is_for_checkout")
-            }
-            checked={carted.is_for_checkout}
-          />
-          <img src={carted.item.image_links[0]} alt="" />
-          <p>{carted.item.name}</p>
-          <span>{toLocalCurrency(carted.item.price)}</span>
-          {amountInput(carted)}
-          <span>{toLocalCurrency(carted.amount * carted.item.price)}</span>
+          <div className="ci-checkbox">
+            <input
+              type="checkbox"
+              onClick={(e) => updateCheckoutStatus(e.target.checked, carted.id)}
+              onChange={(e) =>
+                cartItems.update(carted.id, e.target.checked, "is_for_checkout")
+              }
+              checked={carted.is_for_checkout}
+            />
+          </div>
+          <img className="ci-image" src={carted.item.image_links[0]} alt="" />
+          <div className="ci-info-wrapper">
+            <p className="ci-name">{carted.item.name}</p>
+            <span className="ci-amount-mobile">{amountInput(carted)}</span>
+            <span className="ci-price-mobile">
+              {toLocalCurrency(carted.item.price)}
+            </span>
+          </div>
+          <span className="ci-price">{toLocalCurrency(carted.item.price)}</span>
+          <span className="ci-amount">{amountInput(carted)}</span>
+          <span className="ci-total">
+            {toLocalCurrency(carted.amount * carted.item.price)}
+          </span>
           <button
             className="remove-item-button"
             onClick={() => removeFromCart(carted.id)}
           >
-            Remove
+            <span className="web">Remove</span>
+            <span className="mobile">x</span>
           </button>
         </div>
       );
@@ -115,18 +126,19 @@ export default function CartPage({ createPopUp }) {
     return (
       <>
         <div className="full-height flex-column align-center">
-          <div className="cart-page box-shadow">
+          <div className="cart-page">
             <section className="cart-items-section">
               <div className="cart-items-labels">
-                <p>Products Ordered</p>
-                <span>Price</span>
-                <span>Quantity</span>
-                <span>Total</span>
+                <span className="cil-ordered">Products Ordered</span>
+                <span className="cil-price">Price</span>
+                <span className="cil-quantity">Quantity</span>
+                <span className="cil-total">Total</span>
+                <span className="grid-placeholder"></span>
               </div>
               {renderCartItems()}
             </section>
-            <section className="cart-options-section flex-row justify-between">
-              <div className="right-cart-options flex-row align-center">
+            <section className="cart-options-section">
+              <div className="left-cart-options">
                 <label>
                   <input
                     type="checkbox"
@@ -146,10 +158,10 @@ export default function CartPage({ createPopUp }) {
                   Remove selected
                 </button>
               </div>
-              <div className="left-cart-options flex-row align-center">
+              <div className="right-cart-options">
                 <p className="cart-total-label">{`Total (${renderCartQuantity(
                   cartItems
-                )} item):`}</p>
+                )} item)`}</p>
                 <p className="cart-total-amount">
                   {renderCartTotal(cartItems)}
                 </p>
