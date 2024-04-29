@@ -1,4 +1,8 @@
 .navigation {
+  position: fixed;
+  top: 0;
+  width: 90vw;
+  z-index: 100;
   background-color: var(--primary);
   column-gap: 40px;
   height: 70px;
@@ -22,7 +26,6 @@
   height: 50px;
   margin: 0;
   position: relative;
-  z-index: 100;
 }
 
 .search-wrapper,
@@ -98,7 +101,6 @@
   position: absolute;
   top: 150%;
   background-color: white;
-  z-index: 100;
 }
 
 .options-wrapper a {
@@ -131,7 +133,6 @@
 
   .burger-wrapper {
     display: inline-block;
-    z-index: 50;
   }
 
   .burger {
@@ -202,13 +203,12 @@
   }
 
   .nav-item-mobile {
-    z-index: 100;
-    margin-top: 70px;
+    margin-top: 69px;
     height: 0;
     width: 100%;
     display: block;
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     text-wrap: nowrap;
