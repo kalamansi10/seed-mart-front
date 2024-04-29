@@ -243,7 +243,8 @@ textarea {
 }
 
 .pop-up-container {
-  position: absolute;
+  position: fixed;
+  z-index: 100;
   top: 10vh;
   width: 100%;
   gap: 10px;
