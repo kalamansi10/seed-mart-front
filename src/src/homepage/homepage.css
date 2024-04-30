@@ -41,9 +41,13 @@
 
 .slider {
   position: relative;
-  max-width: 900px;
+  width: 900px;
   aspect-ratio: 9 / 4;
   overflow: hidden;
+}
+
+.banner-img {
+  width: 900px;
 }
 
 .active-banners {
