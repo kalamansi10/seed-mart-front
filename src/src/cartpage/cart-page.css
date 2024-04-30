@@ -33,7 +33,7 @@
 .cil-ordered {
   justify-self: start;
   font-size: x-large;
-  flex: 21;
+  flex: 22;
 }
 
 .cil-price,
@@ -49,7 +49,7 @@
 }
 
 .ci-checkbox {
-  flex: 1;
+  flex: 2;
 }
 
 .ci-info-wrapper {
@@ -125,8 +125,9 @@
 .cart-total-amount {
   margin: 0;
   font-weight: bold;
-  font-size: x-large;
+  font-family: "Maitree";
   color: var(--accent);
+  font-family: "Maitree";
 }
 
 .no-item {
@@ -137,7 +138,7 @@
 
 @media (max-width: 1100px) {
   .cart-page {
-    width: 100vw;
+    width: 90vw;
   }
 }
 
@@ -157,32 +158,46 @@
   .right-cart-options {
     flex-direction: column;
   }
+
+  .cart-page {
+    p,
+    a,
+    i,
+    button,
+    span,
+    label {
+      font-size: small;
+    }
+
+    h3 {
+      font-size: x-large;
+    }
+
+    .co-ordered {
+      font-size: large;
+    }
+  }
 }
 
 @media (max-width: 800px) {
-  .cart-items-section {
+  .cart-items-section,
+  .cart-options-section {
     padding: 5vw;
+    padding-top: 70px;
   }
 
   .cart-page {
     margin: 0;
+    width: 100vw;
     box-shadow: none;
   }
 
   .cil-ordered {
-    flex: 20;
-    font-size: medium;
-  }
-  .ci-info-wrapper {
     flex: 14;
   }
 
-  .cil-quantity,
-  .cil-total,
-  .ci-price-mobile,
-  .ci-total,
-  .remove-item-button {
-    font-size: small;
+  .ci-info-wrapper {
+    flex: 7;
   }
 
   .amount-input {
@@ -201,9 +216,12 @@
     display: none;
   }
 
-  .ci-info-wrapper {
+  .cil-ordered {
     flex: 10;
-    font-size: small;
+  }
+
+  .ci-info-wrapper {
+    flex: 5;
   }
 
   .ci-amount {
@@ -240,10 +258,6 @@
     justify-content: space-between;
     width: 90vw;
 
-    label {
-      font-size: small;
-    }
-
     .remove-item-button {
       text-align: end;
     }
@@ -253,10 +267,6 @@
     flex-direction: column;
     align-items: end;
     width: 90vw;
-
-    .cart-total-label {
-      font-size: medium;
-    }
 
     .check-out-button {
       width: 100%;

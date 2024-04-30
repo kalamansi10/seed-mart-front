@@ -115,7 +115,7 @@ export default function CartPage({ createPopUp }) {
             onClick={() => removeFromCart(carted.id)}
           >
             <span className="web">Remove</span>
-            <span className="mobile">x</span>
+            <span className="mobile">✕</span>
           </button>
         </div>
       );
@@ -162,9 +162,9 @@ export default function CartPage({ createPopUp }) {
                 <p className="cart-total-label">{`Total (${renderCartQuantity(
                   cartItems
                 )} item)`}</p>
-                <p className="cart-total-amount">
+                <span className="cart-total-amount">
                   {renderCartTotal(cartItems)}
-                </p>
+                </span>
                 <button className="check-out-button" onClick={handleCheckOut}>
                   Checkout
                 </button>
