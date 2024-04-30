@@ -44,13 +44,19 @@ export default function CheckOutPage({ currentUser, createPopUp }) {
           id={checkoutItem.item.id}
           key={checkoutItem.item.id}
         >
-          <img src={checkoutItem.item.image_links[0]} alt="" />
-          <p>{checkoutItem.item.name}</p>
-          <p>{toLocalCurrency(checkoutItem.item.price)}</p>
-          <p>{checkoutItem.amount}</p>
-          <p>
+          <img
+            className="col-image"
+            src={checkoutItem.item.image_links[0]}
+            alt=""
+          />
+          <span className="col-name">{checkoutItem.item.name}</span>
+          <span className="col-price">
+            {toLocalCurrency(checkoutItem.item.price)}
+          </span>
+          <span className="col-amount">{checkoutItem.amount}</span>
+          <span className="col-total">
             {toLocalCurrency(checkoutItem.amount * checkoutItem.item.price)}
-          </p>
+          </span>
         </div>
       );
     });
@@ -89,20 +95,20 @@ export default function CheckOutPage({ currentUser, createPopUp }) {
       <>
         <div className="flex-column align-center">
           <div className="check-out-page ">
-            <CheckOutAddress
-              selectedAddress={selectedAddress}
-              setSelectedAddress={setSelectedAddress}
-            />
-            <section className="check-out-items-section box-shadow">
+            <section className="check-out-items-section">
+              <CheckOutAddress
+                selectedAddress={selectedAddress}
+                setSelectedAddress={setSelectedAddress}
+              />
               <div className="check-out-items-labels">
-                <p>Products Ordered</p>
-                <span>Price</span>
-                <span>Quantity</span>
-                <span>Total</span>
+                <span className="co-ordered">Products Ordered</span>
+                <span className="co-price">Price</span>
+                <span className="co-quantity">Quantity</span>
+                <span className="co-total">Total</span>
               </div>
               {rendercheckoutItems()}
             </section>
-            <div className="box-shadow">
+            <div className="check-out-bottom-section">
               <CheckOutPayment />
               <section className="check-out-breakdown section flex-column align-end">
                 <div className="breakdown-container">
@@ -132,7 +138,6 @@ export default function CheckOutPage({ currentUser, createPopUp }) {
                   referenceNumber={orderReference}
                 />
               </section>
-              <section className="check-out section flex-column align-end"></section>
             </div>
           </div>
         </div>

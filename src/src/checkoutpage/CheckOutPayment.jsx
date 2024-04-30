@@ -51,7 +51,7 @@ export default function CheckOutPayment() {
   }
 
   return (
-    <div>
+    <div className="check-out-payment-section" >
       <div className="check-out-payment flex-row">
         <div>
           <p>Payment method</p>

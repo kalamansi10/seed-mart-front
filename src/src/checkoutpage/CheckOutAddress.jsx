@@ -40,13 +40,13 @@ export default function CheckOutAddress({
   }
 
   return (
-    <div className="check-out-address box-shadow">
-      <div className="selected-address-container flex-row justify-between align-center">
-        <h3>Shipping Address</h3>
-        <div className="flex-row align-center">
-          {selectedAddress && <p>{formatAdrress(selectedAddress)}</p>}
+    <div className="check-out-address">
+      <div className="selected-address-container">
+        <h3 className="sa-heading">Shipping Address</h3>
+        <div className="sa-address-input">
+          {selectedAddress && <p className="sa-shipping-address">{formatAdrress(selectedAddress)}</p>}
           {!selectedAddress && shippingAddresses.length != 0 && (
-            <i>Please select a shipping address.</i>
+            <i className="sa-shipping-address">Please select a shipping address.</i>
           )}
           {shippingAddresses.length != 0 && (
             <button
