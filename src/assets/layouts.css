@@ -55,7 +55,7 @@ small {
 }
 
 .full-height {
-  min-height: calc(100vh - 556px);
+  min-height: calc(100vh - 520px);
 }
 .flex-column {
   display: flex;
@@ -279,7 +279,6 @@ textarea {
 #root {
   margin-top: 70px;
 }
-
 /* 
 * {
   outline: 1px solid red;
