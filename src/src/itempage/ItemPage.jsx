@@ -19,24 +19,23 @@ export default function ItemPage({
   const { getReviewList, renderStarRatings } = useReviewAPI();
 
   useEffect(() => {
-    async function fetchItem() {
-      const item = await getItem(id);
-      if (item) {
-        setItem(item);
-      }
-    }
     fetchItem();
-  }, []);
-
-  useEffect(() => {
-    async function fetchItemReviews() {
-      const item = await getReviewList(id);
-      if (item) {
-        setItemReviews(item);
-      }
-    }
     fetchItemReviews();
   }, []);
+
+  async function fetchItem() {
+    const item = await getItem(id);
+    if (item) {
+      setItem(item);
+    }
+  }
+
+  async function fetchItemReviews() {
+    const item = await getReviewList(id);
+    if (item) {
+      setItemReviews(item);
+    }
+  }
 
   function renderReviews() {
     if (!itemReviews || itemReviews.length == 0) {
@@ -70,6 +69,7 @@ export default function ItemPage({
   }
 
   if (item) {
+
     return (
       <>
         <div className="flex-column align-center full-height">
@@ -97,6 +97,12 @@ export default function ItemPage({
           </div>
         </div>
       </>
+    );
+  } else {
+    return (
+      <div className="flex-column align-center full-height">
+        <div className="loading-indicator"></div>
+      </div>
     );
   }
 }
