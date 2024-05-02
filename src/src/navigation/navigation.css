@@ -196,12 +196,6 @@
     display: none;
   }
 
-  #nav-toggle:checked ~ .nav-options {
-    height: 50vh;
-    background-color: var(--background);
-    border-bottom: 2px solid var(--text);
-  }
-
   .nav-item-mobile {
     margin-top: 69px;
     height: 0;
@@ -229,6 +223,7 @@
     padding-top: 10px;
     padding-bottom: 30px;
   }
+
   .search-wrapper-mobile {
     width: 90vw;
     margin-left: 5vw;
