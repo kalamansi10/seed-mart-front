@@ -13,8 +13,9 @@ import cartIcon from "../../assets/cart-icon.png";
 import "./navigation.css";
 
 export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
-  // Ref for options container
   const optionsContainer = useRef();
+  const mobileNavOptions = useRef();
+
   // Hoor for query parameters
   const [searchParams] = useSearchParams();
   // Hook for programmatic navigation
@@ -123,19 +124,27 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
     );
     if (currentUser) {
       return (
-        <ul className="nav-item-mobile">
+        <ul className="nav-item-mobile" ref={mobileNavOptions}>
           {searchWrapper}
-          <li onClick={closeMobileNav}>
-            <Link to="/user/profile">Profile</Link>
+          <li>
+            <span onClick={closeMobileNav}>
+              <Link to="/user/profile">Profile</Link>
+            </span>
           </li>
-          <li onClick={closeMobileNav}>
-            <Link to="/user/orders">Purchases</Link>
+          <li>
+            <span onClick={closeMobileNav}>
+              <Link to="/user/orders">Purchases</Link>
+            </span>
           </li>
-          <li onClick={closeMobileNav}>
-            <Link to="#">Notifications</Link>
+          <li>
+            <span onClick={closeMobileNav}>
+              <Link to="#">Notifications</Link>
+            </span>
           </li>
-          <li onClick={closeMobileNav}>
-            <Link to="/cart">Cart</Link>
+          <li>
+            <span onClick={closeMobileNav}>
+              <Link to="/user/cart">Cart</Link>
+            </span>
           </li>
           <li>
             <a onClick={deleteSession}>Logout</a>
@@ -144,13 +153,27 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
       );
     } else {
       return (
-        <ul className="nav-item-mobile">
+        <ul className="nav-item-mobile" ref={mobileNavOptions}>
           {searchWrapper}
-          <li onClick={closeMobileNav}>
-            <a onClick={logInDialog.show}>Log In</a>
+          <li>
+            <a
+              onClick={() => {
+                logInDialog.show();
+                closeMobileNav();
+              }}
+            >
+              Log In
+            </a>
           </li>
-          <li onClick={closeMobileNav}>
-            <a onClick={signUpDialog.show}>Sign Up</a>
+          <li>
+            <a
+              onClick={() => {
+                logInDialog.show();
+                closeMobileNav();
+              }}
+            >
+              Sign Up
+            </a>
           </li>
         </ul>
       );
@@ -158,7 +181,22 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
   }
 
   function closeMobileNav() {
+    mobileNavOptions.current.removeEventListener("click", handleOutsideClick);
     document.getElementById("nav-toggle").checked = false;
+  }
+
+  function handleToggleNav(e) {
+    if (e.target.checked) {
+      window.addEventListener("click", handleOutsideClick);
+    }
+  }
+
+  function handleOutsideClick(e) {
+    const mobileNavOptionsDimensions =
+      mobileNavOptions.current.getBoundingClientRect();
+    if (e.clientY > mobileNavOptionsDimensions.bottom) {
+      closeMobileNav()
+    }
   }
 
   // Main navigation component
@@ -179,7 +217,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
         </button>
       </div>
       <ul className="nav-options">{renderAccountOptions()}</ul>
-      <input type="checkbox" id="nav-toggle" />
+      <input type="checkbox" id="nav-toggle" onChange={handleToggleNav} />
       <div className="burger-wrapper">
         <label htmlFor="nav-toggle">
           <div className="burger">
