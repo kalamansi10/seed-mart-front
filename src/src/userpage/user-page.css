@@ -1,6 +1,27 @@
 .user-page {
-  padding: 20px;
+  padding: 40px;
+  gap: 70px;
+}
+
+.profile-banner {
+  align-self: start;
   gap: 20px;
+  padding-bottom: 20px;
+
+  img {
+    height: 100px;
+    width: auto;
+    aspect-ratio: 1/1;
+    background-color: var(--secondary);
+    border-radius: 50%;
+  }
+
+  p {
+    font-size: large;
+    font-weight: 600;
+    text-wrap: nowrap;
+    margin: 0;
+  }
 }
 
 .user-options {
@@ -18,7 +39,46 @@
   }
 }
 
-.options-section {
+.options-outlet {
   width: 1000px;
   background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+  rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.user-settings-location {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1300px) {
+  .user-page {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }  
+}
+
+@media (max-width: 800px) {
+  .user-page {
+    padding: 0;
+  }
+
+  .user-options {
+    display: none;
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-bottom: 200px;
+    background-color: white;
+  }
+
+  .user-settings-location {
+    display: flex;
+  }
+  
+  .options-outlet {
+    box-shadow: none;
+  }
 }

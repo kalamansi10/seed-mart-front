@@ -61,7 +61,7 @@ export default function Orders() {
               <div className="flex-row align-center">
                 <img src={order.item.image_links[0]} alt={order.item.name} />
                 <div>
-                  <p>{order.item.name}</p>
+                  <p className="order-item-name">{order.item.name}</p>
                   <p>x{order.amount}</p>
                 </div>
               </div>

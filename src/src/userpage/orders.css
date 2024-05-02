@@ -38,15 +38,23 @@
     height: 100px;
     width: 100px;
   }
+
+  .order-item-name {
+    padding-right: 100px;
+  }
 }
 
 .order-rating-section {
   padding: 0 50px 0 50px;
   border-bottom: 1px solid var(--secondary);
 
+  p {
+    font-size: small;
+  }
+
   span {
     color: var(--accent);
-    font-size: x-large;
+    font-size: large;
   }
 
   button {
@@ -56,6 +64,25 @@
 
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .orders-section {
+    label {
+      font-size: small;
+    }
+  }
+  .ordered-items {
+    p {
+      font-size: small;
+    }
+  }
+
+  .order-rating-section {
+    span {
+      font-size: medium;
     }
   }
 }
