@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./input.css";
 
-function useInput(type, placeholder = "", minlength=0) {
+function useInput(type, placeholder = "", minLength=0) {
   const [value, setValue] = useState("");
   const input = (
     <div className="input-wrapper">
@@ -12,7 +12,7 @@ function useInput(type, placeholder = "", minlength=0) {
         placeholder=""
         data-placeholder={placeholder}
         value={value}
-        minlength={minlength}
+        minLength={minLength}
         required
       />
       <span className="placeholder">{placeholder}</span>
