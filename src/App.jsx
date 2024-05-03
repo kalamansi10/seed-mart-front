@@ -132,7 +132,12 @@ function App() {
           {/* Checkout page with current user data */}
           <Route
             path="/checkout"
-            element={validateUser(<CheckOutPage currentUser={currentUser} createPopUp={createPopUp}/>)}
+            element={validateUser(
+              <CheckOutPage
+                currentUser={currentUser}
+                createPopUp={createPopUp}
+              />
+            )}
           />
 
           {/* User profile page with nested routes for different sections */}
@@ -172,18 +177,22 @@ function App() {
         {/* Footer component */}
         <Footer />
       </BrowserRouter>
-      <LogInDialog
-        logInDialog={logInDialog}
-        signUpDialog={signUpDialog}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-      />
-      <SignUpDialog
-        logInDialog={logInDialog}
-        signUpDialog={signUpDialog}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-      />
+      {currentUser && (
+        <>
+          <LogInDialog
+            logInDialog={logInDialog}
+            signUpDialog={signUpDialog}
+            errorMessage={errorMessage}
+            setErrorMessage={setErrorMessage}
+          />
+          <SignUpDialog
+            logInDialog={logInDialog}
+            signUpDialog={signUpDialog}
+            errorMessage={errorMessage}
+            setErrorMessage={setErrorMessage}
+          />
+        </>
+      )}
     </>
   );
 }
