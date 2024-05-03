@@ -3,7 +3,12 @@ import useInput from "../hooks/useInput";
 import useSessionsAPI from "../api/useSessionsAPI";
 import "./session-dialogs.css";
 
-function LogInDialog({ logInDialog, signUpDialog, errorMessage, setErrorMessage }) {
+function LogInDialog({
+  logInDialog,
+  signUpDialog,
+  errorMessage,
+  setErrorMessage,
+}) {
   // State for input values and errors
   const userEmail = useInput("email", "email");
   const userPass = useInput("password", "password");
@@ -71,8 +76,10 @@ function LogInDialog({ logInDialog, signUpDialog, errorMessage, setErrorMessage 
           <button onClick={handleLoginValidation}>Log in</button>
           <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
           <div>
-            {"Don't have an account? "}
-            <a onClick={handleSignUpInitiation}>Register</a>
+            <p>
+              Don't have an account?
+              <a onClick={handleSignUpInitiation}> Register</a>
+            </p>
           </div>
         </div>
       </dialog>
