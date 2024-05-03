@@ -1,7 +1,7 @@
 .address-select {
   padding: 50px 0;
-  width: 450px;
   background-color: white;
+  overflow: scroll;
 }
 
 .address-select > p {
@@ -17,6 +17,7 @@
 }
 
 .shipping-address-container {
+  margin: 0;
   padding: 15px;
   position: relative;
   background-color: white;

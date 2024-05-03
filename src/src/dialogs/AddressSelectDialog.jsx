@@ -21,7 +21,10 @@ export default function AddressSelectDialog({
       <div
         key={shippingAddress.id}
         htmlFor={shippingAddress.id}
-        onClick={() => setSelectedAddress(shippingAddress)}
+        onClick={() => {
+          addressSelectDialog.close();
+          setSelectedAddress(shippingAddress);
+        }}
       >
         <div
           className={`shipping-address-container box-shadow ${
