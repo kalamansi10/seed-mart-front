@@ -143,7 +143,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
           </li>
           <li>
             <span onClick={closeMobileNav}>
-              <Link to="/user/cart">Cart</Link>
+              <Link to="/cart">Cart</Link>
             </span>
           </li>
           <li>
@@ -168,7 +168,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
           <li>
             <a
               onClick={() => {
-                logInDialog.show();
+                signUpDialog.show();
                 closeMobileNav();
               }}
             >
