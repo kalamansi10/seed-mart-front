@@ -4,6 +4,9 @@
   padding-bottom: 50px;
   min-height: 300px;
 
+  .addresses-header {
+    padding-bottom: 50px;
+  }
   h2 {
     color: var(--primary);
   }
@@ -20,6 +23,10 @@
     &:hover {
       opacity: 95%;
     }
+  }
+
+  .profile-address-wrapper {
+    gap: 20px;
   }
 }
 
@@ -72,5 +79,20 @@ button.default-address.is-default {
 
   &:hover {
     cursor: not-allowed;
+  }
+}
+
+@media (max-width: 600px) {
+  .addresses-section {
+    padding-left: 7vw;
+    padding-right: 7vw;  
+
+    h2 {
+      font-size: large;
+    }
+
+    div, button {
+      font-size: small;
+    }  
   }
 }

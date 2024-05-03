@@ -26,7 +26,7 @@ export default function Addresses({ currentUser }) {
     return shippingAddresses.map((shippingAddress) => (
       <div key={shippingAddress.id}>
         <div
-          className="flex-row justify-between align-center"
+          className="profile-address-wrapper flex-row justify-between align-center"
         >
           <div>
             <div className="flex-row">
@@ -74,7 +74,7 @@ export default function Addresses({ currentUser }) {
 
   return (
     <div className="addresses-section">
-      <div className="flex-row justify-between align-center">
+      <div className="addresses-header flex-row justify-between align-center">
         <h2>ADDRESSES</h2>
         <button
           className="add-address-button"
