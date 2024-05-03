@@ -1,11 +1,12 @@
 .address-form {
   display: grid;
   max-width: 600px;
-  height: auto;
+  height: 70vh;
   background-color: white;
   padding: 50px;
   column-gap: 10px;
   row-gap: 20px;
+  overflow: scroll;
 
   h4 {
     color: var(--primary);
@@ -14,24 +15,18 @@
 
 .address-form .header,
 .default-address-checkbox,
-.submit-button {
-  grid-column: span 6;
-}
-
+.submit-button,
+.address-form .street,
+.address-form .city,
+.address-form .barangay,
 .address-form .name,
 .address-form .number {
-  grid-column: span 3;
-}
-
-.address-form .region,
-.address-form .province,
-.address-form .city,
-.address-form .barangay {
   grid-column: span 2;
 }
 
-.address-form .street {
-  grid-column: span 4;
+.address-form .region,
+.address-form .province {
+  grid-column: span 1;
 }
 
 .input-wrapper input {
@@ -66,5 +61,20 @@
 
   &:checked {
     background-color: var(--primary);
+  }
+}
+
+@media (max-width: 500px) {
+  .address-dialog {
+    width: 100vw;
+  }
+
+  .address-form {
+    padding-left: 7%;
+    padding-right: 7vw;
+  }
+  .address-form .region,
+  .address-form .province {
+    grid-column: span 2;
   }
 }

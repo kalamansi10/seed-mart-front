@@ -145,38 +145,38 @@ export default function AddAddressDialog({
 
   return (
     <>
-      <dialog ref={addAddressDialog.ref}>
-        <div className="address-dialog box-shadow">
-          <form className="address-form">
-            <div className="header">
-              <h4>New shipping address</h4>
-              <p>Please enter your shipping details.</p>
-            </div>
-            <div className="name input-wrapper">{contactName.input}</div>
-            <div className="number input-wrapper">{contactNumber.input}</div>
-            <div className="region input-wrapper">{regionSelect.input}</div>
-            <div className="province input-wrapper">{provinceSelect.input}</div>
-            <div className="city input-wrapper">{citySelect.input}</div>
-            <div className="barangay input-wrapper">{barangaySelect.input}</div>
-            <div className="street input-wrapper">{streetAddress.input}</div>
-            <div className="default-address-checkbox flex-row justify-center">
-              <label>
-                <input
-                  type="checkbox"
-                  onChange={(e) => setIsMainAddress(e.target.checked)}
-                  checked={isMainAddress}
-                />
-                &nbsp;&nbsp;Set as default
-              </label>
-            </div>
-            <input
-              className="submit-button"
-              type="submit"
-              onSubmit={handleAddressForm}
-              value={updatedAddress.id ? "Update" : "Add"}
-            />
-          </form>
-        </div>
+      <dialog className="address-dialog" ref={addAddressDialog.ref}>
+        <form
+          className="address-form box-shadow"
+          onSubmit={(e) => handleAddressForm(e)}
+        >
+          <div className="header">
+            <h4>New shipping address</h4>
+            <p>Please enter your shipping details.</p>
+          </div>
+          <div className="name input-wrapper">{contactName.input}</div>
+          <div className="number input-wrapper">{contactNumber.input}</div>
+          <div className="region input-wrapper">{regionSelect.input}</div>
+          <div className="province input-wrapper">{provinceSelect.input}</div>
+          <div className="city input-wrapper">{citySelect.input}</div>
+          <div className="barangay input-wrapper">{barangaySelect.input}</div>
+          <div className="street input-wrapper">{streetAddress.input}</div>
+          <div className="default-address-checkbox flex-row justify-center">
+            <label>
+              <input
+                type="checkbox"
+                onChange={(e) => setIsMainAddress(e.target.checked)}
+                checked={isMainAddress}
+              />
+              &nbsp;&nbsp;Set as default
+            </label>
+          </div>
+          <input
+            className="submit-button"
+            type="submit"
+            value={updatedAddress.id ? "Update" : "Add"}
+          />
+        </form>
       </dialog>
     </>
   );
