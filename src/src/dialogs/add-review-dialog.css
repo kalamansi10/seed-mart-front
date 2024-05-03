@@ -3,6 +3,15 @@
   min-width: 300px;
   padding: 40px;
 
+  .close-button {
+    all: unset;
+    color: var(--accent);
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   img {
     padding-right: 20px;
     height: 100px;
@@ -61,6 +70,45 @@
 
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  .review-dialog {
+    margin: 0;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    width: 90vw;
+    height: 100vh;
+
+    textarea {
+      width: 86vw;
+    }
+
+    button {
+      display: block;
+      padding: 10px;
+      border: 2px solid var(--primary);
+      background: var(--primary);
+      box-shadow: 0 0 10px rgba(146, 24, 24, 0.1);
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: bold;
+
+      &:hover {
+        opacity: 95%;
+      }
+    }
+
+    .delete-review {
+      all: unset;
+      color: var(--accent);
+      text-decoration: underline;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ export default function AddReviewDialog({ reviewDialog, order }) {
   }, [order]);
 
   async function fetchReview() {
-    let fetchedReview
+    let fetchedReview;
     if (order) fetchedReview = await getReview(order.id);
     setRating(fetchedReview?.rating || 1);
     setComment(fetchedReview?.comment || "");
@@ -94,6 +94,11 @@ export default function AddReviewDialog({ reviewDialog, order }) {
   return (
     <>
       <dialog className="review-dialog box-shadow" ref={reviewDialog.ref}>
+        <div className="flex-row justify-end">
+          <button className="close-button" onClick={reviewDialog.close}>
+            close
+          </button>
+        </div>
         {order?.item && (
           <>
             <h2>Rate Product</h2>
