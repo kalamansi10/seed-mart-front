@@ -86,3 +86,22 @@
     }
   }
 }
+
+@media (max-width: 800px) {
+  .order-status-container {
+    label {
+      font-size: x-small;
+    }
+  }
+
+  .ordered-items {
+    padding: 0 5vw 0 5vw;
+  }
+
+  .order-rating-section {
+    button {
+      font-size: small;
+    }
+  }
+}
+
