@@ -177,7 +177,7 @@ function App() {
         {/* Footer component */}
         <Footer />
       </BrowserRouter>
-      {currentUser && (
+      {!currentUser && (
         <>
           <LogInDialog
             logInDialog={logInDialog}
