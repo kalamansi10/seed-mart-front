@@ -1,7 +1,7 @@
 .address-select {
-  padding: 50px 0;
+  padding: 40px 1vw 150px;
   background-color: white;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .address-select > p {
@@ -12,7 +12,6 @@
 
 .address-list-container {
   padding: 0 10px;
-  padding-bottom: 200px;
   gap: 20px;
 }
 

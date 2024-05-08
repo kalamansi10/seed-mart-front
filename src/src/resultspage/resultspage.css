@@ -81,7 +81,7 @@
     padding-right: 5vw;
     width: 20vw;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .close-filter-section {

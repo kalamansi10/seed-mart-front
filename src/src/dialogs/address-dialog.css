@@ -6,7 +6,7 @@
   padding: 50px;
   column-gap: 10px;
   row-gap: 20px;
-  overflow: scroll;
+  overflow-y: auto;
 
   :is(h4) {
     color: var(--primary);
