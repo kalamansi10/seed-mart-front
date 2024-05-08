@@ -53,24 +53,16 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
     }
   }
 
-  // Toggle visibility of account options
-  function toggleOptionsVisibility(e) {
-    optionsContainer.current.classList.toggle("hidden");
-  }
-
   // Render account options based on user authentication status
   function renderAccountOptions() {
     if (currentUser) {
       return (
         <>
           <li className="nav-item" onClick={toggleOptionsVisibility}>
-            <a>
-              <img src={profileIcon} alt="profile-icon" />
-            </a>
+            <img src={profileIcon} alt="profile-icon" />
             <section
               className="options-wrapper flex-column box-shadow hidden"
               ref={optionsContainer}
-              onMouseLeave={toggleOptionsVisibility}
             >
               <Link to="/user/profile">My Account</Link>
               <Link to="/user/orders">My Purchases</Link>
@@ -78,9 +70,7 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
             </section>
           </li>
           <li className="nav-item">
-            <a>
-              <img src={notificationIcon} alt="notification-icon" />
-            </a>
+            <img src={notificationIcon} alt="notification-icon" />
           </li>
           <li className="nav-item cart">
             <Link to="/cart">
@@ -179,23 +169,48 @@ export default function Navigation({ currentUser, logInDialog, signUpDialog }) {
       );
     }
   }
-
-  function closeMobileNav() {
-    mobileNavOptions.current.removeEventListener("click", handleOutsideClick);
-    document.getElementById("nav-toggle").checked = false;
-  }
-
-  function handleToggleNav(e) {
-    if (e.target.checked) {
-      window.addEventListener("click", handleOutsideClick);
+  // Desktop navigation options functions
+  function toggleOptionsVisibility(e) {
+    const root = document.getElementById("root")
+    const navDimensions = e.target.getBoundingClientRect();
+    const handleOutsideClick = (e) => {
+      if (
+        e.clientX < navDimensions.left ||
+        e.clientX > navDimensions.right ||
+        e.clientY < navDimensions.top ||
+        e.clientY > navDimensions.bottom
+      ) {
+        optionsContainer.current.classList.add("hidden");
+        root.removeEventListener("click", handleOutsideClick);
+      }
+    };
+    if (optionsContainer.current.classList.contains("hidden")) {
+      optionsContainer.current.classList.remove("hidden");
+      root.addEventListener("click", handleOutsideClick);
+    } else {
+      optionsContainer.current.classList.add("hidden");
+      root.removeEventListener("click", handleOutsideClick);
     }
   }
 
-  function handleOutsideClick(e) {
-    const mobileNavOptionsDimensions =
+  // Mobile navigation options functions
+  function handleToggleNav(e) {
+    if (e.target.checked) {
+      document.getElementById("root").addEventListener("click", mobileNavOutboundClick);
+    }
+  }
+  function closeMobileNav() {
+    document.getElementById("root").removeEventListener(
+      "click",
+      mobileNavOutboundClick
+    );
+    document.getElementById("nav-toggle").checked = false;
+  }
+  function mobileNavOutboundClick(e) {
+    const mobileNavDimensions =
       mobileNavOptions.current.getBoundingClientRect();
-    if (e.clientY > mobileNavOptionsDimensions.bottom) {
-      closeMobileNav()
+    if (e.clientY > mobileNavDimensions.bottom) {
+      closeMobileNav();
     }
   }
 
