@@ -20,7 +20,7 @@
   padding-bottom: 50px;
   border-top: 1px solid var(--secondary);
 
-  a {
+  :is(a) {
     all: unset;
 
     &:hover {
@@ -33,7 +33,7 @@
   padding: 0 50px 0 50px;
   border-bottom: 1px solid var(--secondary);
 
-  img {
+  :is(img) {
     padding-right: 20px;
     height: 100px;
     width: 100px;
@@ -48,16 +48,16 @@
   padding: 0 50px 0 50px;
   border-bottom: 1px solid var(--secondary);
 
-  p {
+  :is(p) {
     font-size: small;
   }
 
-  span {
+  :is(span) {
     color: var(--accent);
     font-size: large;
   }
 
-  button {
+  :is(button) {
     all: unset;
     color: var(--accent);
     text-decoration: underline;
@@ -70,18 +70,18 @@
 
 @media (max-width: 1000px) {
   .orders-section {
-    label {
+    :is(label) {
       font-size: small;
     }
   }
   .ordered-items {
-    p {
+    :is(p) {
       font-size: small;
     }
   }
 
   .order-rating-section {
-    span {
+    :is(span) {
       font-size: medium;
     }
   }
@@ -89,7 +89,7 @@
 
 @media (max-width: 800px) {
   .order-status-container {
-    label {
+    :is(label) {
       font-size: x-small;
     }
   }
@@ -99,7 +99,7 @@
   }
 
   .order-rating-section {
-    button {
+    :is(button) {
       font-size: small;
     }
   }

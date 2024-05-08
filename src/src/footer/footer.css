@@ -3,26 +3,26 @@ footer {
   padding-top: 60px;
   background-color: white;
 
-  h2 {
+  :is(h2) {
     margin: 0;
     padding: 0;
     color: var(--primary);
     font-size: x-large;
   }
 
-  ul {
+  :is(ul) {
     list-style: none;
     padding: 0;
   }
 
-  a,
-  p {
+  :is(a),
+  :is(p) {
     text-decoration: none;
     color: gray;
     font-size: small;
   }
 
-  a:hover {
+  :is(a):hover {
     color: var(--primary);
     text-decoration: underline;
   }
@@ -48,7 +48,7 @@ footer {
   height: 60px;
   background-color: var(--primary);
 
-  p {
+  :is(p) {
     color: white;
     font-size: small;
   }
@@ -64,7 +64,7 @@ footer {
   .footer {
     grid-template-columns: 1fr;
 
-    h2 {
+    :is(h2) {
       font-size: large;
     }
   }

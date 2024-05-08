@@ -105,12 +105,12 @@
   }
 
   .session-dialog {
-    h2 {
+    :is(h2) {
       font-size: x-large;
       grid-column: span 1;
     }
-    p,
-    a, label, span {
+    :is(p),
+    :is(a), :is(label), :is(span) {
       font-size: small;
       text-align: center;
     }

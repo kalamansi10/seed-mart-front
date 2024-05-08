@@ -7,7 +7,7 @@
   .addresses-header {
     padding-bottom: 50px;
   }
-  h2 {
+  :is(h2) {
     color: var(--primary);
   }
 
@@ -87,11 +87,11 @@ button.default-address.is-default {
     padding-left: 7vw;
     padding-right: 7vw;  
 
-    h2 {
+    :is(h2) {
       font-size: large;
     }
 
-    div, button {
+    :is(div), :is(button) {
       font-size: small;
     }  
   }

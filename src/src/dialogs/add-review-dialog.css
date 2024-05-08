@@ -12,29 +12,29 @@
     }
   }
 
-  img {
+  :is(img) {
     padding-right: 20px;
     height: 100px;
     width: 100px;
   }
 
-  h2 {
+  :is(h2) {
     color: var(--primary);
   }
 
-  label {
+  :is(label) {
     padding-bottom: 20px;
     padding-left: 5px;
   }
 
-  textarea {
+  :is(textarea) {
     margin: 0;
     margin-bottom: 20px;
     width: 500px;
     min-height: 200px;
   }
 
-  button {
+  :is(button) {
     display: block;
     padding: 10px;
     border: 2px solid var(--primary);
@@ -82,11 +82,11 @@
     width: 90vw;
     height: 100vh;
 
-    textarea {
+    :is(textarea) {
       width: 86vw;
     }
 
-    button {
+    :is(button) {
       display: block;
       padding: 10px;
       border: 2px solid var(--primary);

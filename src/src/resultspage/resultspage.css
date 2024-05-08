@@ -126,10 +126,7 @@
       cursor: pointer;
     }
   }
-  body {
+  :is(body) {
     overflow-x: hidden;
   }
-
 }
-
-

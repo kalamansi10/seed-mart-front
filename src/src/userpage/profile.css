@@ -10,7 +10,7 @@
 .profile-information-section {
   width: 100%;
 
-  p {
+  :is(p) {
     font-weight: 600;
   }
 
@@ -21,12 +21,12 @@
   .input-wrapper.radio {
     display: flex;
     gap: 10px;
-    input {
+    :is(input) {
       flex-basis: 0;
     }
   }
 
-  button {
+  :is(button) {
     width: 100px;
     height: 45px;
     border: 2px solid var(--primary);
@@ -43,7 +43,7 @@
 }
 
 .profile-photo-section {
-  img {
+  :is(img) {
     height: 300px;
     width: auto;
     aspect-ratio: 1/1;
@@ -51,7 +51,7 @@
     border-radius: 50%;
   }
 
-  a {
+  :is(a) {
     padding-top: 20px;
   }
 }
@@ -75,12 +75,12 @@
     padding-bottom: 20px;
     color: var(--primary);
 
-    p {
+    :is(p) {
       font-weight: 600;
       font-size: large;
     }
 
-    button {
+    :is(button) {
       all: unset;
       position: absolute;
       font-size: x-large;

@@ -8,7 +8,7 @@
   row-gap: 20px;
   overflow: scroll;
 
-  h4 {
+  :is(h4) {
     color: var(--primary);
   }
 }
