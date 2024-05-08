@@ -85,6 +85,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  text-wrap: nowrap;
 }
 
 .nav-item img {
