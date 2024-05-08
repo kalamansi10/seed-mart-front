@@ -87,17 +87,6 @@
   display: none;
 }
 
-.loading-indicator {
-  align-self: center;
-  height: 100px;
-  width: 100px;
-  margin: 100px;
-  border-radius: 50%;
-  border: 3px solid var(--accent);
-  border-color: var(--accent) transparent;
-  animation: spin 1s infinite ease-out;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);

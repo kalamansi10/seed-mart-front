@@ -277,6 +277,21 @@ textarea {
 #root {
   margin-top: 70px;
 }
+
+.loading-indicator-wrapper {
+  width: 100%;
+ }
+ 
+ .loading-indicator {
+   height: 100px;
+   width: 100px;
+   margin: 100px;
+   border-radius: 50%;
+   border: 3px solid var(--accent);
+   border-color: var(--accent) transparent;
+   animation: spin 1s infinite ease-out;
+ }
+ 
 /* 
 * {
   outline: 1px solid red;

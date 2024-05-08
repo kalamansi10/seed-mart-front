@@ -130,7 +130,7 @@ export default function ItemsDisplay({ handleToggleFiltersSection }) {
   function renderItemList() {
     if (!items) {
       return (
-        <div className="items-container flex-row justify-center">
+        <div className="loading-indicator-wrapper flex-column align-center">
           <div className="loading-indicator"></div>
         </div>
       );
