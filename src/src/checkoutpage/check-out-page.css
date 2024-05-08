@@ -196,15 +196,15 @@
 
 @media (max-width: 880px) {
   .check-out-page {
-    p,
-    a,
-    i,
-    button,
-    span {
+    :is(p),
+    :is(a),
+    :is(i),
+    :is(button),
+    :is(span) {
       font-size: small;
     }
 
-    h3 {
+    :is(h3) {
       font-size: x-large;
     }
 
@@ -243,15 +243,15 @@
   }
 
   .check-out-page {
-    p,
-    a,
-    i,
-    button,
-    span {
+    :is(p),
+    :is(a),
+    :is(i),
+    :is(button),
+    :is(span) {
       font-size: x-small;
     }
 
-    h3 {
+    :is(h3) {
       font-size: large;
     }
 
